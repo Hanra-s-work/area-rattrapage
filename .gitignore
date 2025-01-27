@@ -1,6 +1,7 @@
 # No build/cache files
 *.o
 *.vs
+*.env
 *.out
 *.idea
 **/out/**
@@ -17,8 +18,8 @@ database/cache/**
 front/cache/**
 !front/cache/.gitkeep
 
-backend/cache/**
-!backend/cache/.gitkeep
+server/cache/**
+!server/cache/.gitkeep
 
 # No build files
 bootstrap
@@ -27,6 +28,9 @@ build/*
 _deps/*
 dist/*
 **/_deps/*
+
+# allow sample environments
+!sample.env
 
 # No editor config files
 .vscode
