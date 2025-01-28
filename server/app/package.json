@@ -1,0 +1,49 @@
+{
+  "name": "area-server",
+  "version": "2.0.0",
+  "description": "This is a server that will be in charge of running the logic of the project for the dashboard that the client will see in their web-browser",
+  "scripts": {
+    "test": "jest --config jest.config.js --tsconfig tsconfig.test.json",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "nodemon -r ts-node/register src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hanra-s-work/area-rattrapage.git"
+  },
+  "keywords": [
+    "area",
+    "rattrapage",
+    "epitech",
+    "full-stack"
+  ],
+  "author": "Henry Letellier",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Hanra-s-work/area-rattrapage/issues"
+  },
+  "homepage": "https://github.com/Hanra-s-work/area-rattrapage#readme",
+  "dependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/dotenv": "^8.2.3",
+    "@types/express": "^5.0.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mariadb": "^3.4.0",
+    "minimist": "^1.2.8"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}

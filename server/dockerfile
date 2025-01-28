@@ -1,0 +1,56 @@
+FROM node:23.6.1-alpine3.20
+
+# Update/set environment variables
+ENV HOME=/srv \
+    PORT=5000 \
+    HOST="0.0.0.0" \
+    LAUNCH_SERVER_ON_BOOT=True \
+    BASH_FILE_LAUNCHER=launch.sh \
+    SYSTEM_ENV_LOCATION=/the_system_environement
+
+# Install npm
+RUN apk add --update npm
+
+# Install bash
+RUN apk add --update bash
+
+# Clean the apk cache
+RUN rm -rf /var/cache/apk/*
+
+# Set the working directory
+WORKDIR ${HOME}
+
+# Copy the package.json and package-lock.json files (failover method)
+COPY ./app/package*.json ./
+
+# Install the dependencies
+RUN npm install
+
+# Clean the npm cache
+RUN npm cache clean --force
+
+# Copy the rest of the application
+COPY ./app .
+
+# Copy the environement file in the container
+COPY .env .
+
+# Expose the port
+EXPOSE 5000
+
+# Create the backup location of the launch script
+RUN mkdir -p ${SYSTEM_ENV_LOCATION}
+
+# Dump script runner
+RUN echo '#!/bin/bash' > ${BASH_FILE_LAUNCHER} \
+    && echo "cd \"\$HOME\"" >> ${BASH_FILE_LAUNCHER} \
+    && echo "CMD=\"npm run build && npm run start -- --port=\"\$PORT\" --host=\"\$HOST\"\"" >> ${BASH_FILE_LAUNCHER} \
+    && echo "if [[ \"\${LAUNCH_SERVER_ON_BOOT,,}\" != 'true' ]]; then echo 'debug is true, starting a boring bash instance';/bin/bash ; exit \$?; fi" >> ${BASH_FILE_LAUNCHER} \
+    && echo "echo \"startup command: \$CMD\"" >> ${BASH_FILE_LAUNCHER} \
+    && echo "\$CMD" >> ${BASH_FILE_LAUNCHER} \
+    && chmod +x "$BASH_FILE_LAUNCHER" \
+    && cp -f ${BASH_FILE_LAUNCHER} ${SYSTEM_ENV_LOCATION}
+
+# Start the application
+ENTRYPOINT [ "/bin/bash", "-c" ]
+CMD [ "cp -f ${SYSTEM_ENV_LOCATION}/${BASH_FILE_LAUNCHER} ${HOME}/${BASH_FILE_LAUNCHER} && chmod +x ${BASH_FILE_LAUNCHER} && ./${BASH_FILE_LAUNCHER}" ]

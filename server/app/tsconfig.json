@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "CommonJS",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "outDir": "./dist",
+        "rootDir": "./src" // Keep source files under the src folder
+    },
+    "include": [
+        "src/**/*.ts", // Include all .ts files under src
+    ],
+    "exclude": [
+        "node_modules", // Exclude node_modules
+        "*tmp*", // Exclude any folder or files with the name tmp
+        "*tmp*.ts" // Exclude any .ts files with the name tmp
+    ]
+}

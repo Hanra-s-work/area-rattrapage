@@ -1,0 +1,15 @@
+{
+    "extends": "./tsconfig.json", // Extend from the main tsconfig
+    "compilerOptions": {
+        "rootDir": "./", // Use the root of the project as rootDir for tests
+        "outDir": "./dist" // Keep output in the dist folder
+    },
+    "include": [
+        "__tests__/**/*.ts" // Only include test files
+    ],
+    "exclude": [
+        "node_modules", // Exclude node_modules
+        "*tmp*", // Exclude any folder or files with the name tmp
+        "*tmp*.ts" // Exclude any .ts files with the name tmp
+    ]
+}
