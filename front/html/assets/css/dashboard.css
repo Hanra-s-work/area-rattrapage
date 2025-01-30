@@ -1,0 +1,30 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+#user_name_header {
+}
+
+.center_text {
+}
+
+.widget_button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.button_desing {
+  /*padding: 10px;*/
+  /*width: 100%;*/
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 28px;
+}
+

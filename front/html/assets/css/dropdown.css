@@ -1,0 +1,26 @@
+.dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.dropdown-select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  width: 150px;
+}
+
+.dropdown-select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.dropdown-output {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
