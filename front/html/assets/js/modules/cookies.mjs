@@ -89,6 +89,34 @@ function count_all_cookies() {
     return cookie_count;
 }
 
+function displayCookies() {
+    const cookies = document.cookie.split("; ");
+    if (cookies.length === 1 && cookies[0] === "") {
+        console.log("No accessible cookies found.");
+        return;
+    }
+
+    console.log("Accessible Cookies:");
+    cookies.forEach(cookie => {
+        const [name, value] = cookie.split("=");
+        console.log(`Name: ${name}, Value: ${decodeURIComponent(value)}`);
+    });
+}
+
+function display() {
+    const cookies = document.cookie.split("; ");
+    if (cookies.length === 1 && cookies[0] === "") {
+        console.log("No accessible cookies found.");
+        return;
+    }
+
+    console.log("Accessible Cookies:");
+    cookies.forEach(cookie => {
+        const [name, value] = cookie.split("=");
+        console.log(`Name: ${name}, Value: ${decodeURIComponent(value)}`);
+    });
+}
+
 console.log("js/cookie_dealing initialised");
 
 const cookie = {
@@ -96,10 +124,12 @@ const cookie = {
     create,
     read,
     remove,
+    display,
     createManyCookie,
     createCookie,
     readCookie,
     removeCookie,
+    displayCookies,
     clear_all_cookies,
     count_all_cookies
 };

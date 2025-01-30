@@ -12,7 +12,7 @@ async function register(formID) { };
 async function login(formID) { };
 
 async function get_available_widgets() {
-    // const widgets = await queries.get("/widgets");
+    // const widgets = await window.querier.get("/widgets");
     const widgets = [
         "sample_widget",
         "Weather",
@@ -23,7 +23,7 @@ async function get_available_widgets() {
 };
 
 async function get_user_widgets() {
-    // const widgets = await queries.get("/user/widgets");
+    // const widgets = await window.querier.get("/user/widgets");
     const widgets = [
         {
             name: "sample_widget",
@@ -45,7 +45,7 @@ async function get_user_widgets() {
 };
 
 async function get_widget_content(widget_name) {
-    // const widgets = await queries.get(`/user/widgets/${widget_name}`);
+    // const widgets = await window.querier.get(`/user/widgets/${widget_name}`);
     const widgets = [
         {
             name: "sample_widget",
@@ -68,11 +68,20 @@ async function get_widget_content(widget_name) {
     return { "status": 404, "data": null };
 };
 
-async function update_user_widgets(widgets) { };
+async function update_user_widgets(widgets_body) {
+    console.log("update_user_widgets called");
+    console.log("widgets_body:", widgets_body);
+    const widgets = window.indexedDB_manager.read(window.constants.widget_cookie_name);
+    console.log("widgets:", widgets);
+    console.log("update_user_widgets finished");
+};
 
 async function remove_user_widget(widget_id) { };
 
-async function log_user_out() { };
+async function log_user_out() {
+    // await window.querier.get("/logout");
+    return true;
+};
 
 
 const update_server = {
