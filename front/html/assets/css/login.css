@@ -147,3 +147,41 @@ form button:hover {
   font-weight: bold;
 }
 
+.sso_separator_box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  gap: 5px;
+}
+
+.sso_separator {
+  border: none;
+  border-top: 2px solid #000;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.sso_text {
+  padding-top: 8px;
+}
+
+.sso_button {
+  color: white;
+  background-color: black;
+  border-radius: 6px;
+  padding: 10px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  transition: color 1s ease, background-color 1s ease, transform 1s ease;
+}
+
+.sso_button:hover {
+  color: black;
+  background-color: white;
+}
+
+.fab.fa-github.sso_button_icon {
+  padding-right: 2px;
+}
+
