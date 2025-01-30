@@ -1,4 +1,4 @@
-FROM mariadb:mariadb:lts-ubi
+FROM mariadb:latest
 
 ENV LOCATION=docker-db
 
