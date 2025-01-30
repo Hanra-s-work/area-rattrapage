@@ -15,6 +15,7 @@ coverage_data/**
 log/**
 *my_docker_bash_launcher.sh*
 True
+launch.sh
 
 # Ignore all the sql files in the server
 *.sql
