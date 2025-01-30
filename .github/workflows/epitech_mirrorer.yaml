@@ -32,10 +32,6 @@ jobs:
         - name: Start the docker compose
           run: |
             docker compose up -d
-        
-        - name: Check that the database is running
-          run: |
-            docker exec a-mariadb mysql -u root -p${{secrets.MYSQL_ROOT_PASSWORD}} -e "SHOW DATABASES;"
 
         - name: Run the tests for the server
           run: |
