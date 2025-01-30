@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-    SOURCE: Hanra-s-work/rtype
+    SOURCE: "Hanra-s-work/area-rattrapage"
     MIRROR_URL: "Hanra-s-work/Rattrapage-promo-2027"
     GITHUB_SSH_KEY: ${{ secrets.MIRROR_KEY }}
 
