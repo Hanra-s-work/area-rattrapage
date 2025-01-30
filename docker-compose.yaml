@@ -28,7 +28,7 @@ services:
     ports:
       - "8081:5000"
     volumes:
-      - ./server/:/srv/
+      - ./server/app:/srv/
     depends_on:
       - mariadb
     networks:

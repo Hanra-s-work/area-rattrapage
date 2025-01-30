@@ -24,6 +24,7 @@ launch.sh
 *.spec
 **/build/**
 **/dist/**
+**/.npm/**
 
 # Ignore the compiled binaries
 binarea_server
