@@ -7,9 +7,74 @@
 
 // Module in charge of managing the communications between the server and the client
 
-async function register(formID) { };
+async function register(username, email, password) {
+    console.log("register called");
+    console.log("username:", username);
+    console.log("email:", email);
+    console.log("password:", password);
+    // let response = await window.querier.post("/register", { username, email, password });
+    let response = {
+        "success": true,
+        "message": "Registration successful",
+        "resp": {
+            "id": 0,
+            "username": username
+        },
+        "token": "token"
+    };
+    if (response.success) {
+        if (response.token) {
+            window.cookie_manager.create(window.constants.user_token_cookie_name, response.token);
+        } else {
+            response.success = false;
+        }
+        if (response.resp) {
+            window.cookie_manager.create(window.constants.user_id_cookie_name, response.resp.id);
+            window.cookie_manager.create(window.constants.user_username_cookie_name, response.resp.username);
+        } else {
+            response.success = false;
+        }
+    } else {
+        response.success = false;
+    }
+    console.log("response:", response);
+    console.log("register finished");
+    return response;
+};
 
-async function login(formID) { };
+async function login(email, password) {
+    console.log("login called");
+    console.log("email:", email);
+    console.log("password:", password);
+    // let response = await window.querier.post("/login", { email, password });
+    let response = {
+        "success": true,
+        "message": "Login successful",
+        "resp": {
+            "id": 0,
+            "username": email.split("@")[0]
+        },
+        "token": "token"
+    };
+    if (response.success) {
+        if (response.token) {
+            window.cookie_manager.create(window.constants.user_token_cookie_name, response.token);
+        } else {
+            response.success = false;
+        }
+        if (response.resp) {
+            window.cookie_manager.create(window.constants.user_id_cookie_name, response.resp.id);
+            window.cookie_manager.create(window.constants.user_username_cookie_name, response.resp.username);
+        } else {
+            response.success = false;
+        }
+    } else {
+        response.success = false;
+    }
+    console.log("response:", response);
+    console.log("login finished");
+    return response;
+};
 
 async function get_available_widgets() {
     // const widgets = await window.querier.get("/widgets");
@@ -85,8 +150,8 @@ async function log_user_out() {
 
 
 const update_server = {
-    register,
     login,
+    register,
     get_available_widgets,
     get_user_widgets,
     get_widget_content,

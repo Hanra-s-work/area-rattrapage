@@ -12,6 +12,6 @@ async function logout() {
     window.cookie_manager.remove(window.constants.user_username_cookie_name);
     window.cookie_manager.remove(window.constants.user_id_cookie_name);
     window.indexedDB_manager.remove(window.constants.widget_cookie_name);
-    window.location.href = "/";
+    window.location.href = window.constants.home_page;
     console.log("logout finished");
 }

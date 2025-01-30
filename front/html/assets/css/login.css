@@ -141,3 +141,9 @@ form button:hover {
   background-color: #45a049;
 }
 
+#error_message {
+  display: none;
+  color: red;
+  font-weight: bold;
+}
+
