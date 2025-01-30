@@ -3,8 +3,11 @@
   "version": "2.0.0",
   "description": "This is a server that will be in charge of running the logic of the project for the dashboard that the client will see in their web-browser",
   "scripts": {
-    "test": "jest --config jest.config.js --tsconfig tsconfig.test.json",
-    "build": "tsc",
+    "test": "jest --config jest.config.js",
+    "build": "tsc -p ./tsconfig.json",
+    "build:watch": "tsc -p ./tsconfig.json --watch",
+    "build-test": "tsc -p ./tsconfig.test.json",
+    "build-test:watch": "tsc -p ./tsconfig.test.json --watch",
     "start": "node dist/index.js",
     "dev": "nodemon -r ts-node/register src/index.ts"
   },
@@ -39,6 +42,7 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
+    "@types/supertest": "^6.0.2",
     "jest": "^29.7.0",
     "nodemon": "^3.1.9",
     "supertest": "^7.0.0",

@@ -13,6 +13,10 @@ describe('GET /', () => {
     it('should return 200 and a welcome message', async () => {
         const response = await request(app).get('/');
         expect(response.status).toBe(200);
-        expect(response.body.msg).toBe('Hello, World!');
+        console.log(response.body);
+        console.log(response.body.message);
+        console.log(`type: body: ${typeof (response.body)}`);
+        console.log(`type: body.message: ${typeof (response.body.message)}`);
+        expect(response.body.message).toBe('Hello, World!');
     });
 });

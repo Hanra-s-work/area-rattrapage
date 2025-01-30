@@ -1,2 +1,3 @@
 # No node modules into the docker, they will be installed during the build process of the container
 **/node_modules/**
+**/dist/**

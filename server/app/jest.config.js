@@ -6,10 +6,12 @@
 */
 
 module.exports = {
-    preset: 'ts-jest', // Use ts-jest preset
-    testEnvironment: 'node', // Set the environment for testing
+    preset: 'ts-jest',
+    testEnvironment: 'node',
+    moduleDirectories: ['node_modules', './src'],
+    moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
     transform: {
-        '^.+\\.ts$': 'ts-jest', // Transform TypeScript files using ts-jest
+        '^.+\\.ts$': ['ts-jest', { tsconfig: 'tsconfig.test.json' }], // Explicitly use tsconfig.test.json
     },
-    testMatch: ['**/__tests__/**/*.ts'], // Specify where to find the test files
+    testMatch: ['**/__tests__/**/*.ts'],
 };
