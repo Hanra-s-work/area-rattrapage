@@ -1,0 +1,54 @@
+services:
+  mariadb:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    image: area-mariadb
+    container_name: a-mariadb
+    restart: always
+    env_file:
+      - ./database/.env
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./database/cache:/var/lib/mysql
+    networks:
+      - t-network
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: area-server
+    container_name: a-server
+    restart: always
+    tty: true
+    env_file:
+      - ./server/.env
+    ports:
+      - "8081:5000"
+    volumes:
+      - ./server/:/srv/
+    depends_on:
+      - mariadb
+    networks:
+      - t-network
+
+  web:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    image: area-web
+    container_name: a-web
+    restart: always
+    tty: true
+    ports:
+      - "8080:80"
+    depends_on:
+      - server
+    networks:
+      - t-network
+
+networks:
+  t-network:
+    driver: bridge
