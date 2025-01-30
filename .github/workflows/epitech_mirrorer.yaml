@@ -27,11 +27,11 @@ jobs:
 
         - name: compile the docker compose
           run: |
-            docker-compose build
+            docker compose build
 
         - name: Start the docker compose
           run: |
-            docker-compose up -d
+            docker compose up -d
         
         - name: Run the tests for the server
           run: |
