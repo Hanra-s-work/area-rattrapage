@@ -1,0 +1,187 @@
+.login_register_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  /*height: 20vh;*/
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  /*align-items: center;*/
+  /*height: 100vh;*/
+  top: 0;
+  background-color: #f4f4f4;
+}
+
+.my_container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 320px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Toggle Switch */
+
+.toggle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.toggle-container span {
+  font-size: 16px;
+  margin: 0 10px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 25px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 3.5px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #4CAF50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+/* Form Wrapper */
+
+.form-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.form-container {
+  display: flex;
+  width: 200%;
+  transition: transform 0.5s ease-in-out;
+}
+
+form {
+  width: 50%;
+  padding: 20px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form h2 {
+  margin-bottom: 15px;
+}
+
+form input {
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 90%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+form button {
+  padding: 10px;
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #45a049;
+}
+
+#error_message {
+  display: none;
+  color: red;
+  font-weight: bold;
+}
+
+.sso_separator_box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  gap: 5px;
+}
+
+.sso_separator {
+  border: none;
+  border-top: 2px solid #000;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.sso_text {
+  padding-top: 8px;
+}
+
+.sso_button {
+  color: white;
+  background-color: black;
+  border-radius: 6px;
+  padding: 10px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  transition: color 1s ease, background-color 1s ease, transform 1s ease;
+}
+
+.sso_button:hover {
+  color: black;
+  background-color: white;
+}
+
+.fab.fa-github.sso_button_icon {
+  padding-right: 2px;
+}
+

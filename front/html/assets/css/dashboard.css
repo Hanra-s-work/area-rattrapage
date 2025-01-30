@@ -1,0 +1,35 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+#user_name_header {
+}
+
+.center_text {
+}
+
+.widget_button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.button_desing {
+  padding: 1px 2px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.button_desing:hover {
+  background-color: #0056b3;
+}
+
+#widgets_body {
+  display: flex;
+}
+

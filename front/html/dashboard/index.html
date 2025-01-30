@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Dashboard</title>
+    <meta name="theme-color" content="#86c8ed">
+    <link rel="canonical" href="https://dashboard.pingpal.news/dashboard/">
+    <meta property="og:url" content="https://dashboard.pingpal.news/dashboard/">
+    <meta name="twitter:description" content="This is the epitech rattrapage project to allow one to see general information about what they wish from the offered api endpoints.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:type" content="website">
+    <meta name="publisher" content="Henry Letellier">
+    <meta name="copyright" content="© Henry Letellier">
+    <meta name="robots" content="index, follow, max-image-preview:standard">
+    <meta name="author" content="Henry LETELLIER,">
+    <meta name="twitter:title" content="Dashboard">
+    <meta name="description" content="This is the epitech rattrapage project to allow one to see general information about what they wish from the offered api endpoints.">
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="manifest" href="../manifest.json" crossorigin="use-credentials">
+    <link rel="stylesheet" href="../assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/dropdown.css">
+    <link rel="stylesheet" href="../assets/css/Login-Form-Basic-icons.css">
+    <link rel="stylesheet" href="../assets/css/widget.css">
+</head>
+
+<body>
+    <section class="header">
+        <aside class="widget_button">
+            <section><select id="header_dropdown" name="options"></select></section><button class="button_desing" type="button" onclick="window.widget_manager.add_widget(&quot;widgets_body&quot;, &quot;header_dropdown&quot;);">Add widget</button>
+        </aside><i class="far fa-trash-alt" style="display:none;"></i>
+        <aside>
+            <p class="center_text">Welcome&nbsp;<span id="username_field" class="usrname">Text</span></p>
+        </aside>
+        <aside><button class="button_desing" type="button" onclick="logout();">Logout</button></aside>
+    </section>
+    <section id="widgets_body"></section>
+    <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/js/dashboard/load_widgets.js"></script>
+    <script src="../assets/js/dashboard/logout.js"></script>
+    <script src="../assets/js/dashboard/my_onload.js"></script>
+    <script src="../assets/js/dashboard/update_username.js"></script>
+    <script src="../assets/js/dashboard/widget_dropdown.js"></script>
+    <script src="../assets/js/modules/constants.mjs" type="module"></script>
+    <script src="../assets/js/modules/cookies.mjs" type="module"></script>
+    <script src="../assets/js/modules/indexeddb_manager.mjs" type="module"></script>
+    <script src="../assets/js/modules/manage_server.mjs" type="module"></script>
+    <script src="../assets/js/modules/querier.mjs" type="module"></script>
+    <script src="../assets/js/modules/widget_manager.mjs" type="module"></script>
+</body>
+
+</html>
