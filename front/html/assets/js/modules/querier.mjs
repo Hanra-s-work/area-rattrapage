@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2024
+** area-rattrapage
+** File description:
+** querier.mjs
+*/
+
 const url = "https://dashboard-back.pingpal.news/";
 const port = -1;
 

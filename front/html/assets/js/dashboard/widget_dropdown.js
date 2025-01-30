@@ -1,19 +1,26 @@
+/*
+** EPITECH PROJECT, 2024
+** area-rattrapage
+** File description:
+** widget_dropdown.js
+*/
+
 function get_dropdown_value(element) {
 
 }
 
-function get_raw_widget_options() {
-    let raw_widget_options = `
-    <option value="" disabled selected>Please choose a widget...</option>
-    <option value="option1">Option 1</option>
-    <option value="option2">Option 2</option>
-    <option value="option3">Option 3</option>`;
+async function get_raw_widget_options() {
+    let raw_widget_options = `<option value="option_default" disabled selected>Please choose a widget...</option>`;
+    const widgets = await window.update_server.get_available_widgets();
+    for (const widget of widgets) {
+        raw_widget_options += `<option value="${widget}">${widget}</option>`;
+    }
     return raw_widget_options;
 }
 
-function get_widgets_options(element) {
+async function get_widgets_options(element) {
     console.log("get_widgets_options called");
-    element.innerHTML = get_raw_widget_options();
+    element.innerHTML = await get_raw_widget_options();
     console.log("get_widgets_options finished");
 }
 

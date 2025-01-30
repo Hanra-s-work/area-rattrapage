@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2024
+** area-rattrapage
+** File description:
+** cookies.mjs
+*/
+
 console.log("js/cookie_dealing initialising");
 function createMany(string) {
     document.cookie = string

@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2024
+** area-rattrapage
+** File description:
+** my_onload.js
+*/
+
 function my_onload() {
     const username = document.getElementById("username_field");
     const dropdown_header_widget = document.getElementById("header_dropdown");

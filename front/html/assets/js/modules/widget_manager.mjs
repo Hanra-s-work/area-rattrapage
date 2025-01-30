@@ -1,4 +1,14 @@
-function create_widget_field(widget_item) {
+/*
+** EPITECH PROJECT, 2024
+** area-rattrapage
+** File description:
+** widget_manager.mjs
+*/
+
+async function create_widget_field(widget_item) {
+    if (!widget_item) {
+        return "";
+    };
     const widget_name = widget_item.name;
     let widget_code = ``;
     widget_code += `<article id="${widget_name}" class="widget">`;
@@ -15,7 +25,7 @@ function create_widget_field(widget_item) {
     widget_code += `</section>`;
     widget_code += `<section class="widget_content_type">`;
     widget_code += `<select class="widget_dropdown">`;
-    widget_code += get_raw_widget_options();
+    widget_code += await get_raw_widget_options();
     widget_code += `</select>`;
     widget_code += `<button class="button_desing" type="button" onclick="update_widget_content(this);">Apply</button>`;
     widget_code += `</section>`;
@@ -31,16 +41,31 @@ function create_widget_field(widget_item) {
     return widget_code;
 }
 
-function add_widget(ID, widgetType) {
+async function get_widget_content(widget_name) {
+    const response = await window.update_server.get_widget_content(widget_name);
+    if (response.status === 200) {
+        return response.data;
+    }
+    return null;
+}
 
+async function add_widget(widget_body_ID, dropdown_ID) {
+    const dropdown = document.getElementById(dropdown_ID);
+    const widget_body = document.getElementById(widget_body_ID);
+    const widget_content = await get_widget_content(dropdown.value);
+    const widget_field = await create_widget_field(widget_content);
+
+    widget_body.innerHTML += widget_field;
+    dropdown_element.value = "option_default";
 }
 
 function remove_widget(ID) {
     const name = ID;
     document.getElementById(ID).remove();
+    window.widget_manager.remove_user_widget(name);
 }
 
-function update_widget(ID, widgetType) { }
+function update_widget(ID) { }
 
 function update_widget_location(ID, element) {
     console.log("update_widget_location called");
