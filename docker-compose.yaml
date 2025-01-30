@@ -2,7 +2,7 @@ services:
   mariadb:
     build:
       context: ./database
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     image: area-mariadb
     container_name: a-mariadb
     restart: always
@@ -13,12 +13,12 @@ services:
     volumes:
       - ./database/cache:/var/lib/mysql
     networks:
-      - t-network
+      - a-network
 
   server:
     build:
       context: ./server
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     image: area-server
     container_name: a-server
     restart: always
@@ -32,12 +32,12 @@ services:
     depends_on:
       - mariadb
     networks:
-      - t-network
+      - a-network
 
   web:
     build:
       context: ./front
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     image: area-web
     container_name: a-web
     restart: always
@@ -47,8 +47,8 @@ services:
     depends_on:
       - server
     networks:
-      - t-network
+      - a-network
 
 networks:
-  t-network:
+  a-network:
     driver: bridge
