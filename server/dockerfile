@@ -8,6 +8,9 @@ ENV HOME=/server \
     BASH_FILE_LAUNCHER=launch.sh \
     SYSTEM_ENV_LOCATION=/the_system_environement
 
+# Update the apk manager
+RUN apk update
+
 # Install npm
 RUN apk add --update npm
 

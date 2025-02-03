@@ -25,6 +25,70 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/ `dashboard` /*!40100 DEFAULT CHARACTER 
 USE `dashboard`;
 
 --
+-- Table structure for table `sso_connections`
+--
+
+DROP TABLE IF EXISTS `sso_connections`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sso_connections` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `token` text DEFAULT NULL,
+  `expiration` datetime DEFAULT NULL,
+  `lifespan` bigint(20) unsigned DEFAULT NULL,
+  `refresh_link` text DEFAULT NULL,
+  `user_id` bigint(20) unsigned DEFAULT NULL,
+  `service_id` bigint(20) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sso_connections`
+--
+
+LOCK TABLES `sso_connections` WRITE;
+/*!40000 ALTER TABLE `sso_connections` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sso_connections` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sso_oauth`
+--
+
+DROP TABLE IF EXISTS `sso_oauth`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sso_oauth` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `provider_name` text DEFAULT NULL,
+  `client_id` text NOT NULL,
+  `client_secret` text NOT NULL,
+  `provider_scope` text DEFAULT NULL,
+  `authorisation_base_url` text NOT NULL,
+  `token_grabber_base_url` text NOT NULL,
+  `user_info_base_url` text NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `sso_oauth_unique` (`client_id`) USING HASH,
+  UNIQUE KEY `sso_oauth_unique_1` (`client_secret`) USING HASH,
+  UNIQUE KEY `sso_oauth_unique_2` (`authorisation_base_url`) USING HASH,
+  UNIQUE KEY `sso_oauth_unique_3` (`token_grabber_base_url`) USING HASH,
+  UNIQUE KEY `sso_oauth_unique_4` (`user_info_base_url`) USING HASH
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sso_oauth`
+--
+
+LOCK TABLES `sso_oauth` WRITE;
+/*!40000 ALTER TABLE `sso_oauth` DISABLE KEYS */;
+INSERT INTO `sso_oauth` VALUES
+(1,'github','Ov23liRvtedfziS9zU4K','38de36ba9d589a8699b72ea739870cdbbeafbec2','user:email repo read:org','https://github.com/login/oauth/authorize','https://github.com/login/oauth/access_token','https://api.github.com/user/emails');
+/*!40000 ALTER TABLE `sso_oauth` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user_widgets`
 --
 
@@ -62,6 +126,7 @@ CREATE TABLE `users` (
   `name` text NOT NULL,
   `email` text NOT NULL,
   `password` text DEFAULT NULL,
+  `token` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_unique` (`email`) USING HASH
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
@@ -111,4 +176,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-03  2:24:05
+-- Dump completed on 2025-02-03 21:40:21
