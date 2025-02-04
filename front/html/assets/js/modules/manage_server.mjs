@@ -5,6 +5,7 @@
 ** update_server.mjs
 */
 
+console.log("js/manage_server initialising");
 // Module in charge of managing the communications between the server and the client
 
 async function register(username, email, password) {
@@ -46,7 +47,7 @@ async function login(email, password) {
     console.log("login called");
     console.log("email:", email);
     console.log("password:", password);
-    // let response = await window.querier.post("/login", { email, password });
+    // let response = await window.querier.post(`${ window.constants.user_login_endpoint}`, { email, password });
     let response = {
         "success": true,
         "message": "Login successful",
@@ -77,74 +78,68 @@ async function login(email, password) {
 };
 
 async function get_available_widgets() {
-    // const widgets = await window.querier.get("/widgets");
-    const widgets = [
-        "sample_widget",
-        "Weather",
-        "Clock",
-        "Picture",
-    ];
+    // const widgets = await window.querier.get(window.constants.widget_name_list_endpoint);
+    const widgets = window.constants.raw_widgets_list;
+    console.log(`Available widgets ${JSON.stringify(widgets)}`);
     return widgets;
 };
 
 async function get_user_widgets() {
-    // const widgets = await window.querier.get("/user/widgets");
-    const widgets = [
-        {
-            name: "sample_widget",
-            content: "Hello world",
-            position: 0
-        },
-        {
-            name: "Clock",
-            content: `<iframe src="https://timeday.co/clock?locale=en&timezone=Europe%2FBrussels&showDate=true&showTime=true&dateFormat=full&timeFormat=24h&showSeconds=true&showTimezone=false&fontSize=18&fontColor=%2523000000&fontWeight=normal&fontStyle=normal&fontDecoration=none&fontFamily=__className_9fd9c5&fontName=orbitron&borderShow=false&borderSize=1&borderStyle=solid&borderColor=%2523000000&borderRadius=rounded-md&backgroundColor=%2523ffffff&alignmentHorizontal=center&alignmentVertical=middle&paddingTop=4&paddingRight=4&paddingBottom=4&paddingLeft=4&width=400&height=40&styleType=standard" width="400" height="40" frameborder="0" style="border:none;"></iframe>`,
-            position: 1
-        },
-        {
-            name: "Picture",
-            content: `<img src="https://picsum.photos/200"></img>`,
-            position: 2
-        }
-    ];
-    return widgets;
+    // const user_widgets = await window.querier.get(window.constants.widget_get_user_widgets_endpoint);
+    return window.constants.user_widget_list;
 };
 
 async function get_widget_content(widget_name) {
-    // const widgets = await window.querier.get(`/user/widgets/${widget_name}`);
-    const widgets = [
-        {
-            name: "sample_widget",
-            content: "Hello world"
-        },
-        {
-            name: "Clock",
-            content: `<iframe src="https://timeday.co/clock?locale=en&timezone=Europe%2FBrussels&showDate=true&showTime=true&dateFormat=full&timeFormat=24h&showSeconds=true&showTimezone=false&fontSize=18&fontColor=%2523000000&fontWeight=normal&fontStyle=normal&fontDecoration=none&fontFamily=__className_9fd9c5&fontName=orbitron&borderShow=false&borderSize=1&borderStyle=solid&borderColor=%2523000000&borderRadius=rounded-md&backgroundColor=%2523ffffff&alignmentHorizontal=center&alignmentVertical=middle&paddingTop=4&paddingRight=4&paddingBottom=4&paddingLeft=4&width=400&height=40&styleType=standard" width="400" height="40" frameborder="0" style="border:none;"></iframe>`
-        },
-        {
-            name: "Picture",
-            content: `<img src="https://picsum.photos/200"></img>`
-        }
-    ];
+    console.log("manage_server.get_widget_content called");
+    // const widgets = await window.querier.get(`${window.constants.widget_get_user_widgets_endpoint}/${widget_name}`);
+    const widgets = window.constants.available_widgets;
+    console.log("widgets:", JSON.stringify(widgets));
+    console.log("Looking for widget");
+    var resp = { "status": 404, "data": null };
     for (const widget of widgets) {
         if (widget.name === widget_name) {
-            return { "status": 200, "data": widget };
+            console.log("Widget found");
+            resp = { "status": 200, "data": widget };
+            break;
         }
     }
-    return { "status": 404, "data": null };
+    if (resp.status === 200) {
+        console.log(`Widget content ${JSON.stringify(resp)}`);
+        return resp;
+    }
+    console.log("Widget not found");
+    return resp;
 };
 
 async function update_user_widgets(widgets_body) {
     console.log("update_user_widgets called");
     console.log("widgets_body:", widgets_body);
-    const widgets = window.indexedDB_manager.read(window.constants.widget_cookie_name);
-    console.log("widgets:", widgets);
+    const widgets = await window.indexedDB_manager.read(window.constants.widget_cookie_name);
+    console.log("widgets:", JSON.stringify(widgets));
     console.log("update_user_widgets finished");
 };
 
-async function remove_user_widget(widget_id) { };
+async function remove_user_widget(widget_id) {
+    console.log("remove_user_widgets called");
+    console.log("widgets_body:", widgets_body);
+    const widgets = await window.indexedDB_manager.read(window.constants.widget_cookie_name);
+    console.log("widgets:", JSON.stringify(widgets));
+    for (const widget of widgets) {
+        if (widget.name === widget_id) {
+            widgets.splice(widgets.indexOf(widget), 1);
+            break;
+        }
+    }
+    console.log("remove_user_widgets finished");
+};
 
 async function log_user_out() {
-    // await window.querier.get("/logout");
+    console.log("log_user_out called");
+    const token = window.cookie_manager.read(window.constants.user_token_cookie_name);
+    if (!token) {
+        return true;
+    }
+    await window.querier.delete(window.constants.logout_page, {}, token);
     return true;
 };
 
@@ -163,3 +158,5 @@ const update_server = {
 export { update_server };
 
 window.update_server = update_server;
+
+console.log("js/manage_server initialised");

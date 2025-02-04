@@ -5,7 +5,9 @@
 ** querier.mjs
 */
 
-const url = "https://dashboard-back.pingpal.news/";
+console.log("js/querier initialising");
+
+const url = "https://dashboard-back.pingpal.news";
 const port = -1;
 
 async function query(method = "GET", path = "/", body = {}, token = "") {
@@ -43,7 +45,9 @@ async function query(method = "GET", path = "/", body = {}, token = "") {
             throw new Error(`Error: ${response.status}`);
         }
         console.log(response);
-        const data = await response.json();
+        var data = await response.json();
+        data.status = response.status;
+        data.ok = response.ok;
         return data;
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -83,3 +87,5 @@ const queries = {
 export { queries };
 
 window.querier = queries;
+
+console.log("js/querier initialised");

@@ -37,16 +37,25 @@ function create(key, value) {
     });
 }
 
-function read(key, callback) {
-    openDB(db => {
-        let transaction = db.transaction(STORE_NAME, "readonly");
-        let store = transaction.objectStore(STORE_NAME);
-        let request = store.get(key);
+async function read(key) {
+    const value = await new Promise((resolve, reject) => {
+        openDB(db => {
+            let transaction = db.transaction(STORE_NAME, "readonly");
+            let store = transaction.objectStore(STORE_NAME);
+            let request = store.get(key);
 
-        request.onsuccess = function () {
-            callback(request.result ? request.result.value : null);
-        };
+            request.onsuccess = function () {
+                resolve(request.result ? request.result.value : null);
+            };
+
+            request.onerror = function () {
+                reject(request.error || new Error("Failed to fetch value"));
+            };
+        });
     });
+
+    console.log(`Value for key ${key}: ${value}`);
+    return value;
 }
 
 function remove(key) {
