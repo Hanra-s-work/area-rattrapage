@@ -42,7 +42,10 @@ async function query(method = "GET", path = "/", body = {}, token = "") {
         const response = await fetch(final_url, payload);
         console.log(response);
         if (!response.ok) {
-            throw new Error(`Error: ${response.status}`);
+            var data = await response.json();
+            data.status = response.status;
+            data.ok = response.ok;
+            return data;
         }
         console.log(response);
         var data = await response.json();
@@ -51,7 +54,10 @@ async function query(method = "GET", path = "/", body = {}, token = "") {
         return data;
     } catch (error) {
         console.error('Error fetching data:', error);
-        throw error;
+        var data = await response.json();
+        data.status = response.status;
+        data.ok = response.ok;
+        return data;
     }
 }
 

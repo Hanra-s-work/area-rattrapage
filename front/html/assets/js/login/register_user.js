@@ -16,9 +16,13 @@ async function register_user() {
         return;
     }
 
+    console.log("passwords match");
+
     const response = await window.update_server.register(username, email, password);
 
-    if (response.success) {
+    console.log(`register: JSON response: ${JSON.stringify(response)}`);
+
+    if (response.ok) {
         console.log("Registration successful:", response);
         window.location.href = window.constants.dashboard_page;
     } else {
