@@ -77,6 +77,16 @@ async function login(email, password) {
     return response;
 };
 
+async function provide_missing_sso_info(username, password) {
+    const token = window.cookie_manager.read(window.constants.user_token_cookie_name);
+    if (!token) {
+        console.log("provide_missing_sso_info failed user is not logged in!");
+        return { "status": 401, "data": null };
+    }
+    const response = await window.querier.post(window.constants.provide_missing_sso_info_endpoint, { username, password }, token);
+    return response;
+}
+
 async function get_available_widgets() {
     // const widgets = await window.querier.get(window.constants.widget_name_list_endpoint);
     const widgets = window.constants.raw_widgets_list;
@@ -139,20 +149,25 @@ async function log_user_out() {
     if (!token) {
         return true;
     }
-    await window.querier.delete(window.constants.logout_page, {}, token);
-    return true;
+    const response = await window.querier.delete_query(window.constants.logout_page, {}, token);
+    if (response.status === 200) {
+        console.log("log_user_out finished");
+        return true;
+    }
+    return false;
 };
 
 
 const update_server = {
     login,
     register,
-    get_available_widgets,
+    log_user_out,
     get_user_widgets,
+    remove_user_widget,
     get_widget_content,
     update_user_widgets,
-    remove_user_widget,
-    log_user_out
+    get_available_widgets,
+    provide_missing_sso_info,
 }
 
 export { update_server };

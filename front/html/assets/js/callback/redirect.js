@@ -7,7 +7,7 @@
 
 async function check_callback() {
     const url = window.location.href;
-    const user_passord = window.constants.user_password || "/passord";
+    const user_password = window.constants.user_password || "/password";
     const about_user = window.constants.about_user || "/user/about";
     const user_id_cookie_name = window.constants.user_id_cookie_name || "user_id";
     const user_token_cookie_name = window.constants.user_token_cookie_name || "user_token";
@@ -42,11 +42,17 @@ async function check_callback() {
             console.log("Login failed");
             logout();
             window.location.href = home_page;
+            return;
         }
         window.cookie_manager.create(user_id_cookie_name, user_info.resp.id);
-        if (!resp.resp.username) {
-            console.log(`Redirecting to ${user_passord}`);
-            window.location.href = user_passord;
+        console.log("username:", user_info.resp.username);
+        console.log("email:", user_info.resp.email);
+        console.log(`typeof username: ${typeof user_info.resp.username}`);
+        console.log(`typeof email: ${typeof user_info.resp.email}`);
+        if (!resp.resp.username || resp.resp.username === "" || resp.resp.username === "undefined" || resp.resp.username === "null" || resp.resp.username === null || resp.resp.username === undefined) {
+            console.log(`Redirecting to ${user_password}`);
+            window.location.href = user_password;
+            return;
         }
         window.cookie_manager.create(user_username_cookie_name, user_info.resp.username);
         console.log(`Redirecting to ${dashboard_page}`);

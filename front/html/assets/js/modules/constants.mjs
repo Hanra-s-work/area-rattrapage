@@ -22,6 +22,7 @@ const oauth_callback = "/oauth/callback";
 const dashboard_page = "/dashboard";
 const user_login_endpoint = "/login";
 const user_passord = "/password";
+const provide_missing_sso_info_endpoint = "/user/sso";
 
 const widget_name_list_endpoint = "/widgets";
 const widget_get_user_widgets_endpoint = "/user/widgets";
@@ -132,6 +133,7 @@ const constants = {
     home_page,
     about_user,
     logout_page,
+    user_passord,
     user_widgets,
     oauth_callback,
     dashboard_page,
@@ -145,6 +147,7 @@ const constants = {
     user_username_cookie_name,
     widget_name_list_endpoint,
     widget_get_user_widgets_endpoint,
+    provide_missing_sso_info_endpoint,
 };
 
 export default constants;

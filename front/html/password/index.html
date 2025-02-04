@@ -29,16 +29,33 @@
     <link rel="manifest" href="../manifest.json" crossorigin="use-credentials">
     <link rel="stylesheet" href="../assets/css/dropdown.css">
     <link rel="stylesheet" href="../assets/css/Login-Form-Basic-icons.css">
+    <link rel="stylesheet" href="../assets/css/login.css">
 </head>
 
 <body>
+    <main class="login_register_box">
+        <section class="my_container">
+            <p>Welcome user</p>
+            <p>Please provide more information about yourself</p>
+            <section class="form-wrapper">
+                <p id="error_message">Hello world !</p>
+                <aside class="form-container">
+                    <form id="loginForm">
+                        <h2>About you</h2><input type="text" id="loginUsername" placeholder="Username" required=""><input type="password" id="loginPassword" placeholder="Password" required=""><input type="password" id="loginPasswordConfirmation" placeholder="Password Confirmation" required=""><button type="submit">Submit</button>
+                    </form>
+                </aside>
+            </section>
+        </section>
+    </main>
     <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../assets/js/login/update_error_message.js"></script>
     <script src="../assets/js/modules/constants.mjs" type="module"></script>
     <script src="../assets/js/modules/cookies.mjs" type="module"></script>
     <script src="../assets/js/modules/indexeddb_manager.mjs" type="module"></script>
     <script src="../assets/js/modules/manage_server.mjs" type="module"></script>
     <script src="../assets/js/modules/querier.mjs" type="module"></script>
     <script src="../assets/js/modules/widget_manager.mjs" type="module"></script>
+    <script src="../assets/js/password/get_sso_details.js"></script>
 </body>
 
 </html>
