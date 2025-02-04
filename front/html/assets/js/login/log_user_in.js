@@ -11,7 +11,9 @@ async function log_user_in() {
 
     const response = await window.update_server.login(email, password);
 
-    if (response.success) {
+    console.log(`login: JSON response: ${JSON.stringify(response)}`);
+
+    if (response.ok) {
         console.log("Login successful:", response);
         window.location.href = window.constants.dashboard_page;
     } else {
