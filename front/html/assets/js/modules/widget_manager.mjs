@@ -5,7 +5,9 @@
 ** widget_manager.mjs
 */
 
-function widgets_to_json(widgets) {
+console.log("js/widget_manager initialising");
+
+async function widgets_to_json(widgets) {
     console.log("widgets_to_json called");
     let widgetData = [];
 
@@ -26,7 +28,7 @@ function widgets_to_json(widgets) {
     return widgetData;
 }
 
-function get_widget_index(widget_body_ID) {
+async function get_widget_index(widget_body_ID) {
     console.log("get_widget_index called");
     const widget_body = document.getElementById(widget_body_ID);
     const widgets_present = widget_body.children.length;
@@ -34,6 +36,7 @@ function get_widget_index(widget_body_ID) {
     console.log("get_widget_index finished");
     return widgets_present;
 }
+
 async function create_widget_field(widget_item, widget_index) {
     console.log("create_widget_field called");
     if (widget_item == null) {
@@ -63,7 +66,7 @@ async function create_widget_field(widget_item, widget_index) {
     widget_code += `<button class="button_desing" type="button" onclick="update_widget_content(this);">Apply</button>`;
     widget_code += `</section>`;
     widget_code += `<section class="widget_body">`;
-    widget_code += `<p>${widget_item.content}</p>`;
+    widget_code += `<div>${widget_item.content}</div>`;
     widget_code += `</section>`;
     widget_code += `<section class="widget_footer">`;
     widget_code += `<p class="widget_name_footer">Name: `;
@@ -91,9 +94,9 @@ async function add_widget(widget_body_ID, dropdown_ID) {
     console.log("add_widget called");
     const dropdown = document.getElementById(dropdown_ID);
     const widget_body = document.getElementById(widget_body_ID);
-    const widget_content = await get_widget_content(dropdown.value);
-    const widget_index = widget_content.position || get_widget_index(widget_body_ID);
-    const widget_field = await create_widget_field(widget_content, widget_index);
+    const widget_content = await window.widget_manager.get_widget_content(dropdown.value);
+    const widget_index = widget_content.position || await window.widget_manager.get_widget_index(widget_body_ID);
+    const widget_field = await window.widget_manager.create_widget_field(widget_content, widget_index);
 
     console.log("widget_body:", widget_body);
     console.log("widget_content:", widget_content);
@@ -107,15 +110,15 @@ async function add_widget(widget_body_ID, dropdown_ID) {
     console.log("add_widget finished");
 }
 
-function remove_widget(ID) {
+async function remove_widget(ID) {
     const name = ID;
     document.getElementById(ID).remove();
-    window.widget_manager.remove_user_widget(name);
+    await window.widget_manager.remove_user_widget(name);
 }
 
-function update_widget(ID) { }
+async function update_widget(ID) { }
 
-function update_widget_location(ID, element) {
+async function update_widget_location(ID, element) {
     console.log("update_widget_location called");
     console.log("ID:", ID);
     console.log("update_widget_location finished");
@@ -126,6 +129,8 @@ const widget_manager = {
     remove_widget,
     update_widget,
     widgets_to_json,
+    get_widget_index,
+    get_widget_content,
     create_widget_field,
     update_widget_location
 }
@@ -133,3 +138,5 @@ const widget_manager = {
 export { widget_manager };
 
 window.widget_manager = widget_manager;
+
+console.log("js/widget_manager initialised");

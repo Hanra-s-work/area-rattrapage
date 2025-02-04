@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Dashboard</title>
     <meta name="theme-color" content="#86c8ed">
-    <link rel="canonical" href="https://dashboard.pingpal.news/dashboard/">
-    <meta property="og:url" content="https://dashboard.pingpal.news/dashboard/">
+    <link rel="canonical" href="https://dashboard.pingpal.news/password/">
+    <meta property="og:url" content="https://dashboard.pingpal.news/password/">
     <meta name="twitter:title" content="Dashboard">
     <meta name="author" content="Henry LETELLIER,">
     <meta name="robots" content="index, follow, max-image-preview:standard">
@@ -27,36 +27,35 @@
     <link rel="icon" type="image/png" sizes="912x1036" href="../assets/img/DashBoard%20logo.png">
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
     <link rel="manifest" href="../manifest.json" crossorigin="use-credentials">
-    <link rel="stylesheet" href="../assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="stylesheet" href="../assets/css/dropdown.css">
     <link rel="stylesheet" href="../assets/css/Login-Form-Basic-icons.css">
-    <link rel="stylesheet" href="../assets/css/widget.css">
+    <link rel="stylesheet" href="../assets/css/login.css">
 </head>
 
 <body>
-    <section class="header">
-        <aside class="widget_button"><img src="../assets/img/DashBoard%20logo.png" width="45" height="45">
-            <section><select id="header_dropdown" name="options"></select></section><button class="button_desing" type="button" onclick="window.widget_manager.add_widget(&quot;widgets_body&quot;, &quot;header_dropdown&quot;);">Add widget</button>
-        </aside><i class="far fa-trash-alt" style="display:none;"></i>
-        <aside>
-            <p class="center_text">Welcome&nbsp;<span id="username_field" class="usrname">Text</span></p>
-        </aside>
-        <aside><button class="button_desing" type="button" onclick="logout();">Logout</button></aside>
-    </section>
-    <section id="widgets_body"></section>
+    <main class="login_register_box">
+        <section class="my_container">
+            <p>Welcome user</p>
+            <p>Please provide more information about yourself</p>
+            <section class="form-wrapper">
+                <p id="error_message">Hello world !</p>
+                <aside class="form-container">
+                    <form id="loginForm">
+                        <h2>About you</h2><input type="text" id="loginUsername" placeholder="Username" required=""><input type="password" id="loginPassword" placeholder="Password" required=""><input type="password" id="loginPasswordConfirmation" placeholder="Password Confirmation" required=""><button type="submit">Submit</button>
+                    </form>
+                </aside>
+            </section>
+        </section>
+    </main>
     <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../assets/js/dashboard/load_widgets.js"></script>
-    <script src="../assets/js/dashboard/logout.js"></script>
-    <script src="../assets/js/dashboard/my_onload.js"></script>
-    <script src="../assets/js/dashboard/update_username.js"></script>
-    <script src="../assets/js/dashboard/widget_dropdown.js"></script>
+    <script src="../assets/js/login/update_error_message.js"></script>
     <script src="../assets/js/modules/constants.mjs" type="module"></script>
     <script src="../assets/js/modules/cookies.mjs" type="module"></script>
     <script src="../assets/js/modules/indexeddb_manager.mjs" type="module"></script>
     <script src="../assets/js/modules/manage_server.mjs" type="module"></script>
     <script src="../assets/js/modules/querier.mjs" type="module"></script>
     <script src="../assets/js/modules/widget_manager.mjs" type="module"></script>
+    <script src="../assets/js/password/get_sso_details.js"></script>
     <script src="../assets/js/sleep.js"></script>
 </body>
 

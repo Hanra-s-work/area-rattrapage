@@ -7,7 +7,12 @@
 
 async function logout() {
     console.log("logout called");
-    await window.update_server.log_user_out();
+    const response = await window.update_server.log_user_out();
+    if (response.ok) {
+        console.log("Logout successful:", response);
+    } else {
+        console.log("Logout failed:", response);
+    }
     window.cookie_manager.remove(window.constants.user_token_cookie_name);
     window.cookie_manager.remove(window.constants.user_username_cookie_name);
     window.cookie_manager.remove(window.constants.user_id_cookie_name);

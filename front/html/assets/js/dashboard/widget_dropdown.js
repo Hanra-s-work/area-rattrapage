@@ -24,26 +24,56 @@ async function get_widgets_options(element) {
     console.log("get_widgets_options finished");
 }
 
-function update_widget_content(element) {    // Find the closest widget container
-    const widget = button.closest('.widget');
+async function update_widget_content(element) {    // Find the closest widget container
+    const widget = element.closest('.widget');
 
     // Access the input field for the position
-    const positionInput = widget.querySelector('.widget_header_index_position');
+    const positionInput = widget.querySelector(".widget_dropdown");
     const positionValue = positionInput ? positionInput.value : null;
 
-    // Access the dropdown inside the widget
-    const dropdown = widget.querySelector('.widget_dropdown');
-    const dropdownValue = dropdown ? dropdown.value : null;
+    if (!positionValue || positionValue === 'option_default') {
+        const msg = "Please select a widget from the dropdown";
+        alert(msg);
+        console.error(msg);
+        return;
+    }
+
+    // Get the node of the widget body content
+    const widgetBody = widget.querySelector(".widget_body");
 
     // Access the widget body content
-    const widgetBody = widget.querySelector('.widget_body');
-    const widgetBodyContent = widgetBody ? widgetBody.innerHTML : null;
+    const widgetFooter = widget.querySelector(".widget_name_footer");
+    const childSpan = widgetFooter.children[0];
+
+    console.log("positionValue:", positionValue);
+
+    const data = await window.widget_manager.get_widget_content(positionValue);
+
+    if (data === null) {
+        const msg = "No widget data found";
+        alert(msg);
+        console.error(msg);
+        return;
+    }
+
+    console.log("Data:", data);
+
+    widgetBody.innerHTML = data.content;
+
+    // Update the name of the widget
+    childSpan.innerText = data.name;
 
     // Log or use the values
-    console.log('Widget Position:', positionValue);
-    console.log('Dropdown Value:', dropdownValue);
-    console.log('Widget Body Content:', widgetBodyContent);
-
-    // Perform other actions as needed
-
+    console.log('Widget Body:', widgetBody);
+    console.log('Widget Footer:', widgetFooter);
 }
+
+
+const widget_dropdown = {
+    get_dropdown_value,
+    get_widgets_options,
+    update_widget_content,
+    get_raw_widget_options
+}
+
+window.widget_dropdown = widget_dropdown;
