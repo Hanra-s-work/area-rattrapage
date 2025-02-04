@@ -32,6 +32,23 @@ export namespace Login {
         return token;
     };
 
+    export async function log_local_user_in(user_email: string, unhashed_password: string, database: DB) {
+        const token = generate_token();
+        const user_data = await database.getContentFromTable("users", ["*"], `email = '${user_email}'`);
+
+        if (!user_data || user_data.length === 0) {
+            return null;
+        }
+
+        const user_id = user_data[0].id;
+        const corresponds = await check_user_password(user_email, unhashed_password, database);
+        if (!corresponds) {
+            return null;
+        }
+        await database.updateTable("users", ["token"], [token], "id = ?", [user_id]);
+        return token;
+    };
+
     export async function log_user_out(token: string, database: DB) {
         const user_data = await database.getContentFromTable("users", ["id"], `token = '${token}'`);
 
@@ -54,29 +71,30 @@ export namespace Login {
         return true;
     };
 
-    export async function check_user_password(user_email: string, password: string, database: DB) {
+    export async function check_user_password(user_email: string, unhashed_password: string, database: DB) {
         const user_data = await database.getContentFromTable("users", ["password"], `email = '${user_email}'`);
 
         if (!user_data || user_data.length === 0) {
             return false;
         }
 
-        return bcryptjs.compareSync(password, user_data[0].password);
+        return bcryptjs.compareSync(unhashed_password, user_data[0].password);
     };
 
     export async function hash_password(password: string) {
         return bcryptjs.hashSync(password, bcryptSalt);
     };
 
-    export async function register_user(user_email: string, password: string, database: DB) {
+    export async function register_user(username: string, user_email: string, password: string, database: DB) {
         const user_data = await database.getContentFromTable("users", ["id"], `email = '${user_email}'`);
 
         if (user_data && user_data.length > 0) {
             return false;
         }
 
-        const hashed_password = bcryptjs.hashSync(password, bcryptSalt);
-        await database.writeToTable("users", ["email", "password"], [[user_email, hashed_password]]);
+        const hashed_password = await hash_password(password);
+        console.log("hashed_password", hashed_password);
+        await database.writeToTable("users", ["email", "password", "username"], [[user_email, hashed_password, username]]);
         return true;
     };
 
@@ -91,12 +109,10 @@ export namespace Login {
             return false;
         }
 
-        const password = bcryptjs.hashSync(new_unhashed_password, bcryptSalt);
-        console.log("password", password);
+        const hashed_password = await hash_password(new_unhashed_password);
 
         const user_id = Number(user_data[0].id);
         console.log("user_id", user_id);
-        const hashed_password = bcryptjs.hashSync(password, bcryptSalt);
         console.log("hashed_password", hashed_password);
         await database.updateTable("users", ["name", "password"], [new_name, hashed_password], "id = ?", [user_id]);
         console.log("updated user information");

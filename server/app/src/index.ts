@@ -30,6 +30,7 @@ import DB from './modules/db';
 
 import { OAuth } from './modules/oauth';
 import { Login } from './modules/login';
+import { createPool } from 'mariadb';
 
 
 // Load environment variables
@@ -225,6 +226,77 @@ app.get("/user/about", async (req, res) => {
     };
     console.log(`Final: ${final}`);
     console.log(final);
+    build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', final, '', false);
+});
+
+app.post('/login', async (req, res) => {
+    const title = `${req.url}`;
+    console.log(`endpoint: ${req.url}`);
+    const email = req.body.email;
+    const password = req.body.password;
+    const data = await database.getContentFromTable('users', ['*'], `email = '${email}'`);
+    if (data.length === 0) {
+        console.log("No user");
+        build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid email or password', 'Error', '', true);
+        return;
+    }
+    const login_response = await Login.log_local_user_in(email, password, database);
+    if (login_response === null) {
+        console.log("login response is null");
+        build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid email or password', 'Error', '', true);
+        return;
+    }
+    const final = {
+        id: Number(data[0].id),
+        username: String(data[0].name),
+        email: String(data[0].email),
+        token: String(login_response),
+    };
+    console.log(`final:`, final);
+    build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', final, '', false);
+});
+
+app.post('/register', async (req, res) => {
+    const title = `${req.url}`;
+    console.log(`endpoint: ${req.url}`);
+    const email = req.body.email;
+    const password = req.body.password;
+    const username = req.body.username;
+
+    if (!email || !password || !username) {
+        console.log("Missing email, password or username");
+        build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Missing email, password or username', 'Error', '', true);
+        return;
+    }
+
+    const response = await Login.register_user(username, email, password, database);
+    if (response === false) {
+        console.log("response is false");
+        build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'The user has not been registered.', 'Error', '', true);
+        return;
+    }
+
+    const data = await database.getContentFromTable('users', ['*'], `email = '${email}'`);
+    if (data.length === 0) {
+        console.log("No user");
+        build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid email or password', 'Error', '', true);
+        return;
+    }
+
+    const login_response = await Login.log_local_user_in(email, password, database);
+    if (login_response === null) {
+        console.log("login response is null");
+        build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid email or password', 'Error', '', true);
+        return;
+    }
+
+    const final = {
+        id: Number(data[0].id),
+        username: String(data[0].name),
+        email: String(data[0].email),
+        token: String(login_response),
+    };
+    console.log(`final:`, final);
     build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', final, '', false);
 });
 
