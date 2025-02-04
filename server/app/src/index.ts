@@ -234,18 +234,22 @@ app.post('/login', async (req, res) => {
     console.log(`endpoint: ${req.url}`);
     const email = req.body.email;
     const password = req.body.password;
+    console.log("email: ", email, "password: ", password);
+    console.log("getting user from the database if it exists");
     const data = await database.getContentFromTable('users', ['*'], `email = '${email}'`);
     if (data.length === 0) {
         console.log("No user");
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid email or password', 'Error', '', true);
         return;
     }
+    console.log("user exists, loging them in");
     const login_response = await Login.log_local_user_in(email, password, database);
     if (login_response === null) {
         console.log("login response is null");
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid email or password', 'Error', '', true);
         return;
     }
+    console.log("login response: ", login_response);
     const final = {
         id: Number(data[0].id),
         username: String(data[0].name),
@@ -263,11 +267,17 @@ app.post('/register', async (req, res) => {
     const password = req.body.password;
     const username = req.body.username;
 
+    console.log("email: ", email, "password: ", password, "username: ", username);
+
+    console.log("Checking fields");
+
     if (!email || !password || !username) {
         console.log("Missing email, password or username");
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Missing email, password or username', 'Error', '', true);
         return;
     }
+
+    console.log("Checking if user already exists");
 
     const response = await Login.register_user(username, email, password, database);
     if (response === false) {
@@ -276,6 +286,10 @@ app.post('/register', async (req, res) => {
         return;
     }
 
+    console.log("User registered");
+
+    console.log("Checking if user exists");
+
     const data = await database.getContentFromTable('users', ['*'], `email = '${email}'`);
     if (data.length === 0) {
         console.log("No user");
@@ -283,12 +297,16 @@ app.post('/register', async (req, res) => {
         return;
     }
 
+    console.log("User exists, logging them in");
+
     const login_response = await Login.log_local_user_in(email, password, database);
     if (login_response === null) {
         console.log("login response is null");
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid email or password', 'Error', '', true);
         return;
     }
+
+    console.log("login response: ", login_response);
 
     const final = {
         id: Number(data[0].id),

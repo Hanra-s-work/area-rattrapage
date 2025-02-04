@@ -16,10 +16,12 @@ export namespace Login {
     export const bcryptSalt = bcryptjs.genSaltSync(bcryptSaltRounds);
 
     export function generate_token() {
+        console.log("generate_token");
         return uuid4();
     };
 
     export async function log_user_in(user_email: string, database: DB) {
+        console.log("log_user_in");
         const token = generate_token();
         const user_data = await database.getContentFromTable("users", ["id"], `email = '${user_email}'`);
 
@@ -33,6 +35,7 @@ export namespace Login {
     };
 
     export async function log_local_user_in(user_email: string, unhashed_password: string, database: DB) {
+        console.log("log_local_user_in");
         const token = generate_token();
         const user_data = await database.getContentFromTable("users", ["*"], `email = '${user_email}'`);
 
@@ -50,6 +53,7 @@ export namespace Login {
     };
 
     export async function log_user_out(token: string, database: DB) {
+        console.log("log_user_out");
         const user_data = await database.getContentFromTable("users", ["id"], `token = '${token}'`);
 
         if (!user_data || user_data.length === 0) {
@@ -62,6 +66,7 @@ export namespace Login {
     };
 
     export async function check_token(token: string, database: DB) {
+        console.log("check_token");
         const user_data = await database.getContentFromTable("users", ["id"], `token = '${token}'`);
 
         if (!user_data || user_data.length === 0) {
@@ -72,6 +77,7 @@ export namespace Login {
     };
 
     export async function check_user_password(user_email: string, unhashed_password: string, database: DB) {
+        console.log("check_user_password");
         const user_data = await database.getContentFromTable("users", ["password"], `email = '${user_email}'`);
 
         if (!user_data || user_data.length === 0) {
@@ -82,10 +88,12 @@ export namespace Login {
     };
 
     export async function hash_password(password: string) {
+        console.log("hash_password");
         return bcryptjs.hashSync(password, bcryptSalt);
     };
 
     export async function register_user(username: string, user_email: string, password: string, database: DB) {
+        console.log("register_user");
         const user_data = await database.getContentFromTable("users", ["id"], `email = '${user_email}'`);
 
         if (user_data && user_data.length > 0) {
@@ -94,7 +102,7 @@ export namespace Login {
 
         const hashed_password = await hash_password(password);
         console.log("hashed_password", hashed_password);
-        await database.writeToTable("users", ["email", "password", "username"], [[user_email, hashed_password, username]]);
+        await database.writeToTable("users", ["email", "password", "name"], [[user_email, hashed_password, username]]);
         return true;
     };
 
