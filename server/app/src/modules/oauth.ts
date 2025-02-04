@@ -8,6 +8,7 @@
 import uuid4 from "uuid4";
 import axios from "axios";
 import DB from './db';
+import { Login } from "./login";
 
 export namespace OAuth {
     export function generate_oauth_authorisation_url(provider: any, redirect_uri: string, global_values: Object[]): string {
@@ -81,16 +82,91 @@ export namespace OAuth {
         }
     };
 
-    export function handle_provider_response(provider_response: any, provider_name: string, database: DB) {
+    export async function get_user_information(provider_data: any, access_token: string, database: DB) {
+        const user_info_getter_url = provider_data["user_info_base_url"]
+        console.log(`User info getter url: ${user_info_getter_url}`);
+
+        try {
+            const response = await axios.get(
+                user_info_getter_url,
+                {
+                    headers: {
+                        "Authorization": `Bearer ${access_token}`
+                    }
+                }
+            )
+            console.log(`User info getter response without stringify: ${response}`);
+            console.log(`User info getter response with stringify: ${JSON.stringify(response.data)}`);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    };
+
+    export async function insert_user_in_db(user_email: string, provider_data: any, user_oauth_info: any[], database: DB) {
+        await database.writeToTable("users", ["email"], [user_email]);
+        const user_id = await database.getContentFromTable("users", ["id"], `email = '${user_email}'`);
+        if (!user_id || user_id.length === 0) {
+            console.log("Failed to retrieve user id from created user.");
+            return null;
+        }
+        user_oauth_info.push(user_id[0]["id"]);
+        user_oauth_info.push(provider_data["id"]);
+        console.log(`User information to insert in Oauth connections table: ${user_oauth_info}`);
+        await database.writeToTable("sso_connections", ["token", "expiration", "lifespan", "refresh_link", "user_id", "service_id"], user_oauth_info);
+        const token = await Login.log_user_in(user_email, database);
+        console.log(`Token: ${token}`);
+        return token;
+    };
+
+    export async function log_oauth_user(user_email: string, provider_data: any, user_oauth_info: any[], database: DB) {
+        const user_from_db = await database.getContentFromTable('users', ['*'], `email = '${user_email}'`);
+        if (!user_from_db || user_from_db.length === 0) {
+            console.log(`User not found, entering into insert user in db.`);
+            return insert_user_in_db(user_email, provider_data, user_oauth_info, database);
+        }
+        console.log(`User found from db, entering into doing oauth connection normally.`);
+        console.log(`User from db: ${user_from_db}`);
+        const user_from_oauth_connection = await database.getContentFromTable("sso_connections", ["*"], `user_id = '${user_from_db["id"]}' AND service_id = '${provider_data["id"]}'`);
+        if (!user_from_oauth_connection || user_from_oauth_connection.length === 0) {
+            user_oauth_info.push(user_from_db[0]["id"]);
+            user_oauth_info.push(provider_data["id"]);
+            console.log(`User information to insert in Oauth connections table: ${user_oauth_info}`);
+            await database.writeToTable("sso_connections", ["token", "expiration", "lifespan", "refresh_link", "user_id", "service_id"], user_oauth_info);
+        }
+        const token = await Login.log_user_in(user_email, database);
+        console.log(`Token = ${token}`);
+        return token;
+    };
+
+    export async function handle_provider_response(provider_response: any, provider_data: any, database: DB) {
         let user_oauth_info: any[] = [];
+        let user_getter_response: any;
 
         user_oauth_info.push(provider_response["access_token"]);
-        if (provider_name === "github") {
-            user_oauth_info.push(Date.now());
+        if (provider_data["provider_name"] === "github") {
+            const now = new Date().toISOString().slice(0, 19).replace("T", " ");
+            user_oauth_info.push(now);
             user_oauth_info.push(0);
             user_oauth_info.push("NULL");
         }
         console.log("Actual user oauth info", user_oauth_info);
-        // get_user_information(provider_name, provider_response["access_token"], database);
+        try {
+            user_getter_response = await get_user_information(provider_data, provider_response["access_token"], database);
+        } catch (error) {
+            throw error;
+        }
+
+        let user_email = "";
+        if (provider_data["provider_name"] === "github") {
+            const foundItem = user_getter_response.find((item: any) => item.primary === true);
+            user_email = foundItem["email"];
+        } else {
+            user_email = user_getter_response["email"];
+        }
+        console.log(`Got email: ${user_email}`);
+        const token = await log_oauth_user(user_email, provider_data, user_oauth_info, database);
+        return token;
     };
 };

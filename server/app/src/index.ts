@@ -29,6 +29,8 @@ import { Args } from './arg_parser'; // Assuming args have a type defined in `ar
 import DB from './modules/db';
 
 import { OAuth } from './modules/oauth';
+import { Login } from './modules/login';
+
 
 // Load environment variables
 const env = process.env;
@@ -179,54 +181,127 @@ app.post("/oauth/callback", async (req, res) => {
         return;
     }
     console.log(provider_response);
-    if (provider_data["access_token"].length === 0) {
+    if (provider_response["access_token"].length === 0) {
         build_response.build_and_send_response(res, speak_on_correct_status.unauthorized, title, 'The access token was not retrieved correctly.', 'Unauthorized', '', true);
         return;
     }
-    OAuth.handle_provider_response(provider_response, got_provider, database);
-    build_response.build_and_send_response(res, speak_on_correct_status.success, title, '', 'Success', '', false);
+    try {
+        const token = await OAuth.handle_provider_response(provider_response, provider_data[0], database);
+        if (token === null) {
+            build_response.build_and_send_response(res, speak_on_correct_status.unauthorized, title, 'The token response handler has failed.', 'Unauthorized', '', true);
+            return;
+        }
+        build_response.build_and_send_response(res, speak_on_correct_status.success, title, '', { "token": token }, token, false);
+    } catch (error) {
+        build_response.build_and_send_response(res, speak_on_correct_status.unauthorized, title, 'The token response handler has failed.', 'Unauthorized', '', true);
+        return;
+    }
 })
 
 
 app.get("/user/about", async (req, res) => {
-    const title = "/user/about";
+    const title = `${req.url}`;
     console.log(`endpoint: ${req.url}`);
-    const token = req.headers.authorization;
+    let token = req.headers.authorization;
     console.log(`token: ${token}`);
     if (!token) {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Missing token', 'Error', '', true);
         return;
     }
-    const data = await database.getContentFromTable('users', ['*'], `token = ${token}`);
+    token = token.replace("Bearer ", "");
+    console.log(`Token without bearer: ${token}`);
+    const data = await database.getContentFromTable('users', ['*'], `token = '${token}'`);
     console.log(data);
-    if (data.length === 0) {
+    if (!data || data.length === 0) {
+        console.log("No data");
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid token', 'Error', '', true);
         return;
     }
+    console.log("After data");
     const final = {
-        id: data[0].id,
-        username: data[0].username
+        id: Number(data[0].id),
+        username: String(data[0].name),
+        email: String(data[0].email),
     };
+    console.log(`Final: ${final}`);
+    console.log(final);
     build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', final, '', false);
 });
 
-app.get("/user/widgets", async (req, res) => { });
+app.get("/user/widgets", async (req, res) => {
+    const title = `${req.url}`;
+    console.log(`endpoint: ${req.url}`);
+});
 
-app.patch("/user/widgets", async (req, res) => { });
+app.patch("/user/widgets", async (req, res) => {
+    const title = `${req.url}`;
+    console.log(`endpoint: ${req.url}`);
+});
 
 app.delete("/logout", async (req, res) => {
-    const title = "/user/about";
+    const title = `${req.url}`;
     console.log(`endpoint: ${req.url}`);
     const token = req.headers.authorization;
     console.log(`token: ${token}`);
-    const data = await database.getContentFromTable('users', ['*'], `token = ${token}`);
+    const token_cleaned = token?.replace("Bearer ", "") || "";
+    console.log(`token cleaned: ${token_cleaned}`);
+    const data = await database.getContentFromTable('users', ['*'], `token = '${token_cleaned}'`);
     console.log(data);
     if (data.length === 0) {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid token', 'Error', '', true);
         return;
     }
-    await database.updateTable('users', ['token'], [null], "token = ?", [`${token}`]);
+    const logout_response = await Login.log_user_out(token_cleaned, database); 4
+    if (logout_response === false) {
+        build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'The user has not been logged out.', 'Error', '', true);
+        return;
+    }
     build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', "success", '', false);
+});
+
+app.post("/user/sso", async (req, res) => {
+    const title = `${req.url}`;
+    console.log(`endpoint: ${req.url}`);
+    const token = req.headers.authorization;
+    const body = req.body;
+    const username = body.username;
+    const password = body.password;
+
+    console.log(`body: ${JSON.stringify(body)}`);
+    console.log("title: ", title, "token: ", token, "username: ", username, "password: ", password);
+
+    if (!token) {
+        console.log("No token");
+        build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Missing token', 'Error', '', true);
+        return;
+    }
+    console.log("token is present");
+    if (!username || !password) {
+        console.log("No username or password");
+        build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Missing username or password', 'Error', '', true);
+        return;
+    }
+    console.log('username and password are present');
+    const token_cleaned = token.replace("Bearer ", "");
+
+    console.log("fetching data");
+    const data = await database.getContentFromTable('users', ['*'], `token = '${token_cleaned}'`);
+    console.log("data fetched");
+    console.log(data);
+    if (!data || data.length === 0) {
+        build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid token', 'Error', '', true);
+        return;
+    }
+
+    console.log("token ", token_cleaned, "username ", username, "password ", password);
+
+    const response = await Login.update_user_information(token_cleaned, username, password, database);
+    console.log("Response: ", response);
+    if (response === false) {
+        build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'The user information has not been updated.', 'Error', '', true);
+        return;
+    }
+    build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', 'Success', '', false);
 });
 
 // Export the app for testing purposes
