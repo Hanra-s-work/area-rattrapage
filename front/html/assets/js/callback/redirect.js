@@ -44,17 +44,20 @@ async function check_callback() {
             window.location.href = home_page;
             return;
         }
-        window.cookie_manager.create(user_id_cookie_name, user_info.resp.id);
-        console.log("username:", user_info.resp.username);
-        console.log("email:", user_info.resp.email);
-        console.log(`typeof username: ${typeof user_info.resp.username}`);
-        console.log(`typeof email: ${typeof user_info.resp.email}`);
-        if (!resp.resp.username || resp.resp.username === "" || resp.resp.username === "undefined" || resp.resp.username === "null" || resp.resp.username === null || resp.resp.username === undefined) {
+        const user_id = user_info.resp.id;
+        const user_name = user_info.resp.username;
+        const user_email = user_info.resp.email;
+        window.cookie_manager.create(user_id_cookie_name, user_id);
+        console.log("username:", user_name);
+        console.log("email:", user_email);
+        console.log(`typeof username: ${typeof user_name}`);
+        console.log(`typeof email: ${typeof user_email}`);
+        if (!user_name || user_name === "" || user_name === "undefined" || user_name === "null" || user_name === null || user_name === undefined) {
             console.log(`Redirecting to ${user_password}`);
             window.location.href = user_password;
             return;
         }
-        window.cookie_manager.create(user_username_cookie_name, user_info.resp.username);
+        window.cookie_manager.create(user_username_cookie_name, user_name);
         console.log(`Redirecting to ${dashboard_page}`);
         window.location.href = dashboard_page;
     } else {
@@ -63,10 +66,4 @@ async function check_callback() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", async function () {
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-    // await sleep(2000); // Sleep for 2 seconds
-    await check_callback();
-});
+document.addEventListener("DOMContentLoaded", check_callback);
