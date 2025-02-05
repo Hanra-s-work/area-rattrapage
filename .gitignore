@@ -34,3 +34,8 @@ dist/*
 
 # No editor config files
 .vscode
+
+# No archives
+*.gz
+*.zip
+*.tar.gz
