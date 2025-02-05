@@ -1,0 +1,77 @@
+/* ** EPITECH PROJECT, 2024
+** area-rattrapage
+** File description:
+** github.css */
+
+.github_widget_body {
+  border: 2px solid #333;
+  background: #f9f9f9;
+  padding: 10px;
+  margin: 10px auto;
+  border-radius: 5px;
+  width: 400px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.github_widget_body h3, .github_widget_body h4 {
+  color: #0366d6;
+  margin-bottom: 5px;
+}
+
+.github_widget_body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.github_widget_body li {
+  padding: 5px 0;
+}
+
+.github_widget_body a {
+  text-decoration: none;
+  color: #0366d6;
+  font-weight: bold;
+}
+
+.github_widget_body a:hover {
+  text-decoration: underline;
+}
+
+.github_widget_body .repositories {
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.github_widget_body .repositories_list {
+  background: #E8FFCEFF;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #0366d6 #f9f9f9;
+  height: 60px;
+}
+
+.github_widget_body .repositories_list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.github_widget_body .repositories_list::-webkit-scrollbar-thumb {
+  background: #0366d6;
+  border-radius: 4px;
+}
+
+.github_widget_body .repositories_list::-webkit-scrollbar-track {
+  background: #f9f9f9;
+}
+
