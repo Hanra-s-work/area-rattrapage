@@ -85,8 +85,8 @@ async function provide_missing_sso_info(username, password) {
 }
 
 async function get_available_widgets() {
-    // const widgets = await window.querier.get(window.constants.widget_name_list_endpoint);
-    const widgets = window.constants.raw_widgets_list;
+    const token = window.cookie_manager.read(window.constants.user_token_cookie_name);
+    const widgets = await window.querier.get(window.constants.widget_name_list_endpoint, {}, token);
     console.log(`Available widgets ${JSON.stringify(widgets)}`);
     return widgets;
 };

@@ -5,14 +5,14 @@
 ** widget_dropdown.js
 */
 
-function get_dropdown_value(element) {
-
-}
-
 async function get_raw_widget_options() {
     let raw_widget_options = `<option value="option_default" disabled selected>Please choose a widget...</option>`;
     const widgets = await window.update_server.get_available_widgets();
-    for (const widget of widgets) {
+    if (!widgets.ok) {
+        console.error("Failed to get widgets");
+        return "<option value='option_default' disabled selected>No widgets available</option>";
+    }
+    for (const widget of widgets.resp) {
         raw_widget_options += `<option value="${widget}">${widget}</option>`;
     }
     return raw_widget_options;
@@ -70,7 +70,6 @@ async function update_widget_content(element) {    // Find the closest widget co
 
 
 const widget_dropdown = {
-    get_dropdown_value,
     get_widgets_options,
     update_widget_content,
     get_raw_widget_options
