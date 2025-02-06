@@ -30,8 +30,8 @@ import DB from './modules/db';
 
 import { OAuth } from './modules/oauth';
 import { Login } from './modules/login';
-import { createPool } from 'mariadb';
 
+import { Widgets } from './modules/widgets';
 
 // Load environment variables
 const env = process.env;
@@ -326,6 +326,24 @@ app.get("/user/widgets", async (req, res) => {
 app.patch("/user/widgets", async (req, res) => {
     const title = `${req.url}`;
     console.log(`endpoint: ${req.url}`);
+});
+
+app.get("/widgets", async (req, res) => {
+    const title = `${req.url}`;
+    console.log(`endpoint: ${req.url}`);
+    const token = req.headers.authorization;
+    console.log(`token: ${token}`);
+    const token_cleaned = token?.replace("Bearer ", "") || "";
+    console.log(`token cleaned: ${token_cleaned}`);
+    const data = await database.getContentFromTable('users', ['*'], `token = '${token_cleaned}'`);
+    console.log(data);
+    if (data.length === 0) {
+        build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid token', 'Error', '', true);
+        return;
+    }
+    const widgets = await Widgets.get_available_widget_names();
+    console.log(widgets);
+    build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', widgets, '', false);
 });
 
 app.delete("/logout", async (req, res) => {
