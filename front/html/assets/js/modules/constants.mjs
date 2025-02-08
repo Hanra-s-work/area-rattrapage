@@ -25,6 +25,8 @@ const user_passord = "/password";
 const provide_missing_sso_info_endpoint = "/user/sso";
 
 const widget_name_list_endpoint = "/widgets";
+const widget_get_widget_content = "/widget";
+const add_user_widget_endpoint = "/user/widget";
 const widget_get_user_widgets_endpoint = "/user/widgets";
 
 const constants = {
@@ -39,6 +41,8 @@ const constants = {
     user_id_cookie_name,
     user_login_endpoint,
     user_token_cookie_name,
+    add_user_widget_endpoint,
+    widget_get_widget_content,
     user_username_cookie_name,
     widget_name_list_endpoint,
     widget_get_user_widgets_endpoint,

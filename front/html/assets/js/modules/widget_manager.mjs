@@ -46,6 +46,7 @@ async function create_widget_field(widget_item, widget_index) {
     };
     const widget_id = `${widget_item.name}_${widget_index}`;
     const widget_name = widget_item.name;
+    const widget_content = widget_item.html;
     let widget_code = ``;
     widget_code += `<article id="${widget_id}" class="widget">`;
     widget_code += `<section class="widget_header">`;
@@ -66,7 +67,7 @@ async function create_widget_field(widget_item, widget_index) {
     widget_code += `<button class="button_desing" type="button" onclick="update_widget_content(this);">Apply</button>`;
     widget_code += `</section>`;
     widget_code += `<section class="widget_body">`;
-    widget_code += `<div>${widget_item.content}</div>`;
+    widget_code += `<div>${widget_content}</div>`;
     widget_code += `</section>`;
     widget_code += `<section class="widget_footer">`;
     widget_code += `<p class="widget_name_footer">Name: `;
@@ -87,26 +88,48 @@ async function get_widget_content(widget_name) {
         return response.data;
     }
     console.log("get_widget_content finished");
-    return null;
+    return response;
 }
 
 async function add_widget(widget_body_ID, dropdown_ID) {
     console.log("add_widget called");
     const dropdown = document.getElementById(dropdown_ID);
+    if (dropdown.value === "option_default") {
+        alert("Please select an option from the dropdown");
+        console.log("add_widget finished");
+        return;
+    }
     const widget_body = document.getElementById(widget_body_ID);
     const widget_content = await window.widget_manager.get_widget_content(dropdown.value);
-    const widget_index = widget_content.position || await window.widget_manager.get_widget_index(widget_body_ID);
-    const widget_field = await window.widget_manager.create_widget_field(widget_content, widget_index);
+    console.log(`add_widget: Received content: ${JSON.stringify(widget_content)}`);
+    if ("status" in widget_content && widget_content.status !== 200) {
+        let msg = "";
+        if (widget_content.data !== null) {
+            msg = `Failed to fetch the widget: ${widget_content.data}`;
+        } else {
+            msg = "Failed to fetch the widget";
+        }
+        alert(msg);
+        console.log(msg);
+        return;
+    }
+    const widget_resp = widget_content;
+    const widget_index = widget_resp.index || await window.widget_manager.get_widget_index(widget_body_ID);
+    const widget_field = await window.widget_manager.create_widget_field(widget_resp, widget_index);
 
     console.log("widget_body:", widget_body);
-    console.log("widget_content:", widget_content);
+    console.log("widget_resp:", widget_resp);
     console.log("widget_field:", widget_field);
 
+
     if (widget_body && widget_field) {
+        if (widget_body.innerHTML === "<p>No widgets to display. To add a widget please choose a widget from the dropdown then click the 'Add widget' button</p>") {
+            widget_body.innerHTML = "";
+        }
         widget_body.innerHTML += widget_field;
     }
     dropdown.value = "option_default";
-    await window.update_server.update_user_widgets(widget_body.innerHTML);
+    // await window.update_server.update_user_widgets(widget_body.innerHTML);
     console.log("add_widget finished");
 }
 

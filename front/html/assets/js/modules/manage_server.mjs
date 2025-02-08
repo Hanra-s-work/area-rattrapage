@@ -92,30 +92,33 @@ async function get_available_widgets() {
 };
 
 async function get_user_widgets() {
-    // const user_widgets = await window.querier.get(window.constants.widget_get_user_widgets_endpoint);
-    return window.constants.user_widget_list;
+    console.log("get_user_widgets called");
+    const token = window.cookie_manager.read(window.constants.user_token_cookie_name);
+    const user_widgets = await window.querier.get(window.constants.widget_get_user_widgets_endpoint, {}, token);
+    return user_widgets;
 };
 
 async function get_widget_content(widget_name) {
     console.log("manage_server.get_widget_content called");
-    // const widgets = await window.querier.get(`${window.constants.widget_get_user_widgets_endpoint}/${widget_name}`);
-    const widgets = window.constants.available_widgets;
+    const token = window.cookie_manager.read(window.constants.user_token_cookie_name);
+    const widgets = await window.querier.get(`${window.constants.widget_get_widget_content}/${widget_name}`, {}, token);
     console.log("widgets:", JSON.stringify(widgets));
     console.log("Looking for widget");
-    var resp = { "status": 404, "data": null };
-    for (const widget of widgets) {
-        if (widget.name === widget_name) {
-            console.log("Widget found");
-            resp = { "status": 200, "data": widget };
-            break;
+    if (widgets.status !== 200) {
+        if (widgets.status === 404) {
+            return { "status": 404, "data": widgets.resp };
+        } else {
+            return { "status": 404, "data": null };
         }
     }
-    if (resp.status === 200) {
-        console.log(`Widget content ${JSON.stringify(resp)}`);
-        return resp;
+    const resp = widgets.resp;
+    let option = "";
+    if (resp.name === "Weather") {
+        option = `/${resp.option}`;
     }
-    console.log("Widget not found");
-    return resp;
+    await window.querier.post(`${window.constants.add_user_widget_endpoint}/${resp.db_index}${option}`, {}, token);
+    console.log("manage_server.get_widget_content finished");
+    return { "status": 200, "data": resp };
 };
 
 async function update_user_widgets(widgets_body) {
