@@ -13,6 +13,7 @@ const widget_cookie_name = "widgets";
 const user_username_cookie_name = "username";
 const user_id_cookie_name = "user_id";
 const user_token_cookie_name = "user_token";
+const user_refresh_wigets_cookie_name = "refresh_widgets";
 
 const home_page = "/";
 const logout_page = "/logout";
@@ -45,6 +46,7 @@ const constants = {
     widget_get_widget_content,
     user_username_cookie_name,
     widget_name_list_endpoint,
+    user_refresh_wigets_cookie_name,
     widget_get_user_widgets_endpoint,
     provide_missing_sso_info_endpoint,
 };

@@ -157,11 +157,21 @@ async function log_user_out() {
     return false;
 };
 
+async function update_refresh(refresh_value) {
+    console.log("update_refresh called");
+    console.log("refresh_value:", refresh_value);
+    const token = window.cookie_manager.read(window.constants.user_token_cookie_name);
+    const response = await window.querier.post(window.constants.user_refresh_wigets_endpoint, { "refresh": refresh_value }, token);
+    console.log("response:", response);
+    console.log("update_refresh finished");
+}
+
 
 const update_server = {
     login,
     register,
     log_user_out,
+    update_refresh,
     get_user_widgets,
     remove_user_widget,
     get_widget_content,
