@@ -55,7 +55,7 @@ async function create_widget_field(widget_item, widget_index) {
     console.log(`internal_widget_id: '${internal_widget_id}'`);
     console.log(`widget_content: '${JSON.stringify(widget_content)}'`);
     let widget_code = ``;
-    widget_code += `<article id="${widget_id}" class="widget">`;
+    widget_code += `<article id="${widget_id}" class="widget" data-internal-id="${internal_widget_id}" data-name="${widget_name}">`;
     widget_code += `<section class="widget_header">`;
     widget_code += `<aside class="widget_header_index_position_box">`;
     widget_code += `<p>Position:</p>`;
@@ -120,8 +120,9 @@ async function add_widget(widget_body_ID, dropdown_ID) {
         console.log(msg);
         return;
     }
-    const widget_index = widget_content.index || await window.widget_manager.get_widget_index(widget_body_ID);
+    const widget_index = widget_content.db_index || await window.widget_manager.get_widget_index(widget_body_ID);
     console.log("widget_content:", widget_content);
+    await window.update_server.add_widget_to_user(widget_content.widget_id, null);
     const widget_field = await window.widget_manager.create_widget_field(widget_content, widget_index);
 
     console.log("widget_body:", widget_body);
