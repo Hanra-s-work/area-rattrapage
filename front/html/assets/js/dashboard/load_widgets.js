@@ -5,20 +5,32 @@
 ** load_widgets.js
 */
 
-async function query_user_widgets() {
-    console.log("Querying user widgets");
-    const widgets = await window.update_server.get_user_widgets();
-    console.log("User widgets queried");
-    return widgets;
-}
-
 async function inject_widgets(element) {
     console.log("Injecting widgets");
-    const widgets = await query_user_widgets();
+    const widgets = await window.update_server.get_user_widgets();
     let cookie_widgets = [];
     let index = 0;
+    const errMsg = "No widgets to display. To add a widget please choose a widget from the dropdown then click the 'Add widget' button";
+    const errMsgHTML = `<p>${errMsg}</p>`;
 
-    for (const widget of widgets) {
+    if (widgets.status !== 200) {
+        console.log(errMsg);
+        element.innerHTML = errMsgHTML;
+        return;
+    }
+
+    console.log("Widgets:", widgets);
+    console.log(`JSON widgets: ${JSON.stringify(widgets)}`);
+
+    const resp = widgets.resp;
+
+    if (resp === null || resp === undefined || resp.length === 0 || resp == {} || Object.keys(resp).length === 0) {
+        console.log(errMsg);
+        element.innerHTML = errMsgHTML;
+        return;
+    }
+
+    for (const widget of resp) {
         if (!widget) {
             index++;
             continue;
