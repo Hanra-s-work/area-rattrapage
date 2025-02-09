@@ -55,7 +55,7 @@ var global_values: any = [];
 
 const corsOptions = {
     origin: "*",
-    methods: "GET,POST,PUT,DELETE,HEAD,OPTIONS",
+    methods: "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS",
     allowedHeaders: "Content-Type,Authorization",
 };
 
@@ -67,6 +67,36 @@ app.use(body_parser.json());
 // Default path
 app.get('/', (req: Request, res: Response): void => {
     console.log(`endpoint: get: ${req.url}`);
+    build_response.build_and_send_response(res, speak_on_correct_status.success, "/", "Hello, World!", "success", "", false);
+});
+
+app.post('/', (req: Request, res: Response): void => {
+    console.log(`endpoint: post: ${req.url}`);
+    build_response.build_and_send_response(res, speak_on_correct_status.success, "/", "Hello, World!", "success", "", false);
+});
+
+app.put('/', (req: Request, res: Response): void => {
+    console.log(`endpoint: put: ${req.url}`);
+    build_response.build_and_send_response(res, speak_on_correct_status.success, "/", "Hello, World!", "success", "", false);
+});
+
+app.patch('/', (req: Request, res: Response): void => {
+    console.log(`endpoint: patch: ${req.url}`);
+    build_response.build_and_send_response(res, speak_on_correct_status.success, "/", "Hello, World!", "success", "", false);
+});
+
+app.delete('/', (req: Request, res: Response): void => {
+    console.log(`endpoint: delete: ${req.url}`);
+    build_response.build_and_send_response(res, speak_on_correct_status.success, "/", "Hello, World!", "success", "", false);
+});
+
+app.head('/', (req: Request, res: Response): void => {
+    console.log(`endpoint: head: ${req.url}`);
+    build_response.build_and_send_response(res, speak_on_correct_status.success, "/", "Hello, World!", "success", "", false);
+});
+
+app.options('/', (req: Request, res: Response): void => {
+    console.log(`endpoint: options: ${req.url}`);
     build_response.build_and_send_response(res, speak_on_correct_status.success, "/", "Hello, World!", "success", "", false);
 });
 
@@ -334,7 +364,7 @@ app.get("/user/widgets", async (req, res) => {
     build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', user_data, '', false);
 });
 
-app.patch("/user/widgets/:user_widget_id/:widget_type/:location?", async (req, res) => {
+app.patch("/user/widget/:user_widget_id/:widget_type/:location?", async (req, res) => {
     const title = `${req.url}`;
     console.log(`endpoint: patch: ${req.url}`);
     // Correctly extract widgetId
