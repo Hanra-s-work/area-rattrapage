@@ -59,7 +59,7 @@ async function create_widget_field(widget_item, widget_index) {
     widget_code += `<section class="widget_header">`;
     widget_code += `<aside class="widget_header_index_position_box">`;
     widget_code += `<p>Position:</p>`;
-    widget_code += `<input type="number" class="widget_header_index_position" min="0" value="${widget_index}" onchange="update_widget_location(${widget_id}, this);">`;
+    widget_code += `<input type="number" class="widget_header_index_position" min="0" value="${widget_index}" onchange="update_widget_location(this);">`;
     widget_code += `</aside>`;
     widget_code += `<aside>`;
     widget_code += `<button class="button_desing" type="button" onclick="window.widget_manager.remove_widget('${widget_id}', '${widget_name}', '${internal_widget_id}');">`;
@@ -71,7 +71,7 @@ async function create_widget_field(widget_item, widget_index) {
     widget_code += `<select class="widget_dropdown">`;
     widget_code += await get_raw_widget_options();
     widget_code += `</select>`;
-    widget_code += `<button class="button_desing" type="button" onclick="update_widget_content(this);">Apply</button>`;
+    widget_code += `<button class="button_desing" type="button" onclick="update_widget_content(this, ${internal_widget_id});">Apply</button>`;
     widget_code += `</section>`;
     widget_code += `<section class="widget_body">`;
     widget_code += `<div>${widget_content}</div>`;
@@ -120,10 +120,9 @@ async function add_widget(widget_body_ID, dropdown_ID) {
         console.log(msg);
         return;
     }
-    const widget_resp = widget_content;
-    const widget_index = widget_resp.index || await window.widget_manager.get_widget_index(widget_body_ID);
-    console.log("widget_resp:", widget_resp);
-    const widget_field = await window.widget_manager.create_widget_field(widget_resp, widget_index);
+    const widget_index = widget_content.index || await window.widget_manager.get_widget_index(widget_body_ID);
+    console.log("widget_content:", widget_content);
+    const widget_field = await window.widget_manager.create_widget_field(widget_content, widget_index);
 
     console.log("widget_body:", widget_body);
     console.log("widget_field:", widget_field);

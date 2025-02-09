@@ -112,21 +112,33 @@ async function get_widget_content(widget_name) {
         }
     }
     const resp = widgets.resp;
-    let option = "";
-    if (resp.name === "Weather") {
-        option = `/${resp.option}`;
-    }
-    await window.querier.post(`${window.constants.add_user_widget_endpoint}/${resp.db_index}${option}`, {}, token);
     console.log("manage_server.get_widget_content finished");
     return { "status": 200, "data": resp };
 };
 
-async function update_user_widgets(widgets_body) {
+async function add_widget_to_user(widget_index, widget_option = null) {
+    console.log("add_widget_to_user called");
+    const token = window.cookie_manager.read(window.constants.user_token_cookie_name);
+    let option = "";
+    if (widget_option !== null) {
+        option = `/${widget_option}`;
+    }
+    const resp = await window.querier.post(`${window.constants.add_user_widget_endpoint}/${widget_index}${option}`, {}, token);
+    console.log("resp = ", resp);
+    console.log(`JSON resp = ${JSON.stringify(resp)}`);
+    console.log("add_widget_to_user finished");
+}
+
+async function update_user_widgets(widget_index, widget_type, widget_position = null) {
     console.log("update_user_widgets called");
-    console.log("widgets_body:", widgets_body);
-    const widgets = await window.indexedDB_manager.read(window.constants.widget_cookie_name);
-    console.log("widgets:", JSON.stringify(widgets));
+    const token = window.cookie_manager.read(window.constants.user_token_cookie_name);
+    let position = "";
+    if (widget_position) {
+        position = `/${widget_position}`;
+    }
+    const response = await window.querier.patch(`${window.constants.update_user_widgets}/${widget_index}/${widget_type}${position}`, {}, token);
     console.log("update_user_widgets finished");
+    return response;
 };
 
 async function remove_user_widget(name, widget_id) {
@@ -183,6 +195,7 @@ const update_server = {
     update_refresh,
     get_user_widgets,
     remove_user_widget,
+    add_widget_to_user,
     get_widget_content,
     update_user_widgets,
     get_available_widgets,

@@ -24,7 +24,7 @@ async function get_widgets_options(element) {
     console.log("get_widgets_options finished");
 }
 
-async function update_widget_content(element) {    // Find the closest widget container
+async function update_widget_content(element, widget_id) {    // Find the closest widget container
     const widget = element.closest('.widget');
 
     // Access the input field for the position
@@ -47,7 +47,9 @@ async function update_widget_content(element) {    // Find the closest widget co
 
     console.log("positionValue:", positionValue);
 
+    console.log("Fetching the content of the widget");
     const data = await window.widget_manager.get_widget_content(positionValue);
+    console.log("Content of the widget fetched");
 
     if (data === null) {
         const msg = "No widget data found";
@@ -58,10 +60,19 @@ async function update_widget_content(element) {    // Find the closest widget co
 
     console.log("Data:", data);
 
-    widgetBody.innerHTML = data.content;
+    console.log("Informing the server of the content update");
+    console.log(`widget_id: ${widget_id}, positionValue: ${positionValue}`);
+    await window.update_server.update_user_widgets(widget_id, positionValue, null);
+    console.log("Server informed of the content update");
 
+    console.log("Updating the widget content with the new data: ", data);
+    widgetBody.innerHTML = data.html;
+    console.log("Widget content updated");
+
+    console.log("Updating the widget name");
     // Update the name of the widget
     childSpan.innerText = data.name;
+    console.log("Widget name updated");
 
     // Log or use the values
     console.log('Widget Body:', widgetBody);

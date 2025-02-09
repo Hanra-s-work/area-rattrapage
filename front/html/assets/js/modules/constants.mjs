@@ -29,6 +29,7 @@ const widget_name_list_endpoint = "/widgets";
 const widget_get_widget_content = "/widget";
 const add_user_widget_endpoint = "/user/widget";
 const widget_get_user_widgets_endpoint = "/user/widgets";
+const widget_update_user_widget_endpoint = "/user/widgets";
 const user_refresh_wigets_endpoint = "/refresh";
 
 const constants = {
@@ -51,6 +52,7 @@ const constants = {
     user_refresh_wigets_cookie_name,
     widget_get_user_widgets_endpoint,
     provide_missing_sso_info_endpoint,
+    widget_update_user_widget_endpoint,
 };
 
 export default constants;
