@@ -123,15 +123,24 @@ export namespace GithubWidget {
         let hasMore = true;
 
         while (hasMore && page <= maxPages) {
+            console.log("Page", page);
+            console.log("hasMore", hasMore);
+            console.log("Token: ", token);
             try {
                 const response = await fetch(`https://api.github.com/user/repos?per_page=${perPage}&page=${page}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 
+                console.log("Response", response);
+
                 if (!response.ok) throw new Error(`GitHub API error: ${response.status}`);
 
+                console.log("Attempting to jsonize response");
+
                 const repos = await response.json();
+                console.log("Response jsonized", repos);
                 allRepos = [...allRepos, ...repos];
+                console.log("All repos", allRepos);
                 hasMore = repos.length === perPage;
                 page++;
             } catch (error) {
@@ -215,6 +224,8 @@ export namespace GithubWidget {
     export async function injector(widget_name: string, index: number, token: string): Promise<string> {
         const widgetId = `${widget_name}_${index}`;
         const listType = "numbered";
+
+        console.log("injector: token", token);
 
         console.log("Fetching repositories...");
         const allRepos = await fetchAllRepositories(token);

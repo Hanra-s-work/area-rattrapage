@@ -364,7 +364,7 @@ app.get("/user/widgets", async (req, res) => {
     build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', user_data, '', false);
 });
 
-app.patch("/user/widget/:user_widget_id/:widget_type/:location?", async (req, res) => {
+app.patch("/user/widget/:user_widget_id/:widget_type", async (req, res) => {
     const title = `${req.url}`;
     console.log(`endpoint: patch: ${req.url}`);
     // Correctly extract widgetId
@@ -394,12 +394,23 @@ app.patch("/user/widget/:user_widget_id/:widget_type/:location?", async (req, re
         return;
     }
 
+    console.log("displaying body");
+    console.log("req.body: ", req.body);
+
     // Extract optional location parameter
-    const location = req.params.location ?? null;
+    const location = req.body.location ?? null;
+
+    console.log("displaying body");
+    console.log("location: ", location);
 
     // Process widget addition
     const user_data = await Widgets.update_user_widget(data[0], widgetId, widgetType, location, database);
     console.log(user_data);
+
+    if (user_data === false) {
+        build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'The widget has not been updated.', 'Error', '', true);
+        return;
+    }
 
     // Send response
     build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', user_data, '', false);
@@ -438,7 +449,12 @@ app.post("/user/widget/:id/:location?", async (req, res) => {
 
     // Process widget addition
     const user_data = await Widgets.add_user_widget(data[0], widgetId, location, database);
-    console.log(user_data);
+    console.log("user_data: ", user_data);
+
+    if (user_data === false) {
+        build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'The widget has not been added.', 'Error', '', true);
+        return;
+    }
 
     // Send response
     build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', user_data, '', false);
@@ -589,6 +605,7 @@ app.post("/user/sso", async (req, res) => {
 });
 
 app.get("/refresh", async (req, res) => {
+    console.log(`endpoint: get: ${req.url}`);
     const title = `${req.url}`;
     const token = req.headers.authorization;
     console.log(`token: ${token}`);
@@ -607,9 +624,8 @@ app.get("/refresh", async (req, res) => {
 });
 
 app.post("/refresh/:refresh", async (req, res) => {
-
     const title = `${req.url}`;
-    console.log(`endpoint: delete: ${req.url}`);
+    console.log(`endpoint: post: ${req.url}`);
     const refreshDelay = Number(req.params.refresh);
     console.log(`refreshDelay: ${refreshDelay}`);
     const token = req.headers.authorization;

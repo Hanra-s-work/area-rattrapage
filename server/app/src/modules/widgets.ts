@@ -8,61 +8,18 @@
 import DB from "./db";
 import { GithubWidget } from "./github_widget";
 import { WeatherApi } from "./weather_api";
+import { Darling } from "./darling";
 
 export namespace Widgets {
 
     export const no_widgets = [
         {
             index: -1,
+            widget_index: -1,
             db_index: -1,
             name: "no_widget",
             option: 0,
             html: "<p>No widgets available</p>"
-        }
-    ];
-
-    export const sample_user_widget = [
-        {
-            index: 0,
-            db_index: 0,
-            name: "sample_widget",
-            option: 0,
-            html: ""
-        },
-        {
-            index: 1,
-            db_index: 1,
-            name: "Clock",
-            option: 0,
-            html: ""
-        },
-        {
-            index: 2,
-            db_index: 2,
-            name: "Picture",
-            option: 0,
-            html: ""
-        },
-        {
-            index: 3,
-            db_index: 3,
-            name: "Weather",
-            option: 0,
-            html: ""
-        },
-        {
-            index: 4,
-            db_index: 4,
-            name: "Weather",
-            option: 5,
-            html: ""
-        },
-        {
-            index: 5,
-            db_index: 5,
-            name: "Github",
-            option: 0,
-            html: ""
         }
     ];
 
@@ -71,7 +28,8 @@ export namespace Widgets {
         "clock": get_clock_widget,
         "picture": get_random_picture,
         "weather": get_weather_widget,
-        "github": get_github_widget
+        "github": get_github_widget,
+        "darling": get_darling_widget,
     };
 
     const raw_widgets_list = Object.keys(available_widgets);
@@ -105,15 +63,23 @@ export namespace Widgets {
             if (!user_info.id || sso_id.length === 0 || !sso_id[0].id) {
                 return "<p>Widget gathering error...</p>";
             }
-            const oauth_token = await database.getContentFromTable("widgets", ["api_key"], `service_id='${sso_id[0].id}' AND user_id='${user_info.id}'`);
+            const oauth_token = await database.getContentFromTable("sso_connections", ["token"], `service_id='${sso_id[0].id}' AND user_id='${user_info.id}'`);
             if (!oauth_token || oauth_token.length === 0) {
                 return "<p>Please connect to GitHub.<br>Please connect to your github account by presing this button<button onclick='sso()'>here</button></p>";
             }
-            return await GithubWidget.injector(widget_name, index, String(oauth_token[oauth_token.length - 1].api_key));
+            console.log("Oauth token:", oauth_token);
+            const finalOauthToken = oauth_token[oauth_token.length - 1].token;
+            console.log("final oauth token:", finalOauthToken);
+            return await GithubWidget.injector(widget_name, index, String(finalOauthToken));
         } catch (error) {
             console.error("Error fetching Github widget:", error);
             return "<p>Widget gathering error...</p>";
         }
+    }
+
+    export async function get_darling_widget(widget_name: string, index: number, user_info: any, database: DB): Promise<string> {
+        console.log("get_darling_widget");
+        return Darling.getDarling(widget_name, index, user_info, database);
     }
 
     export async function get_sample_widget(widget_name: string, index: number, user_info: any, database: DB): Promise<string> {
@@ -131,6 +97,74 @@ export namespace Widgets {
         return raw_widgets_list;
     }
 
+    // export async function get_details_of_the_widget_of_interest(database: DB, user_info: any, widget_id: string, db_widget_index: string | Number | null = null): Promise<typeof no_widgets | any> {
+    //     console.log("get_details_of_the_widget_of_interest");
+    //     console.log("user_info", user_info);
+    //     console.log("widget_id", widget_id);
+    //     console.log("db_widget_index", db_widget_index);
+    //     let DBWidgetIndex = "";
+    //     if (typeof db_widget_index === "number" || typeof db_widget_index === "string") {
+    //         DBWidgetIndex = `AND widget_id='${widget_id}' AND widget_index='${db_widget_index}'`;
+    //     } else {
+    //         DBWidgetIndex = `AND widget_id='${widget_id}'`;
+    //     }
+    //     console.log("DBWidgetIndex", DBWidgetIndex);
+    //     const widget = await database.getContentFromTable("user_widgets", ["*"], `user_id='${user_info.id}'`);
+    //     console.log("widget", widget);
+    //     if (widget.length === 0) {
+    //         console.error("No widgets found for the given user");
+    //         return no_widgets;
+    //     }
+    //     console.log("Iterating through the widgets to try and find the widget of interest");
+    //     let widgetFinalNode = no_widgets[0];
+    //     console.log("widget.length", widget.length);
+    //     for (let i = widget.length - 1; i >= 0; i--) {
+    //         console.log(`widget[${i}]`, widget[i]);
+    //         if (Number(widget[i].widget_id) === Number(widget_id)) {
+    //             console.log("Found the widget of interest");
+    //             widgetFinalNode = widget[i];
+    //             break;
+    //         }
+    //     }
+    //     console.log("Widget of interest: ", widgetFinalNode);
+    //     console.log("Iterated through the widgets");
+    //     // Fetch all widget definitions
+    //     const widgetNames = await database.getContentFromTable("widgets", ["id", "widget_name"]);
+    //     console.log("widgetNames", widgetNames);
+    //     // Convert widgetNames to a lookup map (id -> name)
+    //     const widgetNameMap = Object.fromEntries(widgetNames.map((w: any) => [Number(w.id), w.widget_name.toLowerCase()]));
+    //     // Look the name up in the map
+    //     const widget_name = widgetNameMap[widget_id] || "<Unknown Widget>";
+    //     // Get the info of the last widget
+    //     const last_widget = widgetFinalNode;
+    //     // Get the html content for the front to render
+    //     console.log(`widget_name: ${widget_name}, available_widgets: `, available_widgets);
+    //     console.log("widget_name in available_widgets: ", widget_name in available_widgets);
+    //     let widgetContent = "<p>Widget gathering error, the content for the given widget could not be fetched successfully.</p>";
+    //     if (widget_name in available_widgets) {
+    //         console.log("Widget name found in available_widgets");
+    //         try {
+    //             console.log("Trying to fetch widget content");
+    //             widgetContent = await available_widgets[widget_name](widget_name, last_widget.widget_index, user_info, database)
+    //                 || "<p>Widget gathering error, the content for the given widget could not be fetched successfully.</p>";
+    //             console.log(`Widget content: ${widgetContent}`);
+    //         } catch (error) {
+    //             console.error(`Error executing widget ${widget_name}:`, error);
+    //         }
+    //     }
+    //     const widget_content = {
+    //         widget_index: Number(last_widget.widget_index),
+    //         widget_id: Number(last_widget.widget_id),
+    //         db_index: Number(last_widget.id),
+    //         name: widget_name,
+    //         option: last_widget.widget_option,
+    //         html: widgetContent
+    //     };
+    //     console.log("widget_content", widget_content);
+    //     console.log("get_details_of_the_widget_of_interest finished");
+    //     return widget_content;
+    // }
+
     export async function get_user_widgets(user_info: any, database: DB): Promise<typeof no_widgets | any> {
         console.log("get_user_widgets");
         // Fetch all widget definitions
@@ -144,7 +178,7 @@ export namespace Widgets {
         console.log("widget", widget);
 
         if (!widget || widget.length === 0) {
-            console.log("No widgets found for user");
+            console.error("No widgets found for user");
             return no_widgets;
         }
 
@@ -181,7 +215,8 @@ export namespace Widgets {
             }
 
             let widgetNode = {
-                index: Number(widget[i].widget_index),
+                widget_index: Number(widget[i].widget_index),
+                widget_id: Number(widget[i].widget_id),
                 db_index: Number(widget[i].id),
                 name: widget_name,
                 option: widget[i].widget_option,
@@ -197,7 +232,7 @@ export namespace Widgets {
         return final_build;
     }
 
-    export async function add_user_widget(user_info: any, widget_id: string, widget_location: string | null, database: DB): Promise<boolean> {
+    export async function add_user_widget(user_info: any, widget_id: string, widget_location: string | null, database: DB): Promise<boolean | { index: Number, db_index: Number, name: string, option: Number, html: string }> {
         console.log("add_user_widget");
         console.log("user_info", user_info);
         console.log("widget_id", widget_id);
@@ -207,7 +242,7 @@ export namespace Widgets {
         console.log("user_id", user_id);
         console.log("widget_id_int", widget_id_int);
         if (isNaN(user_id) || isNaN(widget_id_int)) {
-            console.log("Invalid user_id or widget_id");
+            console.error("Invalid user_id or widget_id");
             return false;
         }
         const widget_location_int = widget_location ? Number(widget_location) : 0;
@@ -217,6 +252,8 @@ export namespace Widgets {
         const widgetIndex = lastEnteredWidget.length > 0 ? Number(lastEnteredWidget[lastEnteredWidget.length - 1].widget_index) + 1 : 0;
         console.log("widgetIndex", widgetIndex);
         await database.writeToTable(user_widget_table, ["user_id", "widget_id", "widget_index", "widget_option"], [user_id, widget_id_int, widgetIndex, widget_location_int]);
+        // const widgetContent = await get_details_of_the_widget_of_interest(database, user_info.id, widget_id);
+        // return widgetContent;
         return true;
     }
 
@@ -224,31 +261,78 @@ export namespace Widgets {
         console.log("update_user_widget");
         console.log("user_info", user_info);
         console.log("User widget id", user_widget_id);
+        console.log("widget_type", widget_type);
         console.log("widget_location", widget_location);
+        const user_widget_table = "user_widgets";
         const user_widget_id_int = Number(user_widget_id);
         const user_id = Number(user_info.id);
         console.log("user_id", user_id);
         console.log("widget_id_int", user_widget_id_int);
         if (isNaN(user_id) || isNaN(user_widget_id_int)) {
-            console.log("Invalid user_id or widget_id");
+            console.error("Invalid user_id or widget_id");
             return false;
         }
-        const widget_location_int = widget_location ? Number(widget_location) : null;
-        const user_widget_table = "user_widgets";
-        const widget_informations = await database.getContentFromTable(user_widget_table, ["*"], `id = '${user_widget_id}'`);
+        // Fetch all widget definitions
+        const widgetNames = await database.getContentFromTable("widgets", ["id", "widget_name"]);
+        console.log("widgetNames", widgetNames);
+        // Convert widgetNames to a lookup map (id -> name)
+        const widgetNameMap = Object.fromEntries(widgetNames.map((w: any) => [Number(w.id), w.widget_name.toLowerCase()]));
+        // Convert widgetNames to a lookup map (name -> id)
+        const widgetIdMap = Object.fromEntries(widgetNames.map((w: any) => [w.widget_name.toLowerCase(), Number(w.id)]));
+        let cleaned_widget_location = "";
+        if (typeof widget_location === "string" && widget_location !== null) {
+            cleaned_widget_location = widget_location;
+        }
+        console.log("user_widget_table", user_widget_table);
+        const widget_informations = await database.getContentFromTable(user_widget_table, ["*"], `id = '${user_widget_id_int}'`);
+        console.log("widget_informations", widget_informations);
         if (!widget_informations || widget_informations.length === 0) {
-            console.log("The user widget don't exist");
+            console.error("The user widget doesn't exist");
             return false;
         }
-        if (user_info.id !== widget_informations[0]["user_id"] || Number(widget_type) !== widget_informations[0]["widget_id"]) {
-            console.log("The user id or widget id is not good.");
+        const widget_informations_node = widget_informations[0];
+        console.log("widget_informations_node: ", widget_informations_node);
+        console.log("user_info: ", user_info);
+        console.log("widget_type: ", widget_type);
+        let widget_type_int = Number(widget_type);
+        if (typeof widget_type === "string") {
+            if (widget_type.toLowerCase() in widgetIdMap) {
+                widget_type_int = widgetIdMap[widget_type.toLowerCase()];
+            } else {
+                console.error("The widget type is invalid.");
+                return false;
+            }
+        }
+        console.log("widget_type_int: ", widget_type_int);
+        const user_info_id = Number(user_info.id);
+        console.log("user_info_id: ", user_info_id);
+        console.log("user_widget_id: ", user_widget_id);
+        console.log("user_widget_id_int: ", user_widget_id_int);
+        console.log(`user_info_id !== Number(widget_informations_node["user_id"]): ${user_info_id} !== ${Number(widget_informations_node["user_id"])}: `, (user_info_id !== Number(widget_informations_node["user_id"])));
+        console.log(`widget_type_int !== Number(widget_informations_node["widget_id"]): ${widget_type_int} !== ${Number(widget_informations_node["widget_id"])}: `, (widget_type_int !== Number(widget_informations_node["widget_id"])));
+        console.log(`user_widget_id_int !== Number(widget_informations_node["id"]): ${user_widget_id_int} !== ${Number(widget_informations_node["id"])}: `, (user_widget_id_int !== Number(widget_informations_node["id"])));
+        if (user_info_id !== Number(widget_informations_node["user_id"]) || user_widget_id_int !== Number(widget_informations_node["id"])) {
+            console.error("The user id or user_widget_id is invalid.");
             return false;
         }
-        await database.updateTable(user_widget_table, ["widget_option"], [widget_location_int], "id = ?", [user_widget_id]);
+        // Update the widget information
+        await database.updateTable(user_widget_table, ["widget_id", "widget_option"], [widget_type_int, cleaned_widget_location], "id = ?", [user_widget_id]);
+        console.log('widget updated (before check)');
+        const widget_informations_update = await database.getContentFromTable(user_widget_table, ["*"], `id = '${user_widget_id_int}'`);
+        if (!widget_informations_update || widget_informations_update.length === 0) {
+            console.error("The user widget doesn't exist");
+            return false;
+        }
+        console.log("widget_informations_update", widget_informations_update);
+        console.log("Widget updated successfully");
+        // console.log("fetching the new widget content");
+        // const widgetContent = await get_details_of_the_widget_of_interest(database, user_info, `${widget_type_int}`, user_widget_id);
+        // console.log("widget content: ", widgetContent);
+        // return widgetContent;
         return true;
     }
 
-    export async function get_widget_info(user_info: any, widget_name: string, database: DB): Promise<boolean | { index: Number, db_index: Number, name: string, option: Number, html: string }> {
+    export async function get_widget_info(user_info: any, widget_name: string, database: DB): Promise<boolean | { widget_id: Number, name: string, option: Number, html: string }> {
         console.log("get_widget_info");
         console.log("user_info", user_info);
         console.log("widget_name", widget_name);
@@ -263,11 +347,11 @@ export namespace Widgets {
         console.log("widgetMap: ", widgetNameMap);
         console.log("available_widgets: ", available_widgets);
         if (!(finalName in widgetNameMap)) {
-            console.log(`Widget ${finalName} not found in widgetNameMap`);
+            console.error(`Widget ${finalName} not found in widgetNameMap`);
             return false;
         }
         if (!(finalName in available_widgets)) {
-            console.log(`Widget ${finalName} not found in available_widgets`);
+            console.error(`Widget ${finalName} not found in available_widgets`);
             return false;
         }
         let widgetContent = widgetError;
@@ -278,8 +362,7 @@ export namespace Widgets {
         }
 
         return {
-            index: 0,
-            db_index: Number(widgetNameMap[finalName]),
+            widget_id: Number(widgetNameMap[finalName]),
             name: widget_name,
             option: 0,
             html: widgetContent
@@ -297,6 +380,7 @@ export namespace Widgets {
         const current_widget = await database.getContentFromTable(user_widget_table, ["*"], `user_id='${user_id}' AND id='${widget_id}'`);
         console.log("current_widget", current_widget);
         if (current_widget.length === 0) {
+            console.error("No widgets found for the given user");
             return false;
         }
         await database.dropFromTable(user_widget_table, `id='${widget_id}'`, []);
