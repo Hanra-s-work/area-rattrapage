@@ -59,7 +59,8 @@ async function create_widget_field(widget_item, widget_index) {
     widget_code += `<section class="widget_header">`;
     widget_code += `<aside class="widget_header_index_position_box">`;
     widget_code += `<p>Position:</p>`;
-    widget_code += `<input type="number" class="widget_header_index_position" min="0" value="${widget_index}" onchange="update_widget_location(this);">`;
+    // widget_code += `<input type="number" class="widget_header_index_position" min="0" value="${widget_index}" onchange="update_widget_location(this);">`;
+    widget_code += `<p>${widget_index}</p>`;
     widget_code += `</aside>`;
     widget_code += `<aside>`;
     widget_code += `<button class="button_desing" type="button" onclick="window.widget_manager.remove_widget('${widget_id}', '${widget_name}', '${internal_widget_id}');">`;
