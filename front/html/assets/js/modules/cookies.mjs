@@ -39,7 +39,7 @@ function createManyCookie(string) {
 }
 
 function createCookie(key = "0", value = "0", expires = "", path = "/") { //modifying cookie == create cookie
-    content = key + "=" + value + "; expires=" + expires + "; path=" + path + ";samesite=Lax";
+    let content = key + "=" + value + "; expires=" + expires + "; path=" + path + ";samesite=Lax";
     document.cookie = content;
 }
 

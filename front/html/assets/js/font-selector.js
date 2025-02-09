@@ -5,11 +5,30 @@
 ** font-selector.js
 */
 
-const fonts = ["Arial", "Verdana", "Courier New", "Times New Roman", "Georgia"];
+console.log("js/font-selector initialising");
+
+const fonts = ["Arial", "Verdana", "Courier New", "Times New Roman", "Georgia", "OpenDyslexic", "OpenDyslexic 3", "OpenDyslexic3", "OpenDyslexicAlta", "OpenDyslexicMono"];
 const fontCookieName = "font";
 
-// Function to inject options into a dropdown based on an ID
+function applyFontOverride(font) {
+    console.log("applyFontOverride called");
+    document.body.style.fontFamily = font;
+
+    const styleId = "custom-font-style";
+    let styleTag = document.getElementById(styleId);
+    if (!styleTag) {
+        styleTag = document.createElement("style");
+        styleTag.id = styleId;
+        document.head.appendChild(styleTag);
+    }
+    styleTag.innerHTML = `body, .container, .navbar { font-family: '${font}', sans-serif !important; }`;
+
+    document.documentElement.style.setProperty("--bs-body-font-family", `'${font}', sans-serif`);
+    console.log("applyFontOverride finished");
+}
+
 function populateDropdown(dropdownId, options) {
+    console.log("populateDropdown called");
     const dropdown = document.getElementById(dropdownId);
     if (!dropdown) {
         console.error(`Dropdown with ID '${dropdownId}' not found.`);
@@ -23,42 +42,62 @@ function populateDropdown(dropdownId, options) {
         optElement.textContent = option;
         dropdown.appendChild(optElement);
     });
+    console.log("populateDropdown finished");
 }
 
-// Function to set the font on page load based on a stored cookie
 function initializeFont() {
+    console.log("initializeFont called");
     const fontCookie = window.cookie_manager.readCookie(fontCookieName);
     if (fontCookie) {
         const font = fontCookie;
-        document.body.style.fontFamily = font;
+        applyFontOverride(font);
         const dropdown = document.getElementById("fontSelector");
         if (dropdown) {
             dropdown.value = font;
         }
     } else {
-        document.body.style.fontFamily = fonts[0];
+        applyFontOverride(fonts[0]);
         window.cookie_manager.createCookie(fontCookieName, fonts[0]);
         const dropdown = document.getElementById("fontSelector");
         if (dropdown) {
             dropdown.value = fonts[0];
         }
     }
+    console.log("initializeFont finished");
 }
 
-// Function to update font when the dropdown changes and store it in a cookie
 function updateFont(dropdown) {
+    console.log("updateFont called");
     const selectedFont = dropdown.value.trim();
-    document.body.style.fontFamily = selectedFont;
+    applyFontOverride(selectedFont);
     window.cookie_manager.createCookie(fontCookieName, selectedFont, 365);
+    console.log("updateFont finished");
 }
 
-
+async function waitForCookieManager(retries = 10, interval = 100) {
+    for (let attempts = 0; attempts < retries; attempts++) {
+        if (window.cookie_manager) {
+            return true;
+        }
+        
+        await new Promise(resolve => setTimeout(resolve, interval));
+    }
+    
+    console.error("Cookie manager failed to load after " + retries + " attempts.");
+    return false;
+}
 
 // Initialise when the page is loaded
-function initialise() {
-    populateDropdown("fontSelector", fonts);
-    initializeFont();
+async function initialise() {
+    console.log("initialise function from font-selector.js called");
+    const cookieManagerReady = await waitForCookieManager();
+    if (cookieManagerReady) {
+        populateDropdown("fontSelector", fonts);
+        initializeFont();
+    }
+    console.log("initialise function from font-selector.js finished");
 }
 
 document.addEventListener("DOMContentLoaded", initialise);
 
+console.log("js/font-selector initialised");
