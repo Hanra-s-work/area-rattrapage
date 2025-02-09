@@ -44,18 +44,25 @@ async function create_widget_field(widget_item, widget_index) {
         console.log("create_widget_field finished");
         return "";
     };
-    const widget_id = `${widget_item.name}_${widget_index}`;
-    const widget_name = widget_item.name;
+    const widget_name = widget_item.name.trimStart();
+    const widget_id = `${widget_name}_${widget_index}`;
     const widget_content = widget_item.html;
+    const internal_widget_id = widget_item.db_index;
+    console.log(`widget_item: '${JSON.stringify(widget_item)}'`);
+    console.log(`widget_index: '${widget_index}'`);
+    console.log(`widget_id: '${widget_id}'`);
+    console.log(`widget_name: '${widget_name}'`);
+    console.log(`internal_widget_id: '${internal_widget_id}'`);
+    console.log(`widget_content: '${JSON.stringify(widget_content)}'`);
     let widget_code = ``;
     widget_code += `<article id="${widget_id}" class="widget">`;
     widget_code += `<section class="widget_header">`;
     widget_code += `<aside class="widget_header_index_position_box">`;
     widget_code += `<p>Position:</p>`;
-    widget_code += `<input type="number" class="widget_header_index_position" min="0" value="${widget_index}" onchange="update_widget_location(${widget_name}, this);">`;
+    widget_code += `<input type="number" class="widget_header_index_position" min="0" value="${widget_index}" onchange="update_widget_location(${widget_id}, this);">`;
     widget_code += `</aside>`;
     widget_code += `<aside>`;
-    widget_code += `<button class="button_desing" type="button" onclick="window.widget_manager.remove_widget("${widget_id}");">`;
+    widget_code += `<button class="button_desing" type="button" onclick="window.widget_manager.remove_widget('${widget_id}', '${widget_name}', '${internal_widget_id}');">`;
     widget_code += `<i class="far fa-trash-alt"></i>`;
     widget_code += `</button>`;
     widget_code += `</aside>`;
@@ -115,10 +122,10 @@ async function add_widget(widget_body_ID, dropdown_ID) {
     }
     const widget_resp = widget_content;
     const widget_index = widget_resp.index || await window.widget_manager.get_widget_index(widget_body_ID);
+    console.log("widget_resp:", widget_resp);
     const widget_field = await window.widget_manager.create_widget_field(widget_resp, widget_index);
 
     console.log("widget_body:", widget_body);
-    console.log("widget_resp:", widget_resp);
     console.log("widget_field:", widget_field);
 
 
@@ -129,14 +136,17 @@ async function add_widget(widget_body_ID, dropdown_ID) {
         widget_body.innerHTML += widget_field;
     }
     dropdown.value = "option_default";
-    // await window.update_server.update_user_widgets(widget_body.innerHTML);
     console.log("add_widget finished");
 }
 
-async function remove_widget(ID) {
-    const name = ID;
+async function remove_widget(ID, name, widget_id) {
+    console.log("remove_widget called");
     document.getElementById(ID).remove();
-    await window.widget_manager.remove_user_widget(name);
+    await window.update_server.remove_user_widget(name, widget_id);
+    const widgets = document.getElementById("widgets_body");
+    widgets.innerHTML = "";
+    await inject_widgets(widgets);
+    console.log("remove_widget finished");
 }
 
 async function update_widget(ID) { }

@@ -13,6 +13,8 @@ async function my_onload() {
     await update_username(username);
     await get_widgets_options(dropdown_header_widget);
     await inject_widgets(widget_field);
+    await get_refresh_delay('refresh_delay');
+    refresh_widgets(widget_field);
 }
 
 // Add a a rule to only run once the page is loaded

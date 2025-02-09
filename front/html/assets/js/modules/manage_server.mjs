@@ -129,17 +129,10 @@ async function update_user_widgets(widgets_body) {
     console.log("update_user_widgets finished");
 };
 
-async function remove_user_widget(widget_id) {
+async function remove_user_widget(name, widget_id) {
     console.log("remove_user_widgets called");
-    console.log("widgets_body:", widgets_body);
-    const widgets = await window.indexedDB_manager.read(window.constants.widget_cookie_name);
-    console.log("widgets:", JSON.stringify(widgets));
-    for (const widget of widgets) {
-        if (widget.name === widget_id) {
-            widgets.splice(widgets.indexOf(widget), 1);
-            break;
-        }
-    }
+    const token = window.cookie_manager.read(window.constants.user_token_cookie_name);
+    await window.querier.delete_query(`${window.constants.add_user_widget_endpoint}/${widget_id}`, {}, token);
     console.log("remove_user_widgets finished");
 };
 
@@ -161,15 +154,31 @@ async function update_refresh(refresh_value) {
     console.log("update_refresh called");
     console.log("refresh_value:", refresh_value);
     const token = window.cookie_manager.read(window.constants.user_token_cookie_name);
-    const response = await window.querier.post(window.constants.user_refresh_wigets_endpoint, { "refresh": refresh_value }, token);
+    const response = await window.querier.post(`${window.constants.user_refresh_wigets_endpoint}/${refresh_value}`, {}, token);
     console.log("response:", response);
     console.log("update_refresh finished");
+}
+
+async function get_refresh() {
+    console.log("get_refresh called");
+    const token = window.cookie_manager.read(window.constants.user_token_cookie_name);
+    const response = await window.querier.get(window.constants.user_refresh_wigets_endpoint, {}, token);
+    console.log("JSON response:", JSON.stringify(response));
+    console.log("response:", response);
+    console.log("get_refresh finished");
+    if (response.status !== 200) {
+        console.log("Failed to get refresh value");
+        return null;
+    }
+    console.log("get_refresh finished with response", response.resp);
+    return response.resp;
 }
 
 
 const update_server = {
     login,
     register,
+    get_refresh,
     log_user_out,
     update_refresh,
     get_user_widgets,

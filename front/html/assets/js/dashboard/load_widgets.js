@@ -39,6 +39,7 @@ async function inject_widgets(element) {
         if (!cookie_widgets[index].position) {
             cookie_widgets[index].position = index;
         }
+        console.log(`index: ${index}, Widget:`, widget);
         const widget_field = await window.widget_manager.create_widget_field(widget, cookie_widgets[index].position);
         element.innerHTML += widget_field;
         index++;

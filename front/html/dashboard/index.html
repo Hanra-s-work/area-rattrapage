@@ -46,7 +46,7 @@
         <aside><button class="button_desing" type="button" onclick="logout();">Logout</button></aside>
     </section>
     <section style="display:flex;">
-        <p>Refresh delay: </p><input type="number" value="60" min="5" onchange="update(this)">
+        <p>Refresh delay: </p><input type="number" id="refresh_delay" value="60" min="5" onchange="update_refresh(this)">
         <p>seconds</p>
     </section>
     <section id="widgets_body"></section>
