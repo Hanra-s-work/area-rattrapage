@@ -45,32 +45,14 @@ export namespace WeatherApi {
         longitude: string;
     }
 
-    export async function getCountryCoordinatesOld(country: string, email: string): Promise<Coordinates | null> {
-        const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(country)}&format=json&limit=1`;
-
-        try {
-            const response = await fetch(url, {
-                headers: { 'User-Agent': `YourAppName/1.0 (${email})` },
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP Error! Status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            if (data.length === 0) {
-                throw new Error(`No results found for: ${country}`);
-            }
-
-            return { latitude: data[0].lat, longitude: data[0].lon };
-        } catch (error: any) {
-            console.error("Error fetching coordinates:", error.message);
-            return null;
+    export async function getCountryCoordinates(country: string): Promise<Coordinates | null> {
+        console.log("getCountryCoordinates");
+        let coords;
+        if (coordinate_equivalence.hasOwnProperty(country)) {
+            coords = coordinate_equivalence[country];
+        } else {
+            coords = coordinate_equivalence[available_cities[Math.floor(Math.random() * available_cities.length)]];
         }
-    }
-
-    export async function getCountryCoordinates(country: string, email: string): Promise<Coordinates | null> {
-        const coords = coordinate_equivalence[country];
         if (coords) {
             return { latitude: String(coords.lat), longitude: String(coords.lon) };
         } else {
@@ -79,8 +61,9 @@ export namespace WeatherApi {
         }
     }
 
-    export async function getWeather(container: HTMLElement, country: string, weatherKey: string, email: string): Promise<String> {
-        const coords = await getCountryCoordinates(country, email);
+    export async function getWeather(id: string, country: string, weatherKey: string): Promise<String> {
+        console.log("getWeather");
+        const coords = await getCountryCoordinates(country);
         let html = "";
         if (coords) {
             const { latitude, longitude } = coords;
@@ -90,85 +73,39 @@ export namespace WeatherApi {
             const width = 400;
             const height = 400;
 
-            html = `<iframe src="${weatherUrl}" width="${width}" height="${height}" frameborder="0" scrolling="no"></iframe>`;
+            html = `<iframe src="${weatherUrl}" width="${width}" height="${height}" frameborder="0" scrolling="no" id="${id}" data-country="${country}"></iframe>`;
         } else {
             const msg = "Could not retrieve weather data.";
             console.log(msg);
-            html = `<p>${msg}</p>`;
+            html = `<p id="${id}">${msg}</p>`;
         }
         return html;
     }
 
-    export function injectWidget(widgetId: string, weatherKey: string, email: string): void {
-        const widget = document.getElementById(widgetId);
-        if (widget) {
-            const country = widget.dataset.country || "France";
-            getWeather(widget, country, weatherKey, email);
+    export async function get_weather_locations(dropdown_id: string, command: string) {
+        console.log("get_weather_locations");
+        let html = `<select id="${dropdown_id}" name="${dropdown_id}" onchange="${command}">`;
+        for (let i = 0; i < available_cities.length; i++) {
+            html += `<option value="${available_cities[i]}">${available_cities[i]}</option>`;
         }
+        html += "</select>";
+        return html;
     }
 
-    export async function get_weather_widget(index: number, user_info: any, database: DB) {
+    export async function get_weather_widget(widget_name: string, index: number, user_info: any, database: DB) {
+        console.log("get_weather_widget");
         var content = "";
-        const widget_id = `country_weather_${index}`;
-        const email = user_info.email || 'your@email.com';
+        const widget_id = `${widget_name}_${index}`;
+        const country = await database.getContentFromTable("user_widgets", ["widget_option"], `widget_index='${index}' AND user_id='${user_info.id}'`);
         const apiKey = await database.getContentFromTable("widgets", ["api_key"], "widget_name='weather'");
         if (!apiKey || apiKey.length == 0) {
             return "<p>Widget gathering error, the content for the given widget could not be fetched successfully.</p>";
         }
         const weatherKey = apiKey[0].api_key || null;
-        content += `<div class=\"weather-container\" data-country=\"France\" id=\"${widget_id}\"></div>`;
-        content += `<script id="script_${widget_id}" type='text/javascript'>`;
-        content += "async function getCountryCoordinates(country) {";
-        content += "    const url = \`https://nominatim.openstreetmap.org/search?q=\${encodeURIComponent(country)}&format=json&limit=1\`;"
-        content += "    try {";
-        content += "        const response = await fetch(url, {";
-        content += `            headers: { 'User-Agent': 'YourAppName/1.0 (${email})' },`;
-        content += "        });";
-        content += "        if (!response.ok) { throw new Error(\`HTTP Error! Status: \${response.status}\`);}";
-        content += "        const data = await response.json();";
-        content += "        if (data.length === 0) { throw new Error(\`No results found for: \${country}\`); }";
-        content += "        return { latitude: data[0].lat, longitude: data[0].lon };";
-        content += "    } catch (error) {";
-        content += `        console.error("Error fetching coordinates:", error.message);`;
-        content += "        return null;";
-        content += "    }";
-        content += "}";
-        content += "";
-        content += "async function getWeather(container, country) {";
-        content += "    const coords = await getCountryCoordinates(country);";
-        content += "    if (coords) {";
-        content += "        const lat = coords.latitude;";
-        content += "        const lon = coords.longitude;";
-        content += `        const apiKey = "${weatherKey}";`;
-        content += "        const weatherUrl = \`https://api.openweathermap.org/data/2.5/weather?lat=\${lat}&lon=\${lon}&mode=html&appid=\${apiKey}&units=metric&lang=en\`;";
-        content += "";
-        content += "        // Create and inject the iframe dynamically";
-        content += `        const iframe = document.createElement("iframe");`;
-        content += `        iframe.src = weatherUrl;`;
-        content += `        iframe.width = "400";`;
-        content += `        iframe.height = "400";`;
-        content += `        iframe.frameBorder = "0";`;
-        content += `        iframe.scrolling = "no";`;
-        content += "";
-        content += "        // Remove any previous iframes inside the container";
-        content += `        container.innerHTML = "";`;
-        content += "        container.appendChild(iframe);";
-        content += "    } else {";
-        content += `        console.log("Could not retrieve weather data.");`;
-        content += "    }";
-        content += "}";
-        content += "";
-        content += "    // Automatically trigger the weather fetching for each dynamically injected div";
-        content += "    function inject_widget() {";
-        content += `        const widget = document.getElementById(\"${widget_id}\");`;
-        content += "        if (widget) {";
-        content += `            getWeather(widget, widget.dataset.country || "France");`;
-        content += "        }";
-        content += "    }";
-        content += "";
-        content += "    inject_widget();";
-        content += "</script>";
-        content += "";
+        content += `<div id="${widget_id}" data-country="${country}" data-id="${index}">`;
+        content += await get_weather_locations(`${widget_id}-dropdown`, `getWeather('${widget_id}-iframe', this.value, '${weatherKey}')`);
+        content += await getWeather(`${widget_id}-iframe`, country, weatherKey);
+        content += "</div>";
         return content;
     };
 };
