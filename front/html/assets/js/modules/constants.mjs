@@ -29,7 +29,7 @@ const widget_name_list_endpoint = "/widgets";
 const widget_get_widget_content = "/widget";
 const add_user_widget_endpoint = "/user/widget";
 const widget_get_user_widgets_endpoint = "/user/widgets";
-const widget_update_user_widget_endpoint = "/user/widgets";
+const widget_update_user_widget_endpoint = "/user/widget";
 const user_refresh_wigets_endpoint = "/refresh";
 
 const constants = {

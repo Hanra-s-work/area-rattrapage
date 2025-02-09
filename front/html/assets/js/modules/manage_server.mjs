@@ -116,14 +116,14 @@ async function get_widget_content(widget_name) {
     return { "status": 200, "data": resp };
 };
 
-async function add_widget_to_user(widget_index, widget_option = null) {
+async function add_widget_to_user(widget_type, widget_option = null) {
     console.log("add_widget_to_user called");
     const token = window.cookie_manager.read(window.constants.user_token_cookie_name);
     let option = "";
     if (widget_option !== null) {
         option = `/${widget_option}`;
     }
-    const resp = await window.querier.post(`${window.constants.add_user_widget_endpoint}/${widget_index}${option}`, {}, token);
+    const resp = await window.querier.post(`${window.constants.add_user_widget_endpoint}/${widget_type}${option}`, {}, token);
     console.log("resp = ", resp);
     console.log(`JSON resp = ${JSON.stringify(resp)}`);
     console.log("add_widget_to_user finished");
@@ -132,11 +132,11 @@ async function add_widget_to_user(widget_index, widget_option = null) {
 async function update_user_widgets(widget_index, widget_type, widget_position = null) {
     console.log("update_user_widgets called");
     const token = window.cookie_manager.read(window.constants.user_token_cookie_name);
-    let position = "";
+    let position = {};
     if (widget_position) {
-        position = `/${widget_position}`;
+        position = { "location": widget_position };
     }
-    const response = await window.querier.patch(`${window.constants.update_user_widgets}/${widget_index}/${widget_type}${position}`, {}, token);
+    const response = await window.querier.patch(`${window.constants.widget_update_user_widget_endpoint}/${widget_index}/${widget_type}`, position, token);
     console.log("update_user_widgets finished");
     return response;
 };

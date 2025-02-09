@@ -36,11 +36,11 @@ async function inject_widgets(element) {
             continue;
         }
         cookie_widgets.push(widget);
-        if (!cookie_widgets[index].position) {
-            cookie_widgets[index].position = index;
+        if (!("widget_index" in cookie_widgets[cookie_widgets.length - 1])) {
+            cookie_widgets[cookie_widgets.length - 1].widget_index = index;
         }
         console.log(`index: ${index}, Widget:`, widget);
-        const widget_field = await window.widget_manager.create_widget_field(widget, cookie_widgets[index].position);
+        const widget_field = await window.widget_manager.create_widget_field(widget, cookie_widgets[cookie_widgets.length - 1].widget_index);
         element.innerHTML += widget_field;
         index++;
     }

@@ -1,0 +1,51 @@
+@font-face {
+	font-family: 'OpenDyslexicAlta';
+	src: url(../../assets/fonts/OpenDyslexicAlta-99fc88c22220d095f05b28d5eea4a4a2.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexicAlta-99fc88c22220d095f05b28d5eea4a4a2.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexicAlta-17a43501a7b35b4d48ad0d7af415917e.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexicAlta-db5aa19a966a33ba7dc9efaf8f26da46.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexicAlta-d523281cc5f3f889b5da65660a7da7cb.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexicAlta-56c18a85e46fa68b3388ad95f7b55825.svg) format('svg');
+	font-weight: normal;
+	font-style: normal;
+	font-display: auto;
+}
+
+@font-face {
+	font-family: 'OpenDyslexicAlta';
+	src: url(../../assets/fonts/OpenDyslexicAlta-31b7a32dff6ffc7c6796398e5dfb3ccf.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexicAlta-31b7a32dff6ffc7c6796398e5dfb3ccf.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexicAlta-f3f190d7c10eacd6a3e903fa4c570d81.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexicAlta-bb8b16040943cadf431c6ffb4675b8c0.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexicAlta-b278eb97cb13f024efbd34e414af9870.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexicAlta-11a8fcb7c34c7203a1a86b5c8de364f1.svg) format('svg');
+	font-weight: normal;
+	font-style: italic;
+	font-display: auto;
+}
+
+@font-face {
+	font-family: 'OpenDyslexicAlta';
+	src: url(../../assets/fonts/OpenDyslexicAlta-682314d933ae229f5a20328fc6e9b09f.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexicAlta-682314d933ae229f5a20328fc6e9b09f.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexicAlta-b789b62bbaeccfe17247d3f8bb67ebc5.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexicAlta-940599eb36ba7e7dd03429fb2a77ef63.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexicAlta-5e0a329d302353d18e603b59f56ba0d3.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexicAlta-de691dc63ebf134cb29d2459c89228ff.svg) format('svg');
+	font-weight: bold;
+	font-style: normal;
+	font-display: auto;
+}
+
+@font-face {
+	font-family: 'OpenDyslexicAlta';
+	src: url(../../assets/fonts/OpenDyslexicAlta-f1912a1285535a5e3a790a576f10cb59.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexicAlta-f1912a1285535a5e3a790a576f10cb59.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexicAlta-b30aa95b50cdd45285d19721a6c758c2.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexicAlta-00de6735419e7affbf683a595b82938e.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexicAlta-6e7bdfb397e99cbc8cbb446f553def03.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexicAlta-2b6a0a815d06aa37c728f163752acf2e.svg) format('svg');
+	font-weight: bold;
+	font-style: italic;
+	font-display: auto;
+}

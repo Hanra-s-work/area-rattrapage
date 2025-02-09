@@ -1,0 +1,207 @@
+@font-face {
+	font-family: 'OpenDyslexic';
+	src: url(../../assets/fonts/OpenDyslexic-f487dd11ae68611576df3313ba764a69.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-f487dd11ae68611576df3313ba764a69.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-9af345ec44ce79122e2e266c2cd0d274.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexic-54ee8153618e2a7a50a3520803800174.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexic-9e84615f86b0e2e5e6d471b993856c01.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexic-07c3da83833d3c374f32c2c95da517c5.svg) format('svg');
+	font-weight: normal;
+	font-style: normal;
+	font-display: auto;
+}
+
+@font-face {
+	font-family: 'OpenDyslexic';
+	src: url(../../assets/fonts/OpenDyslexic-3f9a37636ce7280ea801522f4d2914ba.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-3f9a37636ce7280ea801522f4d2914ba.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-27542957aed24cd2142169e5d1855847.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexic-93623e00347ac6145ab83cb120d1b565.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexic-0510e45b34b3de6e988ae05212bf4250.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexic-4af27a896b6e79d69daa0e6c5a801634.svg) format('svg');
+	font-weight: normal;
+	font-style: normal;
+	font-display: auto;
+}
+
+@font-face {
+	font-family: 'OpenDyslexic';
+	src: url(../../assets/fonts/OpenDyslexic-b7213731b27502767126b7843ab26e25.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-b7213731b27502767126b7843ab26e25.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-a8dc236067b5d3bd02fc3da2b4e0d1fd.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexic-f0ea297e90d1b188790bcf04304319a8.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexic-2bdc4cb4346e3bcc942c7dd0bfba3274.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexic-3af6ea5a96868b7980d6e8e72b5494b5.svg) format('svg');
+	font-weight: normal;
+	font-style: normal;
+	font-display: auto;
+}
+
+@font-face {
+	font-family: 'OpenDyslexic';
+	src: url(../../assets/fonts/OpenDyslexic-b9fc0f66f82550c1188a5806e6e39e77.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-b9fc0f66f82550c1188a5806e6e39e77.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-521d84716c8852fec3d8a9845a4211b4.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexic-55a519f548815d163977cd9a8de5f4d7.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexic-14307beb82f2a6db82b0b11cd8cb87be.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexic-9428fac277add58bc901b370728606e3.svg) format('svg');
+	font-weight: normal;
+	font-style: normal;
+	font-display: auto;
+}
+
+@font-face {
+	font-family: 'OpenDyslexic';
+	src: url(../../assets/fonts/OpenDyslexic-e1c42ca730a337f8789a725f7d6b3dad.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-e1c42ca730a337f8789a725f7d6b3dad.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-2b3cc160b4db59b9d40f152610d535ab.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexic-854f2021fdf2f452c40d12a200fcfeab.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexic-a18c10e81f36e05e8731fc2770aae2ed.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexic-2b32588efac54cbc538d14cdc1f17a2a.svg) format('svg');
+	font-weight: normal;
+	font-style: italic;
+	font-display: auto;
+}
+
+@font-face {
+	font-family: 'OpenDyslexic';
+	src: url(../../assets/fonts/OpenDyslexic-38591eb69ae1bd418af6e56dcb9a685a.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-38591eb69ae1bd418af6e56dcb9a685a.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-fdd10e4d96876bf28b203c9bb9d1ab4a.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexic-023c7682e92593a84059fd5be766246e.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexic-ef8927ea0fb13ad4b178757727594329.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexic-7ff5ad84c95da53bf31b348bd0ac6f72.svg) format('svg');
+	font-weight: normal;
+	font-style: italic;
+	font-display: auto;
+}
+
+@font-face {
+	font-family: 'OpenDyslexic';
+	src: url(../../assets/fonts/OpenDyslexic-76b5b4776248a33685d5545d8df39ac3.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-76b5b4776248a33685d5545d8df39ac3.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-95ff8e2c59c1a2b104b6fbc909c99819.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexic-df40d62b1ba700a6d5c0b8180f4628cf.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexic-8f202ea0fa5fac5a7699e449b5bbc7fa.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexic-3d985ed009bb05293ffffc360dbcc00d.svg) format('svg');
+	font-weight: normal;
+	font-style: italic;
+	font-display: auto;
+}
+
+@font-face {
+	font-family: 'OpenDyslexic';
+	src: url(../../assets/fonts/OpenDyslexic-27a2b2afd4f4e2871d63e8d54de7ab70.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-27a2b2afd4f4e2871d63e8d54de7ab70.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-05e27476f4b1b587ca0284aba7bb8749.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexic-4c3f0e2d034c603668a3e637a34b8723.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexic-ae6913e15bdb17ebcf26ffb8418bfbe0.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexic-8c579bce8a4ce1e04155cfb40901f45f.svg) format('svg');
+	font-weight: normal;
+	font-style: italic;
+	font-display: auto;
+}
+
+@font-face {
+	font-family: 'OpenDyslexic';
+	src: url(../../assets/fonts/OpenDyslexic-a2c0cd91e76ea195a525b8a70b8cd0ce.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-a2c0cd91e76ea195a525b8a70b8cd0ce.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-ab514f8410103782df5d661c979613f1.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexic-b548f64a63fce7aaa034512048a9d6d9.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexic-3407b8e4140c8f0b99840fe9f823033c.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexic-40d7b73c154709fa09ef366db1f341ef.svg) format('svg');
+	font-weight: bold;
+	font-style: normal;
+	font-display: auto;
+}
+
+@font-face {
+	font-family: 'OpenDyslexic';
+	src: url(../../assets/fonts/OpenDyslexic-1b1716442d4a0e895dc86ee486ac395c.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-1b1716442d4a0e895dc86ee486ac395c.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-3fb82a3a724a16c4ae83d2bd65e6e605.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexic-8be4af3d1ec8bcffb68473da2c567399.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexic-0c9886c9eb2f94d2d7b0af73ce6a0fae.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexic-03f8347fc5e45d996e2d7064985c3297.svg) format('svg');
+	font-weight: bold;
+	font-style: normal;
+	font-display: auto;
+}
+
+@font-face {
+	font-family: 'OpenDyslexic';
+	src: url(../../assets/fonts/OpenDyslexic-44738b0bd69b753a325f7f5a68d4204c.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-44738b0bd69b753a325f7f5a68d4204c.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-da43f96553c4e68e8a63fdb874d764e3.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexic-8998b94a5f10ea70cc8db8663c4403fa.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexic-4bbc1ad369da48a69cdc77bc46911101.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexic-fabe58ef68fa313d63a7d6f9a4518408.svg) format('svg');
+	font-weight: bold;
+	font-style: normal;
+	font-display: auto;
+}
+
+@font-face {
+	font-family: 'OpenDyslexic';
+	src: url(../../assets/fonts/OpenDyslexic-0233f9361462d919f0fdeb50236f723e.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-0233f9361462d919f0fdeb50236f723e.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-fb33dac29fae10eaf6c8dd2138ef134f.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexic-6bc0d17e47cfdfd945e46c6214f92915.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexic-d6757296642f950fa98bf258996b06d5.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexic-0e6f9ae660a2b692d5a444c62b60c8da.svg) format('svg');
+	font-weight: bold;
+	font-style: normal;
+	font-display: auto;
+}
+
+@font-face {
+	font-family: 'OpenDyslexic';
+	src: url(../../assets/fonts/OpenDyslexic-bded4280ffb903b11d985f65195ee584.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-bded4280ffb903b11d985f65195ee584.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-6bf8919dac33d5e619471600cbf9a33a.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexic-d6bc18d6880e3c222ea805b3ac447b02.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexic-f3110cce6190b1618a49ff9d15bf4e05.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexic-c17bf63b7f365f5a00ebade665ff3874.svg) format('svg');
+	font-weight: bold;
+	font-style: italic;
+	font-display: auto;
+}
+
+@font-face {
+	font-family: 'OpenDyslexic';
+	src: url(../../assets/fonts/OpenDyslexic-5716abfcf4031299d5a1ae90653a507c.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-5716abfcf4031299d5a1ae90653a507c.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-466e99c1ba576ff7edcaaa5b4a453ebf.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexic-e976645f2a5ad39891cf2eed14e2f681.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexic-d9081437dbe3b61962f79cf33e47ee82.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexic-b23cd41b6a327d1aa36b1700735c82ad.svg) format('svg');
+	font-weight: bold;
+	font-style: italic;
+	font-display: auto;
+}
+
+@font-face {
+	font-family: 'OpenDyslexic';
+	src: url(../../assets/fonts/OpenDyslexic-6cdd4ef7856435dff867af4adf9c9240.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-6cdd4ef7856435dff867af4adf9c9240.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-773ea933172190ec062227c0061c0d64.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexic-9ae7fb69f1cea82b8ca63497045a58c6.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexic-0307e7a1cc93b03667aa355e18ecc335.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexic-4a9e4eee5367dde52fd8dc693f3cec09.svg) format('svg');
+	font-weight: bold;
+	font-style: italic;
+	font-display: auto;
+}
+
+@font-face {
+	font-family: 'OpenDyslexic';
+	src: url(../../assets/fonts/OpenDyslexic-d4a349638af64aba11f165b5dd5d977a.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-d4a349638af64aba11f165b5dd5d977a.eot) format('embedded-opentype'),
+	url(../../assets/fonts/OpenDyslexic-8285a17a99ef6778a9c3267c769fdd50.woff2) format('woff2'),
+	url(../../assets/fonts/OpenDyslexic-d7e510f63e50a420eb6321d71e946700.woff) format('woff'),
+	url(../../assets/fonts/OpenDyslexic-f49e6d96ce67cee0a3805fe7ff556cfd.ttf) format('truetype'),
+	url(../../assets/fonts/OpenDyslexic-07d967771af2f60e6a046f3db9040b7b.svg) format('svg');
+	font-weight: bold;
+	font-style: italic;
+	font-display: auto;
+}
