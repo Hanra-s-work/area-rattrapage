@@ -78,8 +78,8 @@ export namespace WeatherApi {
             const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&mode=html&appid=${weatherKey}&units=metric&lang=en`;
 
             // Create and inject the iframe dynamically
-            const width = 400;
-            const height = 400;
+            const width = 200;
+            const height = 150;
 
             html = `<iframe src="${weatherUrl}" width="${width}" height="${height}" frameborder="0" scrolling="no" id="${id}" data-country="${country}"></iframe>`;
         } else {

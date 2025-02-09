@@ -40,7 +40,7 @@ CREATE TABLE `sso_connections` (
   `user_id` bigint(20) unsigned DEFAULT NULL,
   `service_id` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,8 +101,9 @@ CREATE TABLE `user_widgets` (
   `widget_id` bigint(20) unsigned NOT NULL,
   `token` text DEFAULT NULL,
   `widget_index` bigint(20) unsigned NOT NULL,
+  `widget_option` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,13 +124,14 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` text NOT NULL,
+  `name` text DEFAULT NULL,
   `email` text NOT NULL,
   `password` text DEFAULT NULL,
   `token` text DEFAULT NULL,
+  `refresh` bigint(20) unsigned DEFAULT 60,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_unique` (`email`) USING HASH
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,10 +154,11 @@ CREATE TABLE `widgets` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `widget_name` text NOT NULL,
   `widget_link` text NOT NULL,
-  `sso` tinyint(1) NOT NULL,
+  `sso` tinyint(1) DEFAULT NULL,
+  `api_key` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_widgets_unique` (`widget_name`) USING HASH
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -164,6 +167,13 @@ CREATE TABLE `widgets` (
 
 LOCK TABLES `widgets` WRITE;
 /*!40000 ALTER TABLE `widgets` DISABLE KEYS */;
+INSERT INTO `widgets` VALUES
+(1,'sample_widget','google.com',NULL,NULL),
+(2,'Clock','google.com',NULL,NULL),
+(3,'Picture','google.com',NULL,NULL),
+(4,'weather','google.com',NULL,'63adefcfe6e903d050ae3e0bb194af35'),
+(5,'Github','github.com',1,NULL),
+(6,'darling','https://en.wikipedia.org/wiki/Darling_in_the_Franxx',NULL,NULL);
 /*!40000 ALTER TABLE `widgets` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -176,4 +186,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-03 12:14:49
+-- Dump completed on 2025-02-09 23:37:18

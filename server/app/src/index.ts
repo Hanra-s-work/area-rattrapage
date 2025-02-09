@@ -604,6 +604,38 @@ app.post("/user/sso", async (req, res) => {
     build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', 'Success', '', false);
 });
 
+// app.patch("/widget-position/:widget_id/:position", async (req, res) => {
+
+//     const title = `${req.url}`;
+//     console.log(`endpoint: delete: ${req.url}`);
+//     const widgetId = req.params.widget_id;
+//     console.log(`widgetId: ${widgetId}`);
+//     const position = req.params.position;
+//     console.log(`position: ${position}`);
+//     const token = req.headers.authorization;
+//     console.log(`token: ${token}`);
+//     const token_cleaned = token?.replace("Bearer ", "") || "";
+//     console.log(`token cleaned: ${token_cleaned}`);
+//     const data = await database.getContentFromTable('users', ['*'], `token = '${token_cleaned}'`);
+//     console.log(data);
+//     if (data.length === 0) {
+//         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid token', 'Error', '', true);
+//         return;
+//     }
+//     if (!widgetId) {
+//         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Missing widget id', 'Error', '', true);
+//         return;
+//     }
+//     const user_data = await Widgets.delete_user_widget(data[0], widgetId, database);
+//     console.log(user_data);
+//     if (user_data === false) {
+//         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'The widget has not been deleted.', 'Error', '', true);
+//         return;
+//     }
+//     const user_widgets = await Widgets.get_user_widgets(data[0], database);
+//     build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', user_widgets, '', false);
+// });
+
 app.get("/refresh", async (req, res) => {
     console.log(`endpoint: get: ${req.url}`);
     const title = `${req.url}`;
