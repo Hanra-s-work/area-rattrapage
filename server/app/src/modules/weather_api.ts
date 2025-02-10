@@ -8,8 +8,8 @@
 import DB from "./db";
 
 // Import the list of cities for the weather api
-// import CityList from "../ressources/city.list.min.json"
-import CityList from "../ressources/city.list.tiny.json"
+import CityList from "../ressources/city.list.min.json"
+// import CityList from "../ressources/city.list.tiny.json"
 
 
 export namespace WeatherApi {
