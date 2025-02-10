@@ -36,12 +36,12 @@ export namespace Query {
             const finalBase: string = base_url === "" ? url : base_url;
             const finalUrl: string = port === -1 ? `${finalBase}${path}` : `${finalBase}:${port}${path}`;
 
-            console.log("Final URL:", finalUrl);
-            console.log("Payload:", payload);
+            // console.log("Final URL:", finalUrl);
+            // console.log("Payload:", payload);
 
             const response: Response = await fetch(finalUrl, payload);
 
-            console.log("Response:", response);
+            // console.log("Response:", response);
 
             if (!response.ok) {
                 throw new Error(`Error: ${response.status}`);

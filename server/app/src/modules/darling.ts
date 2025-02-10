@@ -957,21 +957,21 @@ export namespace Darling {
 
             console.log("checking if value is an array");
             if (key === "alias" && Array.isArray(value)) {
-                console.log("value is an array");
+                // console.log("value is an array");
                 value = value.join("<br>");
-                console.log(`value (after join): ${value}`);
+                // console.log(`value (after join): ${value}`);
             }
 
             console.log("checking if value is a link");
             if (typeof value === "string" && value.startsWith("http")) {
-                console.log("value is a link");
+                // console.log("value is a link");
                 value = `<a href="${value}" target="_blank">${value}</a>`;
-                console.log(`value (after link): ${value}`);
+                // console.log(`value (after link): ${value}`);
             }
             html += `<tr><td><strong>${key}</strong></td><td>${value}</td></tr>`;
         }
         html += `</table>`;
-        console.log("final html: ", html);
+        // console.log("final html: ", html);
         return html;
     }
 }

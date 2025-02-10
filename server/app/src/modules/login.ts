@@ -101,16 +101,17 @@ export namespace Login {
         }
 
         const hashed_password = await hash_password(password);
-        console.log("hashed_password", hashed_password);
+        // console.log("hashed_password", hashed_password);
         await database.writeToTable("users", ["email", "password", "name"], [[user_email, hashed_password, username]]);
         return true;
     };
 
     export async function update_user_information(token: string, new_name: string, new_unhashed_password: string, database: DB) {
-        console.log('update_user_information', token, new_name, new_unhashed_password);
+        console.log("update_user_information");
+        // console.log('update_user_information', token, new_name, new_unhashed_password);
         const user_data = await database.getContentFromTable("users", ["id"], `token = '${token}'`);
 
-        console.log("user_data", user_data);
+        // console.log("user_data", user_data);
 
         if (!user_data || user_data.length === 0) {
             console.log("user data is empty");
@@ -120,8 +121,8 @@ export namespace Login {
         const hashed_password = await hash_password(new_unhashed_password);
 
         const user_id = Number(user_data[0].id);
-        console.log("user_id", user_id);
-        console.log("hashed_password", hashed_password);
+        // console.log("user_id", user_id);
+        // console.log("hashed_password", hashed_password);
         await database.updateTable("users", ["name", "password"], [new_name, hashed_password], "id = ?", [user_id]);
         console.log("updated user information");
         return true;

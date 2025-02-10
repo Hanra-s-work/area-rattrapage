@@ -12,11 +12,12 @@ import { Login } from "./login";
 
 export namespace OAuth {
     export function generate_oauth_authorisation_url(provider: any, redirect_uri: string, global_values: Object[]): string {
-        console.log(`data ${provider}`);
+        console.log("generate_oauth_authorisation_url");
+        // console.log(`data ${provider}`);
         const base_url = provider["authorisation_base_url"];
         const client_id = provider["client_id"];
         const scope = provider["provider_scope"];
-        console.log(`${base_url} ${client_id} ${scope}`);
+        // console.log(`${base_url} ${client_id} ${scope}`);
         let state = uuid4();
         const now = new Date();
         const expiration = new Date(now.getTime() + (60 * 60 * 1000))
@@ -49,13 +50,14 @@ export namespace OAuth {
             }
         }
         final_url = base_url + "?" + final_url;
-        console.log(`Completed url = ${completed_url}`);
-        console.log(`final_url = ${final_url}`);
+        // console.log(`Completed url = ${completed_url}`);
+        // console.log(`final_url = ${final_url}`);
         return final_url;
     };
 
     // For the callback
     export async function exchange_code_for_token(code: string, provider_data: any, redirect_uri: string) {
+        console.log("exchange_code_for_token");
         try {
             const response = await axios.post(
                 provider_data["token_grabber_base_url"],
@@ -73,8 +75,8 @@ export namespace OAuth {
                     }
                 }
             )
-            console.log(response);
-            console.log(`Response data: ${JSON.stringify(response.data)}`);
+            // console.log(response);
+            // console.log(`Response data: ${JSON.stringify(response.data)}`);
             return response.data;
         } catch (error) {
             console.log(error);
@@ -83,8 +85,9 @@ export namespace OAuth {
     };
 
     export async function get_user_information(provider_data: any, access_token: string, database: DB) {
+        console.log("get_user_information");
         const user_info_getter_url = provider_data["user_info_base_url"]
-        console.log(`User info getter url: ${user_info_getter_url}`);
+        // console.log(`User info getter url: ${user_info_getter_url}`);
 
         try {
             const response = await axios.get(
@@ -95,8 +98,8 @@ export namespace OAuth {
                     }
                 }
             )
-            console.log(`User info getter response without stringify: ${response}`);
-            console.log(`User info getter response with stringify: ${JSON.stringify(response.data)}`);
+            // console.log(`User info getter response without stringify: ${response}`);
+            // console.log(`User info getter response with stringify: ${JSON.stringify(response.data)}`);
             return response.data;
         } catch (error) {
             console.log(error);
@@ -113,7 +116,7 @@ export namespace OAuth {
         }
         user_oauth_info.push(user_id[0]["id"]);
         user_oauth_info.push(provider_data["id"]);
-        console.log(`User information to insert in Oauth connections table: ${user_oauth_info}`);
+        // console.log(`User information to insert in Oauth connections table: ${user_oauth_info}`);
         await database.writeToTable("sso_connections", ["token", "expiration", "lifespan", "refresh_link", "user_id", "service_id"], user_oauth_info);
         const token = await Login.log_user_in(user_email, database);
         console.log(`Token: ${token}`);
@@ -127,16 +130,16 @@ export namespace OAuth {
             return insert_user_in_db(user_email, provider_data, user_oauth_info, database);
         }
         console.log(`User found from db, entering into doing oauth connection normally.`);
-        console.log(`User from db: ${user_from_db}`);
+        // console.log(`User from db: ${user_from_db}`);
         const user_from_oauth_connection = await database.getContentFromTable("sso_connections", ["*"], `user_id = '${user_from_db["id"]}' AND service_id = '${provider_data["id"]}'`);
         if (!user_from_oauth_connection || user_from_oauth_connection.length === 0) {
             user_oauth_info.push(user_from_db[0]["id"]);
             user_oauth_info.push(provider_data["id"]);
-            console.log(`User information to insert in Oauth connections table: ${user_oauth_info}`);
+            // console.log(`User information to insert in Oauth connections table: ${user_oauth_info}`);
             await database.writeToTable("sso_connections", ["token", "expiration", "lifespan", "refresh_link", "user_id", "service_id"], user_oauth_info);
         }
         const token = await Login.log_user_in(user_email, database);
-        console.log(`Token = ${token}`);
+        // console.log(`Token = ${token}`);
         return token;
     };
 
@@ -151,7 +154,7 @@ export namespace OAuth {
             user_oauth_info.push(0);
             user_oauth_info.push("NULL");
         }
-        console.log("Actual user oauth info", user_oauth_info);
+        // console.log("Actual user oauth info", user_oauth_info);
         try {
             user_getter_response = await get_user_information(provider_data, provider_response["access_token"], database);
         } catch (error) {
@@ -165,7 +168,7 @@ export namespace OAuth {
         } else {
             user_email = user_getter_response["email"];
         }
-        console.log(`Got email: ${user_email}`);
+        // console.log(`Got email: ${user_email}`);
         const token = await log_oauth_user(user_email, provider_data, user_oauth_info, database);
         return token;
     };

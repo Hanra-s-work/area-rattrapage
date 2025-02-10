@@ -18,7 +18,7 @@ export namespace WeatherApi {
     export function get_location_coordinates() {
         console.log("get_location_coordinates");
 
-        console.log(`CityList: ${JSON.stringify(CityList)}: CityList`);
+        // console.log(`CityList: ${JSON.stringify(CityList)}: CityList`);
 
         let coordinate_equivalence: Record<string, { lat: number; lon: number }> = Object();
         for (let i = 0; i < CityList.length; i++) {
@@ -33,7 +33,7 @@ export namespace WeatherApi {
             keyName += city.country;
             coordinate_equivalence[String(keyName)] = { "lat": city.coord.lat, "lon": city.coord.lon };
         }
-        console.log(`Coordinate Equivalence: ${JSON.stringify(coordinate_equivalence)} : coodinate equivalence`);
+        // console.log(`Coordinate Equivalence: ${JSON.stringify(coordinate_equivalence)} : coodinate equivalence`);
         return coordinate_equivalence;
     }
 
@@ -84,7 +84,7 @@ export namespace WeatherApi {
             html = `<iframe src="${weatherUrl}" width="${width}" height="${height}" frameborder="0" scrolling="no" id="${id}" data-country="${country}"></iframe>`;
         } else {
             const msg = "Could not retrieve weather data.";
-            console.log(msg);
+            console.error(msg);
             html = `<p id="${id}">${msg}</p>`;
         }
         return { html: html, location: location };
@@ -114,23 +114,23 @@ export namespace WeatherApi {
             return "<p>Widget gathering error, the content for the given widget could not be fetched successfully.</p>";
         }
         const weatherKey = apiKey[0].api_key || null;
-        console.log("widget_id", widget_id);
-        console.log("Country", country);
-        console.log("Weather key", weatherKey);
+        // console.log("widget_id", widget_id);
+        // console.log("Country", country);
+        // console.log("Weather key", weatherKey);
         let countryCleaned = country[0].widget_option;
         if (countryCleaned === undefined || countryCleaned.length === 0 || !countryCleaned || countryCleaned === null) {
             countryCleaned = "";
         }
-        console.log("Country cleaned", countryCleaned);
+        // console.log("Country cleaned", countryCleaned);
         const weatherBody = await getWeather(`${widget_id}-iframe`, countryCleaned, weatherKey, database, user_info, index);
         const weatherDropdown = await get_weather_locations(`${widget_id}-dropdown`, `getWeather('${widget_id}-iframe', this.value, this)`, weatherBody.location);
-        console.log("Weather body", weatherBody);
-        console.log("Weather dropdown", weatherDropdown);
+        // console.log("Weather body", weatherBody);
+        // console.log("Weather dropdown", weatherDropdown);
         content += `<div id="${widget_id}" data-country="${weatherBody.location}" data-id="${index}">`;
         content += weatherDropdown;
         content += weatherBody.html;
         content += "</div>";
-        console.log("Widget content:", content);
+        // console.log("Widget content:", content);
         return content;
     };
 };

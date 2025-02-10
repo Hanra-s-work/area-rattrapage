@@ -131,16 +131,16 @@ export namespace GithubWidget {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 
-                console.log("Response", response);
+                // console.log("Response", response);
 
                 if (!response.ok) throw new Error(`GitHub API error: ${response.status}`);
 
                 console.log("Attempting to jsonize response");
 
                 const repos = await response.json();
-                console.log("Response jsonized", repos);
+                // console.log("Response jsonized", repos);
                 allRepos = [...allRepos, ...repos];
-                console.log("All repos", allRepos);
+                // console.log("All repos", allRepos);
                 hasMore = repos.length === perPage;
                 page++;
             } catch (error) {

@@ -121,7 +121,7 @@ app.post('/shutdown', async (req, res) => {
     const token = req.headers.authorization;
     console.log(`token: ${token}`);
     const data = await database.getContentFromTable('users', ['*'], `token = ${token}`);
-    console.log(data);
+    // console.log(data);
     if (data.length === 0) {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid token', 'Error', '', true);
         return;
@@ -146,7 +146,7 @@ app.get('/oauth/login/:provider', async (req, res) => {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid provider', 'Error', '', true);
         return;
     }
-    console.log(data);
+    // console.log(data);
     const authorisation_url = OAuth.generate_oauth_authorisation_url(data[0], env?.REDIRECT_URI || "", global_values);
     build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', authorisation_url, '', false);
 })
@@ -171,10 +171,10 @@ app.post("/oauth/callback", async (req, res) => {
     const got_provider = splitted_state[1];
     code = code.replace("code=", "");
     generated_uuid = generated_uuid.replace("state=", "");
-    console.log(code);
-    console.log(generated_uuid);
+    // console.log(code);
+    // console.log(generated_uuid);
 
-    console.log(`Global values before checking: ${JSON.stringify(global_values)}`);
+    // console.log(`Global values before checking: ${JSON.stringify(global_values)}`);
     if (code.length === 0 || generated_uuid.length === 0 || got_provider === 0) {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Missing information from the callback url', 'Error', '', true);
         return;
@@ -193,7 +193,7 @@ app.post("/oauth/callback", async (req, res) => {
     if (index !== -1) {
         global_values.splice(index, 1);
     }
-    console.log(`Global values after removing the state: ${global_values}`);
+    // console.log(`Global values after removing the state: ${global_values}`);
 
     const provider_data = await database.getContentFromTable('sso_oauth', ['*'], `provider_name = '${got_provider}'`);
 
@@ -201,7 +201,7 @@ app.post("/oauth/callback", async (req, res) => {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'The given provider is not correct.', 'Error', '', true);
         return;
     }
-    console.log(provider_data);
+    // console.log(provider_data);
     let provider_response;
     try {
         provider_response = await OAuth.exchange_code_for_token(code, provider_data[0], env?.REDIRECT_URI || "");
@@ -209,7 +209,7 @@ app.post("/oauth/callback", async (req, res) => {
         build_response.build_and_send_response(res, speak_on_correct_status.unauthorized, title, 'The code exchanger has failed.', 'Unauthorized', '', true);
         return;
     }
-    console.log(provider_response);
+    // console.log(provider_response);
     if (provider_response["access_token"].length === 0) {
         build_response.build_and_send_response(res, speak_on_correct_status.unauthorized, title, 'The access token was not retrieved correctly.', 'Unauthorized', '', true);
         return;
@@ -240,7 +240,7 @@ app.get("/user/about", async (req, res) => {
     token = token.replace("Bearer ", "");
     console.log(`Token without bearer: ${token}`);
     const data = await database.getContentFromTable('users', ['*'], `token = '${token}'`);
-    console.log(data);
+    // console.log(data);
     if (!data || data.length === 0) {
         console.log("No data");
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid token', 'Error', '', true);
@@ -252,8 +252,8 @@ app.get("/user/about", async (req, res) => {
         username: String(data[0].name),
         email: String(data[0].email),
     };
-    console.log(`Final: ${final}`);
-    console.log(final);
+    // console.log(`Final: ${final}`);
+    // console.log(final);
     build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', final, '', false);
 });
 
@@ -277,14 +277,14 @@ app.post('/login', async (req, res) => {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid email or password', 'Error', '', true);
         return;
     }
-    console.log("login response: ", login_response);
+    // console.log("login response: ", login_response);
     const final = {
         id: Number(data[0].id),
         username: String(data[0].name),
         email: String(data[0].email),
         token: String(login_response),
     };
-    console.log(`final:`, final);
+    // console.log(`final:`, final);
     build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', final, '', false);
 });
 
@@ -334,7 +334,7 @@ app.post('/register', async (req, res) => {
         return;
     }
 
-    console.log("login response: ", login_response);
+    // console.log("login response: ", login_response);
 
     const final = {
         id: Number(data[0].id),
@@ -342,7 +342,7 @@ app.post('/register', async (req, res) => {
         email: String(data[0].email),
         token: String(login_response),
     };
-    console.log(`final:`, final);
+    // console.log(`final:`, final);
     build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', final, '', false);
 });
 
@@ -354,13 +354,13 @@ app.get("/user/widgets", async (req, res) => {
     const token_cleaned = token?.replace("Bearer ", "") || "";
     console.log(`token cleaned: ${token_cleaned}`);
     const data = await database.getContentFromTable('users', ['*'], `token = '${token_cleaned}'`);
-    console.log(data);
+    // console.log(data);
     if (data.length === 0) {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid token', 'Error', '', true);
         return;
     }
     const user_data = await Widgets.get_user_widgets(data[0], database);
-    console.log("user_data: ", user_data);
+    // console.log("user_data: ", user_data);
     build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', user_data, '', false);
 });
 
@@ -382,7 +382,7 @@ app.patch("/user/widget/:user_widget_id/:widget_type", async (req, res) => {
 
     // Validate user with token
     const data = await database.getContentFromTable('users', ['*'], `token = '${token_cleaned}'`);
-    console.log(data);
+    // console.log(data);
     if (data.length === 0) {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid token', 'Error', '', true);
         return;
@@ -405,7 +405,7 @@ app.patch("/user/widget/:user_widget_id/:widget_type", async (req, res) => {
 
     // Process widget addition
     const user_data = await Widgets.update_user_widget(data[0], widgetId, widgetType, location, database);
-    console.log(user_data);
+    // console.log(user_data);
 
     if (user_data === false) {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'The widget has not been updated.', 'Error', '', true);
@@ -432,7 +432,7 @@ app.post("/user/widget/:id/:location?", async (req, res) => {
 
     // Validate user with token
     const data = await database.getContentFromTable('users', ['*'], `token = '${token_cleaned}'`);
-    console.log(data);
+    // console.log(data);
     if (data.length === 0) {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid token', 'Error', '', true);
         return;
@@ -449,7 +449,7 @@ app.post("/user/widget/:id/:location?", async (req, res) => {
 
     // Process widget addition
     const user_data = await Widgets.add_user_widget(data[0], widgetId, location, database);
-    console.log("user_data: ", user_data);
+    // console.log("user_data: ", user_data);
 
     if (user_data === false) {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'The widget has not been added.', 'Error', '', true);
@@ -482,7 +482,7 @@ app.delete("/user/widget/:id", async (req, res) => {
         return;
     }
     const user_data = await Widgets.delete_user_widget(data[0], widgetId, database);
-    console.log(user_data);
+    // console.log(user_data);
     if (user_data === false) {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'The widget has not been deleted.', 'Error', '', true);
         return;
@@ -499,13 +499,13 @@ app.get("/widgets", async (req, res) => {
     const token_cleaned = token?.replace("Bearer ", "") || "";
     console.log(`token cleaned: ${token_cleaned}`);
     const data = await database.getContentFromTable('users', ['*'], `token = '${token_cleaned}'`);
-    console.log(data);
+    // console.log(data);
     if (data.length === 0) {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid token', 'Error', '', true);
         return;
     }
     const widgets = await Widgets.get_available_widget_names();
-    console.log(widgets);
+    // console.log(widgets);
     build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', widgets, '', false);
 });
 
@@ -520,7 +520,7 @@ app.get("/widget/:name", async (req, res) => {
     const token_cleaned = token?.replace("Bearer ", "") || "";
     console.log(`token cleaned: ${token_cleaned}`);
     const data = await database.getContentFromTable('users', ['*'], `token = '${token_cleaned}'`);
-    console.log(data);
+    // console.log(data);
     if (data.length === 0) {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid token', 'Error', '', true);
         return;
@@ -530,7 +530,7 @@ app.get("/widget/:name", async (req, res) => {
         return;
     }
     const user_data = await Widgets.get_widget_info(data, widgetId, database);
-    console.log(user_data);
+    // console.log(user_data);
     if (user_data === false) {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, '<p>Widget gathering error, the content for the given widget could not be fetched successfully.</p>', 'Error', '', true);
         return;
@@ -546,7 +546,7 @@ app.delete("/logout", async (req, res) => {
     const token_cleaned = token?.replace("Bearer ", "") || "";
     console.log(`token cleaned: ${token_cleaned}`);
     const data = await database.getContentFromTable('users', ['*'], `token = '${token_cleaned}'`);
-    console.log(data);
+    // console.log(data);
     if (data.length === 0) {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid token', 'Error', '', true);
         return;
@@ -587,54 +587,22 @@ app.post("/user/sso", async (req, res) => {
     console.log("fetching data");
     const data = await database.getContentFromTable('users', ['*'], `token = '${token_cleaned}'`);
     console.log("data fetched");
-    console.log(data);
+    // console.log(data);
     if (!data || data.length === 0) {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid token', 'Error', '', true);
         return;
     }
 
-    console.log("token ", token_cleaned, "username ", username, "password ", password);
+    // console.log("token ", token_cleaned, "username ", username, "password ", password);
 
     const response = await Login.update_user_information(token_cleaned, username, password, database);
-    console.log("Response: ", response);
+    // console.log("Response: ", response);
     if (response === false) {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'The user information has not been updated.', 'Error', '', true);
         return;
     }
     build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', 'Success', '', false);
 });
-
-// app.patch("/widget-position/:widget_id/:position", async (req, res) => {
-
-//     const title = `${req.url}`;
-//     console.log(`endpoint: delete: ${req.url}`);
-//     const widgetId = req.params.widget_id;
-//     console.log(`widgetId: ${widgetId}`);
-//     const position = req.params.position;
-//     console.log(`position: ${position}`);
-//     const token = req.headers.authorization;
-//     console.log(`token: ${token}`);
-//     const token_cleaned = token?.replace("Bearer ", "") || "";
-//     console.log(`token cleaned: ${token_cleaned}`);
-//     const data = await database.getContentFromTable('users', ['*'], `token = '${token_cleaned}'`);
-//     console.log(data);
-//     if (data.length === 0) {
-//         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid token', 'Error', '', true);
-//         return;
-//     }
-//     if (!widgetId) {
-//         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Missing widget id', 'Error', '', true);
-//         return;
-//     }
-//     const user_data = await Widgets.delete_user_widget(data[0], widgetId, database);
-//     console.log(user_data);
-//     if (user_data === false) {
-//         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'The widget has not been deleted.', 'Error', '', true);
-//         return;
-//     }
-//     const user_widgets = await Widgets.get_user_widgets(data[0], database);
-//     build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', user_widgets, '', false);
-// });
 
 app.get("/refresh", async (req, res) => {
     console.log(`endpoint: get: ${req.url}`);
@@ -651,7 +619,7 @@ app.get("/refresh", async (req, res) => {
     }
     console.log("data: ", data);
     const refresh = Number(data[0].refresh);
-    console.log(`refresh: ${refresh}`);
+    // console.log(`refresh: ${refresh}`);
     build_response.build_and_send_response(res, speak_on_correct_status.success, title, 'Success', { "refresh": refresh }, '', false);
 });
 
@@ -665,7 +633,7 @@ app.post("/refresh/:refresh", async (req, res) => {
     const token_cleaned = token?.replace("Bearer ", "") || "";
     console.log(`token cleaned: ${token_cleaned}`);
     const data = await database.getContentFromTable('users', ['*'], `token = '${token_cleaned}'`);
-    console.log(data);
+    // console.log(data);
     if (data.length === 0) {
         build_response.build_and_send_response(res, speak_on_correct_status.bad_request, title, 'Invalid token', 'Error', '', true);
         return;
