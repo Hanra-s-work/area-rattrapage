@@ -22,7 +22,6 @@ server/cache/**
 !server/cache/.gitkeep
 
 # No build files
-bootstrap
 bin/*
 build/*
 _deps/*
