@@ -10,24 +10,24 @@ import jsonImages from "../ressources/darling_images.json";
 
 export namespace Darling {
 
-    const default_japanese_name = "Unknown";
-    const default_romaji = "Unknown";
     const default_age = "Unknown";
     const default_quote = "";
-    const default_image_height = "300px";
-    const default_image_width = "auto";
+    const default_alias = "None";
+    const default_romaji = "Unknown";
     const default_height = "Unknown";
     const default_weight = "Unknown";
-    const default_alias = "";
+    const default_image_width = "auto";
+    const default_image_height = "300px";
+    const default_japanese_name = "Unknown";
 
     export const character = [
         {
-            id:1,
+            id: 1,
             name: "001",
             japanese_name: "きょりゅうひめ叫竜の姫",
-            romaji:"Kyoryuu no Hime",
-            age:"Over 60 million years",
-            quote:`"We are the defenders of this planet. Once upon a time, during a long battle, we turned ourselves into an immortal weapon. Except fighting, all was lost, so we went to sleep at the bottom of death, our bond was to prepare for the returning invader."—001 about the war with VIRM `,
+            romaji: "Kyoryuu no Hime",
+            age: "Over 60 million years",
+            quote: `"We are the defenders of this planet. Once upon a time, during a long battle, we turned ourselves into an immortal weapon. Except fighting, all was lost, so we went to sleep at the bottom of death, our bond was to prepare for the returning invader."—001 about the war with VIRM `,
             description: "The Klaxo Sapien princess, the last of her kind, who has lived for millennia. She leads the war against humanity and the VIRM.",
             image_link: "https://static.wikia.nocookie.net/darling-in-the-franxx/images/0/03/001.png",
             image_height: default_image_height,
@@ -39,10 +39,10 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:2,
+            id: 2,
             name: "007",
             japanese_name: "新ナナ",
-            romaji:"Shin Nana",
+            romaji: "Shin Nana",
             age: "Alive (Immortal)",
             quote: `"It is considered impossible for a pregnant woman to pilot a FRANXX. Past records indicate abortion, that is the removal of the fetus as one of the possible treatments. Please let me know what you decide to do."—To Kokoro upon informing her of her pregnancy `,
             description: "007 (New Nana) is a calm and blunt caretaker of the parasites, lacking the empathy of the original Nana. Unlike her predecessor, she is indifferent to the well-being of the children and strictly follows APE’s orders, even dismissing their concerns about life-threatening missions with a passive smile. She values law and order to the extent that she initially denies necessities to the children, even when their survival is at stake.  However, over time, she begins to show a subtle kindness, especially toward Kokoro after discovering her pregnancy. She prioritizes Kokoro’s well-being, ensuring she receives special treatment as a precedent for doing things right in the new world.",
@@ -56,10 +56,10 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:3,
+            id: 3,
             name: "081",
             japanese_name: "高典 星野",
-            romaji:"Takanori Hoshino",
+            romaji: "Takanori Hoshino",
             age: default_age,
             quote: default_quote,
             description: `Zero Two's previous partner before Hiro. He couldn't handle her growing Klaxosaur blood influence and perished in combat when their Franxx, Strelizia, went out of control. His death highlights how lethal Zero Two’s piloting compatibility was for normal humans.`,
@@ -73,7 +73,7 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:4,
+            id: 4,
             name: "090",
             japanese_name: "誠 古川",
             romaji: "Makoto Furukawa",
@@ -90,7 +90,7 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:5,
+            id: 5,
             name: "245",
             japanese_name: default_japanese_name,
             romaji: default_romaji,
@@ -107,7 +107,7 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:6,
+            id: 6,
             name: "9 Model",
             japanese_name: default_japanese_name,
             romaji: default_romaji,
@@ -124,8 +124,8 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:7,
-            name:"9'α",
+            id: 7,
+            name: "9'α",
             japanese_name: default_japanese_name,
             romaji: default_romaji,
             age: default_age,
@@ -141,7 +141,7 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:8,
+            id: 8,
             name: "9'β",
             japanese_name: default_japanese_name,
             romaji: default_romaji,
@@ -158,7 +158,7 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:9,
+            id: 9,
             name: "9'γ",
             japanese_name: default_japanese_name,
             romaji: default_romaji,
@@ -175,7 +175,7 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:10,
+            id: 10,
             name: "9'δ",
             japanese_name: default_japanese_name,
             romaji: default_romaji,
@@ -192,7 +192,7 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:11,
+            id: 11,
             name: "9'ε",
             japanese_name: default_japanese_name,
             romaji: default_romaji,
@@ -209,14 +209,14 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:12,
+            id: 12,
             name: "9'ζ, η, θ",
             japanese_name: default_japanese_name,
             romaji: default_romaji,
             age: default_age,
             quote: default_quote,
             description: `Members of the 9's, loyal to APE and possessing cold, elite attitudes.`,
-            image_link :"https://static.wikia.nocookie.net/darling-in-the-franxx/images/6/6d/9something_stand.png",
+            image_link: "https://static.wikia.nocookie.net/darling-in-the-franxx/images/6/6d/9something_stand.png",
             image_height: default_image_height,
             image_width: default_image_width,
             height: default_height,
@@ -226,7 +226,7 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:13,
+            id: 13,
             name: "Ai",
             japanese_name: "アイ",
             romaji: "Ai",
@@ -243,7 +243,7 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:14,
+            id: 14,
             name: "Argentea",
             japanese_name: "アルジェンティア",
             romaji: "Arujentia",
@@ -260,7 +260,7 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:15,
+            id: 15,
             name: "Baboon",
             japanese_ame: "バブーン",
             romaji: "Babūn",
@@ -277,7 +277,7 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:16,
+            id: 16,
             name: "Chlorophytum",
             japanese_name: "クロロフィッツ",
             romaji: "Kurorofittsu",
@@ -294,7 +294,7 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:17,
+            id: 17,
             name: "Delphinium",
             japanese_name: "デルフィニウム",
             romaji: "Derufiniumu",
@@ -311,7 +311,7 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:18,
+            id: 18,
             name: "Dr. FRANXX",
             japanese_name: "ヴェルナー・フランク",
             romaji: "Veruna Furanku",
@@ -328,7 +328,7 @@ export namespace Darling {
             alias: [" Werner Frank "]
         },
         {
-            id:19,
+            id: 19,
             name: "Futoshi",
             japanese_name: "フトシ",
             romaji: "Futoshi",
@@ -345,7 +345,7 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:20,
+            id: 20,
             name: "Futoshi’s Unnamed Daughter",
             japanese_name: default_japanese_name,
             romaji: default_romaji,
@@ -362,7 +362,7 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:21,
+            id: 21,
             name: "Futoshi’s Unnamed Son",
             japanese_name: default_japanese_name,
             romaji: default_romaji,
@@ -498,7 +498,7 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:29,
+            id: 29,
             name: "Ichigo and Goro’s Unborn Child",
             japanese_name: default_japanese_name,
             romaji: default_romaji,
@@ -515,7 +515,7 @@ export namespace Darling {
             alias: default_alias
         },
         {
-            id:30,
+            id: 30,
             name: "Ikuno",
             japanese_name: "イクノ",
             romaji: "Ikuno",
@@ -782,7 +782,7 @@ export namespace Darling {
             image_width: default_image_width,
             height: default_height,
             weight: default_weight,
-            more_information:"https://darling-in-the-franxx.fandom.com/wiki/Papa",
+            more_information: "https://darling-in-the-franxx.fandom.com/wiki/Papa",
             type: "Council Member",
             alias: default_alias
         },
@@ -894,7 +894,7 @@ export namespace Darling {
             japanese_name: "ゼロツー",
             romaji: "Zero Tsū",
             age: "Unknown",
-            quote: [`"I was waiting for you, Darling."—Zero Two to Hiro`,`"If you don’t belong here, just build a place where you do. If you don’t have a partner, find one. And if you can’t, take one by force."—Zero Two after Hiro explains his lack of partner`],
+            quote: [`"I was waiting for you, Darling."—Zero Two to Hiro`, `"If you don’t belong here, just build a place where you do. If you don’t have a partner, find one. And if you can’t, take one by force."—Zero Two after Hiro explains his lack of partner`],
             description: `Zero Two is the main heroine and deuteragonist in DARLING in the FRANXX. A human-klaxo sapien hybrid, she initially fought alone as an elite pilot with the codename "002" and was known as the "Partner Killer" due to her previous co-pilots' deaths. Despite her violent and isolated nature, Zero Two grows close to Hiro, becoming his partner and eventually developing romantic feelings for him. Throughout the series, she struggles with her Klaxosaur blood and desire to become fully human. This causes friction with Hiro, though they eventually rediscover their past connection and sacrifice themselves for humanity's survival.  As a child, Zero Two was treated like a monster, and this led to her cynical and detached attitude. Over time, she grew closer to Hiro, showing more affection and care, despite her emotional struggles. Her appearance includes long pink hair, horns, and a military-style uniform. After several intense battles, she becomes more human-like, gaining self-awareness and socializing with others in Squad 13. Her relationship with Hiro deepens, and she vows to protect him, even if it means sacrificing herself.  Zero Two’s journey is marked by her battle to accept herself, her love for Hiro, and her ultimate realization of humanity's strength. In the end, she and Hiro sacrifice their lives to save Earth, leaving behind a legacy of hope for the future.`,
             image_link: "https://static.wikia.nocookie.net/darling-in-the-franxx/images/8/88/Zero_Two_infobox.png",
             image_height: default_image_height,
@@ -923,37 +923,56 @@ export namespace Darling {
             alias: default_alias
         }
     ];
-    export async function getDarling(widget_name: string, index: number, user_info: any, database: DB) : Promise<string> {
+    export async function getDarling(widget_name: string, index: number, user_info: any, database: DB): Promise<string> {
         console.log("getDarling");
-        let html = `<div id="${widget_name}_${index}" class="widget">`;
-    
+        let html = ``;
+
         const chosen_widget = character[Math.floor(Math.random() * character.length)];
         const widgetObjects = Object.keys(chosen_widget);
-    
+
         html += `<h2>${chosen_widget.name}</h2>`;
-    
-        html += `<img src="${chosen_widget.image_link}" alt="${chosen_widget.name}" style="width: 100%; height: auto;">`;
-    
-        html += `<table border="1" style="width: 100%; margin-top: 20px;">`;
-    
+
+        html += `<img src="${chosen_widget.image_link}" alt="${chosen_widget.name}" style="width: ${chosen_widget.image_width}; height: ${chosen_widget.image_height};">`;
+
+        html += `<table class="table .table-custom">`;
+
+        console.log(`html (before loop): ${html}`);
+
         for (let i = 0; i < widgetObjects.length; i++) {
+            console.log(`i: ${i}`);
             const key: string = widgetObjects[i];
+            console.log(`key: ${key}`);
             let value: any = chosen_widget[key as keyof typeof chosen_widget];
-    
-            if (key === "name" || key === "image_link") continue;
-    
-            if (key === "alias" && Array.isArray(value)) {
-                value = value.join("<br>");
+            console.log(`value: ${value}`);
+
+            if (key === "name" || key === "image_link") {
+                console.log("skipping name or image_link: ", key);
+                continue;
+            };
+
+            if (key === "image_height" || key === "image_width" || key === "id") {
+                console.log("skipping image_height or image_width or id: ", key);
+                continue;
             }
-    
-            if (value.startsWith("http")) {
+
+            console.log("checking if value is an array");
+            if (key === "alias" && Array.isArray(value)) {
+                console.log("value is an array");
+                value = value.join("<br>");
+                console.log(`value (after join): ${value}`);
+            }
+
+            console.log("checking if value is a link");
+            if (typeof value === "string" && value.startsWith("http")) {
+                console.log("value is a link");
                 value = `<a href="${value}" target="_blank">${value}</a>`;
+                console.log(`value (after link): ${value}`);
             }
             html += `<tr><td><strong>${key}</strong></td><td>${value}</td></tr>`;
+            console.log(`html (in loop): ${html}`);
         }
+        console.log(`html (after loop): ${html}`);
         html += `</table>`;
-    
-        html += "</div>";
         console.log("final html: ", html);
         return html;
     }
