@@ -5,12 +5,6 @@
   flex-wrap: nowrap;
 }
 
-#user_name_header {
-}
-
-.center_text {
-}
-
 .widget_button {
   display: flex;
   flex-direction: row;
