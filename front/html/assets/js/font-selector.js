@@ -40,6 +40,7 @@ function populateDropdown(dropdownId, options) {
         const optElement = document.createElement("option");
         optElement.value = option;
         optElement.textContent = option;
+        optElement.style.fontFamily = option;
         dropdown.appendChild(optElement);
     });
     console.log("populateDropdown finished");
