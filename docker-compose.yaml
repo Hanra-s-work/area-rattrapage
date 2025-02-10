@@ -43,7 +43,7 @@ services:
     restart: always
     tty: true
     ports:
-      - "8080:80"
+      - "8000:80"
     depends_on:
       - server
     networks:

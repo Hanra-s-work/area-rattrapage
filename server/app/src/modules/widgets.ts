@@ -79,7 +79,9 @@ export namespace Widgets {
 
     export async function get_darling_widget(widget_name: string, index: number, user_info: any, database: DB): Promise<string> {
         console.log("get_darling_widget");
-        return Darling.getDarling(widget_name, index, user_info, database);
+        const response = await Darling.getDarling(widget_name, index, user_info, database);
+        console.log(`Darling response: ${response}`);
+        return response;
     }
 
     export async function get_sample_widget(widget_name: string, index: number, user_info: any, database: DB): Promise<string> {
@@ -96,74 +98,6 @@ export namespace Widgets {
         console.log("get_available_widget_names");
         return raw_widgets_list;
     }
-
-    // export async function get_details_of_the_widget_of_interest(database: DB, user_info: any, widget_id: string, db_widget_index: string | Number | null = null): Promise<typeof no_widgets | any> {
-    //     console.log("get_details_of_the_widget_of_interest");
-    //     console.log("user_info", user_info);
-    //     console.log("widget_id", widget_id);
-    //     console.log("db_widget_index", db_widget_index);
-    //     let DBWidgetIndex = "";
-    //     if (typeof db_widget_index === "number" || typeof db_widget_index === "string") {
-    //         DBWidgetIndex = `AND widget_id='${widget_id}' AND widget_index='${db_widget_index}'`;
-    //     } else {
-    //         DBWidgetIndex = `AND widget_id='${widget_id}'`;
-    //     }
-    //     console.log("DBWidgetIndex", DBWidgetIndex);
-    //     const widget = await database.getContentFromTable("user_widgets", ["*"], `user_id='${user_info.id}'`);
-    //     console.log("widget", widget);
-    //     if (widget.length === 0) {
-    //         console.error("No widgets found for the given user");
-    //         return no_widgets;
-    //     }
-    //     console.log("Iterating through the widgets to try and find the widget of interest");
-    //     let widgetFinalNode = no_widgets[0];
-    //     console.log("widget.length", widget.length);
-    //     for (let i = widget.length - 1; i >= 0; i--) {
-    //         console.log(`widget[${i}]`, widget[i]);
-    //         if (Number(widget[i].widget_id) === Number(widget_id)) {
-    //             console.log("Found the widget of interest");
-    //             widgetFinalNode = widget[i];
-    //             break;
-    //         }
-    //     }
-    //     console.log("Widget of interest: ", widgetFinalNode);
-    //     console.log("Iterated through the widgets");
-    //     // Fetch all widget definitions
-    //     const widgetNames = await database.getContentFromTable("widgets", ["id", "widget_name"]);
-    //     console.log("widgetNames", widgetNames);
-    //     // Convert widgetNames to a lookup map (id -> name)
-    //     const widgetNameMap = Object.fromEntries(widgetNames.map((w: any) => [Number(w.id), w.widget_name.toLowerCase()]));
-    //     // Look the name up in the map
-    //     const widget_name = widgetNameMap[widget_id] || "<Unknown Widget>";
-    //     // Get the info of the last widget
-    //     const last_widget = widgetFinalNode;
-    //     // Get the html content for the front to render
-    //     console.log(`widget_name: ${widget_name}, available_widgets: `, available_widgets);
-    //     console.log("widget_name in available_widgets: ", widget_name in available_widgets);
-    //     let widgetContent = "<p>Widget gathering error, the content for the given widget could not be fetched successfully.</p>";
-    //     if (widget_name in available_widgets) {
-    //         console.log("Widget name found in available_widgets");
-    //         try {
-    //             console.log("Trying to fetch widget content");
-    //             widgetContent = await available_widgets[widget_name](widget_name, last_widget.widget_index, user_info, database)
-    //                 || "<p>Widget gathering error, the content for the given widget could not be fetched successfully.</p>";
-    //             console.log(`Widget content: ${widgetContent}`);
-    //         } catch (error) {
-    //             console.error(`Error executing widget ${widget_name}:`, error);
-    //         }
-    //     }
-    //     const widget_content = {
-    //         widget_index: Number(last_widget.widget_index),
-    //         widget_id: Number(last_widget.widget_id),
-    //         db_index: Number(last_widget.id),
-    //         name: widget_name,
-    //         option: last_widget.widget_option,
-    //         html: widgetContent
-    //     };
-    //     console.log("widget_content", widget_content);
-    //     console.log("get_details_of_the_widget_of_interest finished");
-    //     return widget_content;
-    // }
 
     export async function get_user_widgets(user_info: any, database: DB): Promise<typeof no_widgets | any> {
         console.log("get_user_widgets");
@@ -252,8 +186,6 @@ export namespace Widgets {
         const widgetIndex = lastEnteredWidget.length > 0 ? Number(lastEnteredWidget[lastEnteredWidget.length - 1].widget_index) + 1 : 0;
         console.log("widgetIndex", widgetIndex);
         await database.writeToTable(user_widget_table, ["user_id", "widget_id", "widget_index", "widget_option"], [user_id, widget_id_int, widgetIndex, widget_location_int]);
-        // const widgetContent = await get_details_of_the_widget_of_interest(database, user_info.id, widget_id);
-        // return widgetContent;
         return true;
     }
 
@@ -325,10 +257,6 @@ export namespace Widgets {
         }
         console.log("widget_informations_update", widget_informations_update);
         console.log("Widget updated successfully");
-        // console.log("fetching the new widget content");
-        // const widgetContent = await get_details_of_the_widget_of_interest(database, user_info, `${widget_type_int}`, user_widget_id);
-        // console.log("widget content: ", widgetContent);
-        // return widgetContent;
         return true;
     }
 

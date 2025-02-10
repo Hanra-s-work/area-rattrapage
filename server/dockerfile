@@ -38,16 +38,21 @@ COPY ./app .
 # Copy the environement file in the container
 COPY .env .
 
+# Build the application
+RUN npm run build
+
 # Expose the port
 EXPOSE 5000
 
 # Create the backup location of the launch script
 RUN mkdir -p ${SYSTEM_ENV_LOCATION}
 
+# -- --port=\"\$PORT\" --host=\"\$HOST\"
+
 # Dump script runner
 RUN echo '#!/bin/bash' > ${BASH_FILE_LAUNCHER} \
     && echo "cd \"\$HOME\"" >> ${BASH_FILE_LAUNCHER} \
-    && echo "CMD=\"npm run build && npm run start -- --port=\"\$PORT\" --host=\"\$HOST\"\"" >> ${BASH_FILE_LAUNCHER} \
+    && echo "CMD=\"npm run start\"" >> ${BASH_FILE_LAUNCHER} \
     && echo "if [[ \"\${LAUNCH_SERVER_ON_BOOT,,}\" != 'true' ]]; then echo 'debug is true, starting a boring bash instance';/bin/bash ; exit \$?; fi" >> ${BASH_FILE_LAUNCHER} \
     && echo "echo \"startup command: \$CMD\"" >> ${BASH_FILE_LAUNCHER} \
     && echo "\$CMD" >> ${BASH_FILE_LAUNCHER} \
