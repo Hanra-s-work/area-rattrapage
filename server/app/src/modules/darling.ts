@@ -47,7 +47,7 @@ export namespace Darling {
             quote: `"It is considered impossible for a pregnant woman to pilot a FRANXX. Past records indicate abortion, that is the removal of the fetus as one of the possible treatments. Please let me know what you decide to do."—To Kokoro upon informing her of her pregnancy `,
             description: "007 (New Nana) is a calm and blunt caretaker of the parasites, lacking the empathy of the original Nana. Unlike her predecessor, she is indifferent to the well-being of the children and strictly follows APE’s orders, even dismissing their concerns about life-threatening missions with a passive smile. She values law and order to the extent that she initially denies necessities to the children, even when their survival is at stake.  However, over time, she begins to show a subtle kindness, especially toward Kokoro after discovering her pregnancy. She prioritizes Kokoro’s well-being, ensuring she receives special treatment as a precedent for doing things right in the new world.",
             image_link: "https://static.wikia.nocookie.net/darling-in-the-franxx/images/b/b0/New_nana.png",
-            image_height: default_image_height,
+            image_height: "200px",
             image_width: default_image_width,
             height: default_height,
             weight: default_weight,
@@ -100,7 +100,7 @@ export namespace Darling {
             image_link: "https://static.wikia.nocookie.net/darling-in-the-franxx/images/f/f9/Plan26.png",
             image_height: default_image_height,
             image_width: default_image_width,
-            height: default_height,
+            height: "150px",
             weight: default_weight,
             more_information: "https://darling-in-the-franxx.fandom.com/wiki/245",
             type: "Group of humans",
@@ -234,7 +234,7 @@ export namespace Darling {
             quote: `"Papa, Darling, darling!"—Ai to Mitsuru`,
             description: `Ai is the eldest daughter of Mitsuru and Kokoro and the first child born to the Parasites. She inherits her mother’s gentle and cheerful personality and is a precocious, curious child.  She shares a close bond with her parents, calling them "Mama" and "Papa," and is adored by the other members of Squad 13. Ai enjoys hearing stories about the past and eagerly asks Miku about her parents' younger days.`,
             image_link: "https://static.wikia.nocookie.net/darling-in-the-franxx/images/4/4d/Ai.png",
-            image_height: default_image_height,
+            image_height: "200px",
             image_width: default_image_width,
             height: default_height,
             weight: default_weight,
@@ -557,7 +557,7 @@ export namespace Darling {
             quote: `"Klaxosaurs are the enemy of humanity and must be eradicated."—APE's official stance on Klaxosaurs`,
             description: `Klaxosaurs are powerful biological weapons created by the Klaxo Sapiens in DARLING in the FRANXX, initially serving as antagonists before eventually teaming up with humanity to fight the VIRM. These dragon- or dinosaur-shaped creatures are attracted to magma energy, which they feed on. Their design involves a male-female pairing: the female merges with the Klaxosaur, while the male becomes the core that controls it.  Over 60 million years ago, the Klaxo Sapiens were a technologically advanced civilization, but after resisting an offer from the VIRM to merge as one life form, a devastating war broke out. The war drained the planet's life energy, leading to desertification. Eventually, the Klaxo Sapiens went underground, and their powerful Klaxosaurs were preserved as weapons for future threats. Meanwhile, humanity discovered magma energy and started drilling it, unknowingly triggering attacks from the Klaxosaurs, who became protectors of the planet.  Dr. Franxx, using Klaxosaur carcasses, developed the FRANXX units, which required male-female pilots. This technology was used to defend against Klaxosaur attacks, with humans taking refuge in mobile fortresses called plantations. As the war against the Klaxosaurs intensified, APE (a human organization led by VIRM) created a plan to destroy the Klaxosaurs using their cores. However, the emergence of the Klaxosaur Princess (001) and the creation of a human-Klaxosaur hybrid, Zero Two, complicated matters.  In the final conflict, the Klaxosaurs and humanity united against the VIRM, who had secretly infiltrated humanity’s leadership. The Klaxosaurs helped defeat the VIRM, and after a galactic battle, the VIRM were defeated, and the Klaxosaurs returned to Earth. The planet began to recover, and humanity vowed to never exploit magma energy again, marking the beginning of a new, more harmonious era.`,
             image_link: "https://static.wikia.nocookie.net/darling-in-the-franxx/images/f/f5/Vlcsnap-2018-03-03-18h47m02s435.png",
-            image_height: default_image_height,
+            image_height: "200px",
             image_width: default_image_width,
             height: default_height,
             weight: default_weight,
@@ -744,7 +744,7 @@ export namespace Darling {
             quote: default_quote,
             description: `Nawabari is a giant black and blue Klaxosaur serpent loyal to the Klaxosaur Princess (001). With glittering scales and a cobra-like hood, Nawabari is calm but highly dangerous, sharing the Princess's hatred for humans. He has served her for millions of years, willing to attack anyone who threatens her. Though fiercely loyal, he is also compassionate enough to compromise for her well-being, such as helping Zero Two save her from a doomsday virus. Nawabari played a crucial role in key battles, including protecting the Princess and assisting in the final fight against VIRM. He died helping Zero Two reach the core of Star Entity to save Hiro and Strelizia. Nawabari is a powerful being capable of overpowering FRANXX units, with sections of his body hollow for the Princess to ride inside. He can fuse with another serpent, creating a formidable, multi-eyed creature. The term "nawabari" refers to a castle layout from the Edo Period, symbolizing Nawabari's strategic strength.`,
             image_link: "https://static.wikia.nocookie.net/darling-in-the-franxx/images/6/61/PrincessCave.png",
-            image_height: "100px",
+            image_height: "200px",
             image_width: default_image_width,
             height: default_height,
             weight: default_weight,
@@ -761,7 +761,7 @@ export namespace Darling {
             quote: default_quote,
             description: `The unnamed Old Woman is an elderly character in DARLING in the FRANXX, who is part of the immortal Adults living in the inner city. She wears a white headdress and relies on magma energy for sustenance, with an externally mounted orange heart. She is kind to Zorome, but remains emotionally detached, revealing that her immortality treatment has made her sterile and unable to feel the joys of human life, like eating or relationships. Zorome feels a mysterious connection with her, but she is unable to understand his sentiments about his partner, Miku.  Throughout their interaction, she expresses indifference toward many aspects of life, even offering tea and sweets but admitting that she no longer finds pleasure in taste. Zorome is confused and frustrated by her detached lifestyle, while the Old Woman becomes progressively ill, possibly due to her biochemical differences with Zorome or the memory manipulation by APE. She reveals she lives with her partner, whose brain's reward system is artificially activated for pleasure, but they live separate lives, not meddling in each other's affairs. She suggests that Zorome change his partner, which surprises him. As Zorome grows emotional and reflects on her kindness, he asks her to be his family or friend, though she gently rejects the idea. The Old Woman's interactions with Zorome highlight her loneliness and resignation from the human experiences she once valued.`,
             image_link: "https://static.wikia.nocookie.net/darling-in-the-franxx/images/d/d9/Old_woman.png",
-            image_height: default_image_height,
+            image_height: "200px",
             image_width: default_image_width,
             height: default_height,
             weight: default_weight,
@@ -780,7 +780,7 @@ export namespace Darling {
             image_link: "https://static.wikia.nocookie.net/darling-in-the-franxx/images/1/19/Papa-close.png",
             image_height: default_image_height,
             image_width: default_image_width,
-            height: default_height,
+            height: "280px",
             weight: default_weight,
             more_information: "https://darling-in-the-franxx.fandom.com/wiki/Papa",
             type: "Council Member",
@@ -794,9 +794,9 @@ export namespace Darling {
             age: default_age,
             quote: default_quote,
             description: `Squad 13, composed of ten 14-year-old Parasites, is an experimental team living at Plantation 13. They are trained to pilot specialized FRANXX mechs to fight Klaxosaurs. The squad is unique for using names instead of code numbers and has a strong bond, despite being initially hesitant about Zero Two, who becomes Hiro’s partner. Zero Two has a dangerous reputation, as her partners often die, but Hiro becomes the only one able to synchronize with her. Over time, Squad 13 forms close bonds, faces challenges, and uncovers truths about their roles as weapons and the true enemy, VIRM.  The squad goes through many trials, including battles, emotional struggles, and conflicts about love and identity. They are betrayed by APE, who reveals their true purpose and the parasites' lack of freedom. Despite this, Squad 13 continues to fight, uncovering the truth about VIRM and their role in manipulating humanity and Klaxosaurs. After a climactic battle and sacrifice, Hiro and Zero Two defeat VIRM but perish in the process, leaving the squad to rebuild society.  Years later, Squad 13 members live fulfilling lives, with families and careers, honoring the sacrifices of Hiro and Zero Two. Eventually, a thousand years pass, and the souls of Hiro and Zero Two are reincarnated, meeting again at a cherry blossom tree.`,
-            image_link: "https://static.wikia.nocookie.net/darling-in-the-franxx/images/e/ea/ShuffleShiyou.png",
-            image_height: default_image_height,
-            image_width: default_image_width,
+            image_link: jsonImages["squad_13"],
+            image_height: "200px",
+            image_width: default_image_height,
             height: default_height,
             weight: default_weight,
             more_information: "https://darling-in-the-franxx.fandom.com/wiki/Squad_13",
@@ -812,7 +812,7 @@ export namespace Darling {
             quote: default_quote,
             description: `Squad 26 is a parasite unit stationed at Plantation 26, Chrysanthemum. Two years before the events of the series, they were involved in a joint operation with Zero Two that resulted in the deaths of 26 members due to her recklessness, including the partner of 090. In Episode 05, due to a klaxosaur attack depleting Plantation 13’s magma reserves, the two squads collaborate for defense. Squad 26, more seasoned and composed, is led by 090, who offers advice to Squad 13.  During the mission, 090 is hesitant to work with Zero Two because of their past experience. Initially, Squad 26 performs well, but the overwhelming number of Klaxosaurs forces Squad 13 to step in. After a tense battle, Strelizia saves the day, and the squads manage to survive.  Months later, in Episode 15, during the siege of Gran Crevasse, Squad 26 struggles against an enormous number of Klaxosaurs and requires the 9's intervention. When a Super Lehmann Klaxosaur destroys Plantation 26, 090 is ordered to execute Protocol 32. Despite his hesitation, 090 follows through, and the squad sacrifices themselves to destroy the plantation, leaving Squad 13 to continue the fight.`,
             image_link: "https://static.wikia.nocookie.net/darling-in-the-franxx/images/f/f9/Plan26.png",
-            image_height: default_image_height,
+            image_height: "150px",
             image_width: default_image_width,
             height: default_height,
             weight: default_weight,
@@ -936,14 +936,14 @@ export namespace Darling {
 
         html += `<table class="table .table-custom">`;
 
-        console.log(`html (before loop): ${html}`);
-
         for (let i = 0; i < widgetObjects.length; i++) {
             console.log(`i: ${i}`);
             const key: string = widgetObjects[i];
             console.log(`key: ${key}`);
             let value: any = chosen_widget[key as keyof typeof chosen_widget];
-            console.log(`value: ${value}`);
+            if (key != "image_link") {
+                console.log(`value: ${value}`);
+            }
 
             if (key === "name" || key === "image_link") {
                 console.log("skipping name or image_link: ", key);
@@ -969,9 +969,7 @@ export namespace Darling {
                 console.log(`value (after link): ${value}`);
             }
             html += `<tr><td><strong>${key}</strong></td><td>${value}</td></tr>`;
-            console.log(`html (in loop): ${html}`);
         }
-        console.log(`html (after loop): ${html}`);
         html += `</table>`;
         console.log("final html: ", html);
         return html;
