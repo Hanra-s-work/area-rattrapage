@@ -1,0 +1,48 @@
+/* ** EPITECH PROJECT, 2024
+** area-rattrapage
+** File description:
+** detabelifyer.css */
+
+.table-custom {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* Default (Light Mode) */
+
+.table-custom th, .table-custom td {
+  border: 1px solid #dee2e6;
+  padding: 8px;
+  color: #212529;
+}
+
+.table-custom th {
+  background-color: #f8f9fa;
+}
+
+/* Dark Mode Support */
+
+@media (prefers-color-scheme: dark) {
+  .table-custom th, .table-custom td {
+    border: 1px solid #495057;
+    color: #f8f9fa;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .table-custom th {
+    background-color: #343a40;
+  }
+}
+
+/* Support Bootstrap Dark Mode if using `.table-dark` */
+
+.table-dark.table-custom th, .table-dark.table-custom td {
+  border: 1px solid #495057;
+  color: #f8f9fa;
+}
+
+.table-dark.table-custom th {
+  background-color: #343a40;
+}
+
