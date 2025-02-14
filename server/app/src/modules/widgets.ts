@@ -30,6 +30,7 @@ export namespace Widgets {
         "weather": get_weather_widget,
         "github": get_github_widget,
         "darling": get_darling_widget,
+        "darling_full": get_darling_widget_full
     };
 
     const raw_widgets_list = Object.keys(available_widgets);
@@ -79,7 +80,14 @@ export namespace Widgets {
 
     export async function get_darling_widget(widget_name: string, index: number, user_info: any, database: DB): Promise<string> {
         console.log("get_darling_widget");
-        const response = await Darling.getDarling(widget_name, index, user_info, database);
+        const response = await Darling.getDarling();
+        // console.log(`Darling response: ${response}`);
+        return response;
+    }
+
+    export async function get_darling_widget_full(widget_name: string, index: number, user_info: any, database: DB): Promise<string> {
+        console.log("get_darling_widget_full");
+        const response = await Darling.getDarlingFull();
         // console.log(`Darling response: ${response}`);
         return response;
     }

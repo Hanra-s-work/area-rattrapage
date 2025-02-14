@@ -923,11 +923,11 @@ export namespace Darling {
             alias: default_alias
         }
     ];
-    export async function getDarling(widget_name: string, index: number, user_info: any, database: DB): Promise<string> {
-        console.log("getDarling");
-        let html = ``;
 
-        const chosen_widget = character[Math.floor(Math.random() * character.length)];
+    export async function process_single_widget(
+        chosen_widget: typeof character[0]
+    ): Promise<string> {
+        let html = ``;
         const widgetObjects = Object.keys(chosen_widget);
 
         html += `<h2>${chosen_widget.name}</h2>`;
@@ -971,6 +971,27 @@ export namespace Darling {
             html += `<tr><td><strong>${key}</strong></td><td>${value}</td></tr>`;
         }
         html += `</table>`;
+        return html;
+    }
+    export async function getDarling(): Promise<string> {
+        console.log("getDarling");
+
+        const chosen_widget = character[Math.floor(Math.random() * character.length)];
+
+        const html = await process_single_widget(chosen_widget);
+        // console.log("final html: ", html);
+        return html;
+    }
+    export async function getDarlingFull(): Promise<string> {
+        console.log("getDarlingFull");
+        let html = ``;
+
+        for (let i = 0; i < character.length; i++) {
+            const chosen_widget = character[i];
+            html += '<div>';
+            html += await process_single_widget(chosen_widget);
+            html += "</div>";
+        }
         // console.log("final html: ", html);
         return html;
     }
